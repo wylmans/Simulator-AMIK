@@ -1,5 +1,5 @@
 import pygame
-from camera import camera
+from core.camera import camera
 
 class TileKinds:
   def __init__(self, name, image, is_solid):

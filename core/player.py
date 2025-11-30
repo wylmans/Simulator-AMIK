@@ -1,7 +1,7 @@
 import pygame
-from sprite import Sprite
-from input import is_key_pressed
-from camera import camera
+from core.sprite import Sprite
+from core.input import is_key_pressed
+from core.camera import camera
 
 class Player(Sprite):
 	def __init__(self, image, x, y):
