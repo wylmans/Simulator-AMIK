@@ -1,33 +1,109 @@
 import pygame
 import random
-from core.camera import camera  # Import camera untuk posisi relatif
+from core.camera import camera
+from core.animated_sprite import AnimatedSprite, SimpleAnimatedSprite
+from core.collision import CollisionBox
 
 class NPC(pygame.sprite.Sprite):
-    """Base class untuk NPC (Dosen)"""
+    """Base class untuk NPC (Dosen) dengan animated sprite support"""
 
-    def __init__(self, name, x, y, sprite_path, dialogue_lines):
+    def __init__(self, name, x, y, sprite_config, dialogue_lines):
+        """
+        Args:
+            name: Nama NPC
+            x, y: Posisi di map
+            sprite_config: Dict config untuk sprite
+                Format 1 (Aseprite): {
+                    'type': 'aseprite',
+                    'spritesheet': 'path/to/sprite.png',
+                    'json': 'path/to/sprite.json'  # optional
+                }
+                Format 2 (Simple strip): {
+                    'type': 'simple',
+                    'sprite': 'path/to/sprite.png',
+                    'frame_width': 48,
+                    'frame_height': 48,
+                    'num_frames': 4
+                }
+                Format 3 (Fallback): {
+                    'type': 'fallback',
+                    'color': (100, 100, 200),  # optional
+                    'size': (48, 48)  # optional
+                }
+            dialogue_lines: List dialog
+        """
         super().__init__()
         self.name = name
-        self.x = x  # Posisi absolute di map
-        self.y = y  # Posisi absolute di map
-        self.sprite_path = sprite_path
-        self.dialogue_lines = dialogue_lines  # List dialog yang akan ditampilkan
+        self.x = x
+        self.y = y
+        self.dialogue_lines = dialogue_lines
 
-        # Load sprite
-        try:
-            self.image = pygame.image.load(sprite_path)
-            self.image = pygame.transform.scale(self.image, (48, 48))
-        except:
-            # Fallback jika gambar tidak ada
-            self.image = pygame.Surface((48, 48))
-            self.image.fill((100, 100, 200))
+        # Load sprite berdasarkan config
+        self._load_sprite(sprite_config)
 
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        # Setup collision box
+        # Default: slightly smaller than sprite untuk better feel
+        sprite_rect = self.animated_sprite.get_rect()
+        self.collision_box = CollisionBox(
+            0, 0,  # offset dari sprite position
+            sprite_rect.width * 0.8,  # 80% dari sprite width
+            sprite_rect.height * 0.8,  # 80% dari sprite height
+            shape="rect"
+        )
+        # Center collision box
+        self.collision_box.offset_x = sprite_rect.width * 0.1
+        self.collision_box.offset_y = sprite_rect.height * 0.1
 
         # Interaction range
-        self.interaction_range = 80  # Pixel radius untuk interaksi
+        self.interaction_range = 80
+
+    def _load_sprite(self, config):
+        """Load sprite berdasarkan config"""
+        sprite_type = config.get('type', 'fallback')
+
+        if sprite_type == 'aseprite':
+            self.animated_sprite = AnimatedSprite(
+                spritesheet_path=config['spritesheet'],
+                json_path=config.get('json'),
+                x=self.x,
+                y=self.y,
+                fallback_color=config.get('color', (100, 100, 200))
+            )
+
+        elif sprite_type == 'simple':
+            self.animated_sprite = SimpleAnimatedSprite(
+                sprite_path=config['sprite'],
+                frame_width=config['frame_width'],
+                frame_height=config['frame_height'],
+                num_frames=config['num_frames'],
+                frame_duration=config.get('frame_duration', 100),
+                x=self.x,
+                y=self.y,
+                fallback_color=config.get('color', (100, 100, 200))
+            )
+
+        else:  # fallback
+            size = config.get('size', (48, 48))
+            color = config.get('color', (100, 100, 200))
+            self.animated_sprite = SimpleAnimatedSprite(
+                sprite_path='__nonexistent__.png',  # Force fallback
+                frame_width=size[0],
+                frame_height=size[1],
+                num_frames=1,
+                x=self.x,
+                y=self.y,
+                fallback_color=color
+            )
+
+
+    def update(self, dt=16):
+        """Update NPC (animation, dll)"""
+        # Update position untuk animated sprite
+        self.animated_sprite.x = self.x
+        self.animated_sprite.y = self.y
+
+        # Update animation
+        self.animated_sprite.update(dt)
 
     def is_in_range(self, player):
         """Cek apakah player dalam jangkauan interaksi"""
@@ -41,17 +117,20 @@ class NPC(pygame.sprite.Sprite):
         return random.choice(self.dialogue_lines)
 
     def draw(self, screen):
-        """Render NPC ke layar dengan camera offset"""
-        # Gunakan camera offset seperti di sprite.py
-        screen.blit(self.image, (self.x - camera.x, self.y - camera.y))
+        """Render NPC ke layar"""
+        self.animated_sprite.draw(screen)
 
     def draw_indicator(self, screen, player):
         """Tampilkan indikator jika player dalam range"""
         if self.is_in_range(player):
-            # Gambar tanda seru di atas NPC (dengan camera offset)
+            # Gambar tanda seru di atas NPC
             font = pygame.font.Font(None, 36)
             text = font.render("!", True, (255, 255, 0))
             screen.blit(text, (self.x - camera.x + 16, self.y - camera.y - 30))
+
+    def draw_collision_debug(self, screen):
+        """Draw collision box untuk debugging"""
+        self.collision_box.draw_debug(screen, self.x, self.y, camera)
 
 
 class NPCManager:
@@ -59,10 +138,16 @@ class NPCManager:
 
     def __init__(self):
         self.npcs = []
+        self.debug_collision = False  # Toggle untuk debug collision
 
     def add_npc(self, npc):
         """Tambah NPC ke manager"""
         self.npcs.append(npc)
+
+    def update_all(self, dt=16):
+        """Update semua NPC"""
+        for npc in self.npcs:
+            npc.update(dt)
 
     def get_nearby_npc(self, player):
         """Cari NPC terdekat yang dalam range"""
@@ -76,6 +161,16 @@ class NPCManager:
         for npc in self.npcs:
             npc.draw(screen)
             npc.draw_indicator(screen, player)
+
+            # Debug collision (jika enabled)
+            if self.debug_collision:
+                npc.draw_collision_debug(screen)
+
+    def toggle_debug(self):
+        """Toggle collision debug visualization"""
+        self.debug_collision = not self.debug_collision
+        status = "ON" if self.debug_collision else "OFF"
+        print(f"🔍 NPC Collision Debug: {status}")
 
 
 # Template dialog untuk berbagai dosen
@@ -123,71 +218,117 @@ def create_sample_npcs():
     Fungsi helper untuk membuat contoh NPC dosen
 
     ⭐ SESUAIKAN POSISI X dan Y DENGAN MAP ANDA! ⭐
-
-    Koordinat adalah posisi ABSOLUTE di map (bukan screen)
-    Contoh: Jika map 1000x1000, gunakan koordinat 0-1000
+    ⭐ SESUAIKAN SPRITE CONFIG DENGAN FILE SPRITE ANDA! ⭐
     """
     npcs = []
 
     # ═══════════════════════════════════════════════════════
-    # ⭐⭐⭐ UBAH KOORDINAT X, Y DI SINI! ⭐⭐⭐
+    # ⭐⭐⭐ CONTOH BERBAGAI KONFIGURASI SPRITE ⭐⭐⭐
     # ═══════════════════════════════════════════════════════
 
-    # Contoh NPC 1 - Dosen Pemrograman
+    # CONTOH 1: NPC dengan Aseprite animated sprite
+    npc1_sprite_config = {
+        'type': 'aseprite',
+        'spritesheet': 'sprites/dosen1.png',  # Export dari Aseprite
+        'json': 'sprites/dosen1.json'  # Export JSON dari Aseprite
+        # Jika tidak ada sprite, akan fallback ke kotak biru
+    }
+
     npc1 = NPC(
         name="Prof. Budi",
-        x=250,        # ← UBAH KOORDINAT X (posisi horizontal di map)
-        y=150,        # ← UBAH KOORDINAT Y (posisi vertikal di map)
-        sprite_path="images/dosen1.png",
+        x=250,
+        y=150,
+        sprite_config=npc1_sprite_config,
         dialogue_lines=DOSEN_DIALOGUES["pemrograman"]
     )
     npcs.append(npc1)
 
-    # Contoh NPC 2 - Dosen Database
+    # CONTOH 2: NPC dengan simple sprite strip
+    npc2_sprite_config = {
+        'type': 'simple',
+        'sprite': 'sprites/dosen2.png',  # Sprite strip horizontal
+        'frame_width': 48,  # Lebar setiap frame
+        'frame_height': 48,  # Tinggi setiap frame
+        'num_frames': 4,  # Jumlah frame dalam strip
+        'frame_duration': 150  # Durasi setiap frame (ms)
+    }
+
     npc2 = NPC(
         name="Dr. Siti",
-        x=400,        # ← UBAH KOORDINAT X
-        y=300,        # ← UBAH KOORDINAT Y
-        sprite_path="images/dosen2.png",
+        x=400,
+        y=300,
+        sprite_config=npc2_sprite_config,
         dialogue_lines=DOSEN_DIALOGUES["database"]
     )
     npcs.append(npc2)
 
-    # Contoh NPC 3 - Dosen Jaringan
+    # CONTOH 3: NPC dengan fallback (kotak warna) - Color berbeda
+    npc3_sprite_config = {
+        'type': 'fallback',
+        'color': (200, 100, 100),  # Merah
+        'size': (48, 48)
+    }
+
     npc3 = NPC(
         name="Pak Ahmad",
-        x=600,        # ← UBAH KOORDINAT X
-        y=200,        # ← UBAH KOORDINAT Y
-        sprite_path="images/dosen3.png",
+        x=600,
+        y=200,
+        sprite_config=npc3_sprite_config,
         dialogue_lines=DOSEN_DIALOGUES["jaringan"]
     )
     npcs.append(npc3)
 
-    # Contoh NPC 4 - Dosen Matematika
+    # CONTOH 4: NPC dengan fallback - Color berbeda
+    npc4_sprite_config = {
+        'type': 'fallback',
+        'color': (100, 200, 100),  # Hijau
+        'size': (48, 48)
+    }
+
     npc4 = NPC(
         name="Bu Rina",
-        x=300,        # ← UBAH KOORDINAT X
-        y=450,        # ← UBAH KOORDINAT Y
-        sprite_path="images/dosen4.png",
+        x=300,
+        y=450,
+        sprite_config=npc4_sprite_config,
         dialogue_lines=DOSEN_DIALOGUES["matematika"]
     )
     npcs.append(npc4)
 
-    # Contoh NPC 5 - Dosen Umum
+    # CONTOH 5: NPC dengan fallback default (biru)
+    npc5_sprite_config = {
+        'type': 'fallback',
+        'color': (100, 100, 200),  # Biru (default)
+        'size': (48, 48)
+    }
+
     npc5 = NPC(
         name="Pak Dedi",
-        x=150,        # ← UBAH KOORDINAT X
-        y=350,        # ← UBAH KOORDINAT Y
-        sprite_path="images/dosen5.png",
+        x=150,
+        y=350,
+        sprite_config=npc5_sprite_config,
         dialogue_lines=DOSEN_DIALOGUES["umum"]
     )
     npcs.append(npc5)
 
     # ═══════════════════════════════════════════════════════
-    # TIPS: Untuk cari koordinat yang tepat:
-    # 1. Jalankan game dan gerakkan player ke lokasi yg diinginkan
-    # 2. Print koordinat player: print(f"X: {player.x}, Y: {player.y}")
-    # 3. Gunakan koordinat tersebut untuk NPC
+    # 💡 TIPS SPRITE CONFIG:
+    #
+    # 1. Aseprite Export:
+    #    - File → Export → Export Sprite Sheet
+    #    - Output: PNG + JSON
+    #    - JSON Data: Array
+    #    - Item Filename: {frame}
+    #    - Beri tag pada animation (idle, walk, dll)
+    #
+    # 2. Simple Strip:
+    #    - Buat sprite strip horizontal (semua frame berjajar)
+    #    - Semua frame harus sama ukuran
+    #    - Cocok untuk animasi sederhana
+    #
+    # 3. Fallback:
+    #    - Akan otomatis digunakan jika file tidak ditemukan
+    #    - Bisa custom warna dan ukuran
+    #    - Bagus untuk prototyping
     # ═══════════════════════════════════════════════════════
 
     return npcs

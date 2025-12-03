@@ -1,148 +1,187 @@
 """
-Script untuk generate sound effect seperti UNDERTALE
-Sound effect akan bunyi setiap karakter muncul
-
-Requirements: numpy, scipy
-Install dengan: pip install numpy scipy
-
-Note: Untuk convert ke MP3, butuh ffmpeg atau pydub
+Script untuk generate sound effects sederhana
+Jalankan: python generate_sounds.py
 """
 
 import numpy as np
-from scipy.io import wavfile
+import wave
+import struct
 import os
 
-def generate_undertale_blip(filename="sounds/bubble", duration=0.04, frequency=800):
-    """
-    Generate sound effect seperti Undertale - blip pendek dan jelas
-
-    Args:
-        filename: Path output file (tanpa extension)
-        duration: Durasi sound dalam detik (pendek = 0.04)
-        frequency: Frekuensi nada (Hz)
-    """
-
-    # Create sounds directory jika belum ada
-    os.makedirs("sounds", exist_ok=True)
-
-    # Parameters
-    sample_rate = 44100  # Sample rate (Hz)
-
-    # Generate time array
+def generate_beep(filename, frequency=440, duration=0.1, sample_rate=44100):
+    """Generate simple beep sound"""
     t = np.linspace(0, duration, int(sample_rate * duration))
 
-    # Generate SQUARE WAVE (retro/pixel game style seperti Undertale)
-    signal = np.sign(np.sin(2 * np.pi * frequency * t))
+    # Generate sine wave dengan fade out
+    audio = np.sin(2 * np.pi * frequency * t)
 
-    # Add very fast envelope (hampir tidak ada fade, langsung bunyi)
-    envelope = np.ones_like(t)
-    attack_samples = int(0.002 * sample_rate)  # 2ms attack (sangat cepat)
-    release_samples = int(0.015 * sample_rate)  # 15ms release
+    # Apply fade out untuk smooth ending
+    fade_samples = int(sample_rate * 0.02)  # 20ms fade
+    fade = np.linspace(1, 0, fade_samples)
+    audio[-fade_samples:] *= fade
 
-    # Very fast attack
-    if attack_samples < len(envelope):
-        envelope[:attack_samples] = np.linspace(0, 1, attack_samples)
+    # Convert to 16-bit
+    audio = np.int16(audio * 32767 * 0.5)  # 50% volume
 
-    # Quick release
-    if release_samples < len(envelope):
-        envelope[-release_samples:] = np.linspace(1, 0, release_samples)
+    # Save as WAV
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)  # Mono
+        wav_file.setsampwidth(2)  # 16-bit
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio.tobytes())
 
-    # Apply envelope
-    signal = signal * envelope
-
-    # Normalize ke 16-bit integer range
-    signal = np.int16(signal / np.max(np.abs(signal)) * 32767 * 0.6)  # 60% volume
-
-    # Save to WAV
-    wav_file = filename + ".wav"
-    wavfile.write(wav_file, sample_rate, signal)
-    print(f"✅ WAV created: {wav_file}")
-
-    # Try to convert to MP3
-    try:
-        from pydub import AudioSegment
-        sound = AudioSegment.from_wav(wav_file)
-        mp3_file = filename + ".mp3"
-        sound.export(mp3_file, format="mp3")
-        print(f"✅ MP3 created: {mp3_file}")
-        return mp3_file
-    except ImportError:
-        print(f"⚠️  pydub tidak tersedia, hanya WAV yang dibuat")
-        print(f"   Gunakan {wav_file} atau install: pip install pydub")
-        return wav_file
-    except Exception as e:
-        print(f"⚠️  Convert ke MP3 gagal, gunakan WAV")
-        return wav_file
+    print(f"✅ Generated: {filename}")
 
 
-def generate_undertale_style_sounds():
-    """Generate berbagai varian sound seperti karakter Undertale"""
+def generate_bubble(filename, sample_rate=44100):
+    """Generate bubble/text sound (like Undertale)"""
+    duration = 0.05  # Very short
+    t = np.linspace(0, duration, int(sample_rate * duration))
 
-    print("🎮 Generating UNDERTALE-style sound effects...\n")
-    print("="*60)
+    # Combine multiple frequencies for "bubbly" sound
+    audio = (np.sin(2 * np.pi * 800 * t) * 0.3 +
+             np.sin(2 * np.pi * 1200 * t) * 0.2 +
+             np.sin(2 * np.pi * 600 * t) * 0.1)
 
-    # Sound 1: Standard text blip (seperti Sans/Papyrus)
-    print("\n1. STANDARD BLIP (Recommended - Undertale style):")
-    generate_undertale_blip("sounds/bubble", duration=0.04, frequency=800)
+    # Quick envelope
+    envelope = np.exp(-t * 50)
+    audio *= envelope
 
-    # Sound 2: High pitch (seperti Flowey/Toriel)
-    print("\n2. HIGH PITCH (Cute/High voice):")
-    generate_undertale_blip("sounds/bubble_high", duration=0.035, frequency=1200)
+    # Convert to 16-bit
+    audio = np.int16(audio * 32767)
 
-    # Sound 3: Low pitch (seperti Asgore/Deep voice)
-    print("\n3. LOW PITCH (Deep voice):")
-    generate_undertale_blip("sounds/bubble_low", duration=0.045, frequency=500)
+    # Save as WAV
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio.tobytes())
 
-    # Sound 4: Very high (seperti Flowey evil laugh)
-    print("\n4. VERY HIGH (Special characters):")
-    generate_undertale_blip("sounds/bubble_special", duration=0.03, frequency=1500)
-
-    print("\n" + "="*60)
-    print("✨ Sound effects generation complete!")
-    print("\n📝 REKOMENDASI:")
-    print("   Gunakan: sounds/bubble.wav atau sounds/bubble.mp3")
-    print("   Sound ini akan bunyi SETIAP karakter seperti Undertale!")
-    print("\n💡 TIPS:")
-    print("   - bubble.wav = Standard (paling mirip Undertale)")
-    print("   - bubble_high.wav = Untuk NPC dengan suara tinggi")
-    print("   - bubble_low.wav = Untuk NPC dengan suara dalam")
-    print("   - bubble_special.wav = Untuk karakter spesial/robot")
+    print(f"✅ Generated: {filename}")
 
 
-def show_usage_info():
-    """Tampilkan info penggunaan"""
-    print("\n" + "="*60)
-    print("📚 CARA PAKAI:")
-    print("="*60)
-    print("\n1. File sound sudah dibuat di folder sounds/")
-    print("   Game akan otomatis detect file sound")
-    print("\n2. Sound akan bunyi SETIAP karakter (non-spasi)")
-    print("   Mirip seperti Undertale!")
-    print("\n3. Jika ingin ganti sound untuk NPC tertentu:")
-    print("   Edit core/dialogue.py dan buat multiple DialogueBox")
-    print("   dengan sound berbeda")
-    print("\n4. Test di game:")
-    print("   - Dekati NPC")
-    print("   - Tekan E")
-    print("   - Dengarkan sound effect setiap huruf muncul!")
-    print("="*60)
+def generate_correct(filename, sample_rate=44100):
+    """Generate 'correct answer' sound (ascending)"""
+    duration = 0.3
+    t = np.linspace(0, duration, int(sample_rate * duration))
+
+    # Ascending chord
+    freqs = [523, 659, 784]  # C, E, G (major chord)
+    audio = np.zeros_like(t)
+
+    for i, freq in enumerate(freqs):
+        start = int(len(t) * i / len(freqs))
+        end = int(len(t) * (i + 1) / len(freqs))
+        audio[start:end] += np.sin(2 * np.pi * freq * t[start:end])
+
+    # Fade out
+    fade_samples = int(sample_rate * 0.05)
+    fade = np.linspace(1, 0, fade_samples)
+    audio[-fade_samples:] *= fade
+
+    # Normalize and convert
+    audio = audio / np.max(np.abs(audio))
+    audio = np.int16(audio * 32767 * 0.6)
+
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio.tobytes())
+
+    print(f"✅ Generated: {filename}")
+
+
+def generate_wrong(filename, sample_rate=44100):
+    """Generate 'wrong answer' sound (short buzz)"""
+    duration = 0.15
+    t = np.linspace(0, duration, int(sample_rate * duration))
+
+    # Low buzz
+    audio = np.sin(2 * np.pi * 200 * t)
+
+    # Envelope
+    envelope = np.exp(-t * 15)
+    audio *= envelope
+
+    audio = np.int16(audio * 32767 * 0.5)
+
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio.tobytes())
+
+    print(f"✅ Generated: {filename}")
+
+
+def generate_fail(filename, sample_rate=44100):
+    """Generate 'fail' sound (descending dramatic)"""
+    duration = 0.5
+    t = np.linspace(0, duration, int(sample_rate * duration))
+
+    # Descending frequencies (sad trombone style)
+    freq_start = 400
+    freq_end = 200
+    freq = np.linspace(freq_start, freq_end, len(t))
+
+    # Generate sweep
+    phase = 2 * np.pi * np.cumsum(freq) / sample_rate
+    audio = np.sin(phase)
+
+    # Add some "gentar" effect (tremolo)
+    tremolo = 1 + 0.3 * np.sin(2 * np.pi * 8 * t)
+    audio *= tremolo
+
+    # Envelope
+    envelope = np.exp(-t * 3)
+    audio *= envelope
+
+    audio = np.int16(audio * 32767 * 0.6)
+
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio.tobytes())
+
+    print(f"✅ Generated: {filename}")
+
+
+def main():
+    """Generate all sound effects"""
+    # Create sounds directory if not exists
+    os.makedirs("sounds", exist_ok=True)
+
+    print("Generating sound effects...")
+    print()
+
+    # Generate all sounds
+    generate_bubble("sounds/bubble.wav")
+    generate_correct("sounds/correct.wav")
+    generate_wrong("sounds/wrong.wav")
+    generate_fail("sounds/fail.wav")
+
+    print()
+    print("=" * 50)
+    print("✅ All sound effects generated successfully!")
+    print("=" * 50)
+    print()
+    print("Sound files created in 'sounds/' directory:")
+    print("  - bubble.wav   : Text typing sound")
+    print("  - correct.wav  : Correct answer sound")
+    print("  - wrong.wav    : Wrong answer sound")
+    print("  - fail.wav     : Failed quest sound (gentar!)")
+    print()
 
 
 if __name__ == "__main__":
     try:
-        # Generate Undertale-style sounds
-        generate_undertale_style_sounds()
-
-        # Show usage info
-        show_usage_info()
-
-        print("\n🎊 SELESAI! Sound effects siap digunakan!")
-        print("   Jalankan game dan test sound nya! 🎮")
-
-    except ImportError as e:
-        print("❌ Error: Library tidak ditemukan!")
-        print("Install dengan: pip install numpy scipy")
-        print("\nOptional (untuk MP3): pip install pydub")
-        print(f"\nDetail: {e}")
+        main()
+    except ImportError:
+        print("❌ ERROR: NumPy tidak terinstall!")
+        print()
+        print("Install dengan: pip install numpy")
+        print()
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"❌ ERROR: {e}")

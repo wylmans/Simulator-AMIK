@@ -4,204 +4,243 @@ from core.player import Player
 from core.sprite import sprites
 from core.map import TileKinds, Map
 from core.camera import create_screen
+from core.collision import MapCollision
 from core.music import MusicManager
-# Import sistem NPC baru
 from core.npc import NPCManager, create_sample_npcs
-from core.quest import QuestManager
+from core.quest import QuestManager, CodeChallengeBox
 from core.dialog import DialogueBox, EndingChoice
 from core.ending import EndingScreen
 
-# OPTIONAL: Import coordinate helper untuk cari posisi NPC
-# Uncomment baris di bawah jika ingin melihat koordinat player
-# from coordinate_helper import show_coordinates
-
 pygame.init()
 
-#setup
+# Setup
 screen = create_screen(800, 600, "Simulasi AMIK")
 clear_color = (30, 150, 50)
 running = True
+clock = pygame.time.Clock()
+
+# Player
 player = Player("models/image.png", 200, 100)
+
+# Map
 tile_kinds = [
-	TileKinds("dirt", "images/dirt.png", False),
-	TileKinds("grass", "images/grass.png", False),
-	TileKinds("wood", "images/wood.png", False),
-	TileKinds("water", "images/water.png", False),
-	TileKinds("rock", "images/rock.png", False)
+    TileKinds("dirt", "images/dirt.png", False),
+    TileKinds("grass", "images/grass.png", False),
+    TileKinds("wood", "images/wood.png", False),
+    TileKinds("water", "images/water.png", True),
+    TileKinds("rock", "images/rock.png", True)
 ]
 
-map = Map("maps/start.map", tile_kinds, 32)
+map_obj = Map("maps/start.map", tile_kinds, 32)
+map_collision = MapCollision(map_obj)
 
 # Setup musik
 playlist = [
-	"music/Caffeine.mp3",
-	"music/Dorm.mp3"
+    "music/Caffeine.mp3",
+    "music/Dorm.mp3"
 ]
 
-# PENTING: Turunkan volume musik agar sound effect terdengar jelas!
-music_manager = MusicManager(playlist, volume=0.3, fade_duration=2000)  # Volume 30% (turun dari 50%)
+music_manager = MusicManager(playlist, volume=0.3, fade_duration=2000)
 music_manager.play()
 
 # ==================== SISTEM NPC & QUEST ====================
-# Inisialisasi NPC Manager
 npc_manager = NPCManager()
-
-# Tambahkan sample NPCs (SESUAIKAN POSISI DENGAN MAP ANDA!)
 sample_npcs = create_sample_npcs()
 for npc in sample_npcs:
-	npc_manager.add_npc(npc)
+    npc_manager.add_npc(npc)
 
-# Inisialisasi Quest Manager
 quest_manager = QuestManager()
-
-# Inisialisasi Dialogue System
 dialogue_box = DialogueBox()
+code_challenge_box = CodeChallengeBox()
 ending_choice = EndingChoice()
 ending_screen = EndingScreen()
 
 # Game state
-game_state = "playing"  # "playing", "ending_choice", "ending_screen"
+game_state = "playing"
+current_challenge_quest_index = -1
+
+# Helper function (must be defined before the main loop since the loop can call it)
+def start_quest_challenge(quest_index):
+    """Start code challenge untuk quest dengan index tertentu"""
+    global game_state, current_challenge_quest_index
+
+    if game_state == "playing" and not dialogue_box.active:
+        quests = quest_manager.get_quest_list()
+        if 0 <= quest_index < len(quests):
+            quest = quests[quest_index]
+            if quest.code_challenge:
+                code_challenge_box.show(quest.code_challenge)
+                # switch into code_challenge state
+                # note: current_challenge_quest_index tracks which quest we're working on
+                game_state = "code_challenge"
+                current_challenge_quest_index = quest_index
+                print(f"🐛 Debug challenge: Quest {quest_index + 1}")
 
 print("=== KONTROL GAME ===")
-print("Arrow Keys: Gerak")
-print("E atau SPACE: Bicara dengan dosen (saat dekat)")
-print("Q: Selesaikan quest aktif")
-print("N: Next music track")
-print("P: Previous music track")
-print("M: Mute/Unmute music")
+print("WASD: Gerak")
+print("E atau SPACE: Bicara dengan dosen")
+print("1-5: Kerjakan quest (tekan angka sesuai nomor quest)")
+print("N/P: Next/Previous music")
+print("M: Mute/Unmute")
 print("==================")
 
-#game loop
+# Game loop
 while running:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-		elif event.type == pygame.KEYDOWN:
-			Input.keys_down.add(event.key)
+        elif event.type == pygame.KEYDOWN:
+            Input.keys_down.add(event.key)
 
-			# ====== KONTROL BERDASARKAN GAME STATE ======
+            # ====== CODE CHALLENGE STATE ======
+            if game_state == "code_challenge":
+                if event.key == pygame.K_ESCAPE:
+                    code_challenge_box.hide()
+                    game_state = "playing"
+                    current_challenge_quest_index = -1
 
-			if game_state == "ending_choice":
-				# Kontrol untuk ending choice
-				if event.key == pygame.K_UP:
-					ending_choice.move_selection(-1)
-				elif event.key == pygame.K_DOWN:
-					ending_choice.move_selection(1)
-				elif event.key == pygame.K_RETURN:
-					choice = ending_choice.get_choice()
-					ending_choice.hide()
-					if choice == 0:  # Lanjutkan bermain
-						game_state = "playing"
-					else:  # Lihat ending
-						quest_manager.mark_game_completed()
-						ending_screen.show()
-						game_state = "ending_screen"
+                elif event.key == pygame.K_UP:
+                    code_challenge_box.move_selection(-1)
 
-			elif game_state == "ending_screen":
-				# Kontrol untuk ending screen
-				if event.key == pygame.K_ESCAPE:
-					running = False
-				elif event.key == pygame.K_r:
-					# Reset dan main lagi
-					quest_manager.reset_progress()
-					ending_screen.hide()
-					game_state = "playing"
+                elif event.key == pygame.K_DOWN:
+                    code_challenge_box.move_selection(1)
 
-			elif game_state == "playing":
-				# Kontrol musik
-				if event.key == pygame.K_n:
-					music_manager.next_track()
-				elif event.key == pygame.K_p:
-					music_manager.previous_track()
-				elif event.key == pygame.K_m:
-					if music_manager.volume > 0:
-						music_manager.set_volume(0)
-					else:
-						music_manager.set_volume(0.5)
+                elif event.key == pygame.K_RETURN:
+                    code_challenge_box.submit_answer()
 
-				# Interaksi dengan NPC (E atau SPACE)
-				elif event.key in [pygame.K_e, pygame.K_SPACE]:
-					if dialogue_box.active:
-						# Jika dialog aktif dan typing selesai, tutup dialog
-						if dialogue_box.is_typing_complete():
-							dialogue_box.hide()
-						else:
-							# Skip typing animation
-							dialogue_box.skip_typing()
-					else:
-						# Cek apakah ada NPC terdekat
-						nearby_npc = npc_manager.get_nearby_npc(player)
-						if nearby_npc:
-							# Tampilkan dialog dan mulai quest
-							quest_text = nearby_npc.get_random_dialogue()
-							# Pass music_manager agar volume musik bisa diturunkan
-							dialogue_box.show(nearby_npc.name, quest_text, music_manager)
-							quest_manager.start_quest(quest_text, nearby_npc.name)
+            # ====== ENDING CHOICE STATE ======
+            elif game_state == "ending_choice":
+                if event.key == pygame.K_UP:
+                    ending_choice.move_selection(-1)
+                elif event.key == pygame.K_DOWN:
+                    ending_choice.move_selection(1)
+                elif event.key == pygame.K_RETURN:
+                    choice = ending_choice.get_choice()
+                    ending_choice.hide()
+                    if choice == 0:
+                        game_state = "playing"
+                    else:
+                        quest_manager.mark_game_completed()
+                        ending_screen.show()
+                        game_state = "ending_screen"
 
-				# Complete quest (Q) - hanya jika dialog tidak aktif
-				elif event.key == pygame.K_q and not dialogue_box.active:
-					if quest_manager.current_quest:
-						reached_100 = quest_manager.complete_quest()
-						if reached_100:
-							# Tampilkan ending choice
-							game_state = "ending_choice"
-							ending_choice.show()
+            # ====== ENDING SCREEN STATE ======
+            elif game_state == "ending_screen":
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_r:
+                    quest_manager.reset_progress()
+                    ending_screen.hide()
+                    game_state = "playing"
 
-		elif event.type == pygame.KEYUP:
-			Input.keys_down.remove(event.key)
+            # ====== PLAYING STATE ======
+            elif game_state == "playing":
+                # Music controls
+                if event.key == pygame.K_n:
+                    music_manager.next_track()
+                elif event.key == pygame.K_p:
+                    music_manager.previous_track()
+                elif event.key == pygame.K_m:
+                    if music_manager.volume > 0:
+                        music_manager.set_volume(0)
+                    else:
+                        music_manager.set_volume(0.3)
 
-		# Handle musik selesai
-		music_manager.handle_music_end(event)
+                # NPC interaction
+                elif event.key in [pygame.K_e, pygame.K_SPACE]:
+                    if dialogue_box.active:
+                        if dialogue_box.is_typing_complete():
+                            dialogue_box.hide()
+                        else:
+                            dialogue_box.skip_typing()
+                    else:
+                        nearby_npc = npc_manager.get_nearby_npc(player)
+                        if nearby_npc:
+                            if quest_manager.can_accept_quest():
+                                quest_text = nearby_npc.get_random_dialogue()
+                                dialogue_box.show(nearby_npc.name, quest_text, music_manager)
+                                success = quest_manager.start_quest(quest_text, nearby_npc.name)
+                                if success:
+                                    print(f"✅ Quest diterima: {nearby_npc.name}")
+                            else:
+                                warning = f"Kamu sudah punya {quest_manager.MAX_QUESTS} quest! Selesaikan dulu."
+                                dialogue_box.show(nearby_npc.name, warning, music_manager)
 
-	# ====== UPDATE CODE ======
-	if game_state == "playing":
-		# Player hanya bisa bergerak jika dialog TIDAK aktif
-		if not dialogue_box.active:
-			player.update()
-		dialogue_box.update()
-	elif game_state == "ending_screen":
-		ending_screen.update()
+                # Quest challenge hotkeys (1-5)
+                elif event.key == pygame.K_1:
+                    start_quest_challenge(0)
+                elif event.key == pygame.K_2:
+                    start_quest_challenge(1)
+                elif event.key == pygame.K_3:
+                    start_quest_challenge(2)
+                elif event.key == pygame.K_4:
+                    start_quest_challenge(3)
+                elif event.key == pygame.K_5:
+                    start_quest_challenge(4)
 
-	# ====== DRAW CODE ======
-	screen.fill(clear_color)
+        elif event.type == pygame.KEYUP:
+            if event.key in Input.keys_down:
+                Input.keys_down.remove(event.key)
 
-	if game_state == "ending_screen":
-		# Hanya tampilkan ending screen
-		ending_screen.draw(screen, quest_manager.completed_quests)
-	else:
-		# Render game normal
-		map.draw(screen)
+        music_manager.handle_music_end(event)
 
-		# Draw NPCs
-		npc_manager.draw_all(screen, player)
+    # ====== UPDATE ======
+    if game_state == "playing":
+        if not dialogue_box.active:
+            player.update(map_collision)
+        dialogue_box.update()
 
-		# Draw sprites (termasuk player)
-		for s in sprites:
-			s.draw(screen)
+    elif game_state == "code_challenge":
+        result = code_challenge_box.update()
 
-		# Draw UI
-		if game_state == "playing":
-			# Progress bar di TENGAH ATAS (posisi otomatis)
-			quest_manager.draw_progress_bar(screen)
+        if result == "correct":
+            reached_100 = quest_manager.complete_quest(current_challenge_quest_index)
+            code_challenge_box.hide()
+            game_state = "playing"
+            current_challenge_quest_index = -1
 
-			# Current quest di kiri atas (jika ada)
-			quest_manager.draw_current_quest(screen, 10, 60)
+            if reached_100:
+                game_state = "ending_choice"
+                ending_choice.show()
 
-			# Dialogue box
-			dialogue_box.draw(screen)
+        elif result == "failed":
+            quest_manager.fail_quest(current_challenge_quest_index)
+            code_challenge_box.hide()
+            game_state = "playing"
+            current_challenge_quest_index = -1
 
-			# OPTIONAL: Tampilkan koordinat player (untuk cari posisi NPC)
-			# Uncomment baris di bawah untuk melihat koordinat
-			# show_coordinates(screen, player)
+    elif game_state == "ending_screen":
+        ending_screen.update()
 
-		elif game_state == "ending_choice":
-			# Tampilkan ending choice overlay
-			ending_choice.draw(screen)
+    # ====== DRAW ======
+    screen.fill(clear_color)
 
-	pygame.display.flip()
-	pygame.time.delay(8)
+    if game_state == "ending_screen":
+        ending_screen.draw(screen, quest_manager.completed_quests)
+    else:
+        map_obj.draw(screen)
+        npc_manager.draw_all(screen, player)
 
-# Stop musik dengan fade out saat keluar
+        for s in sprites:
+            s.draw(screen)
+
+        if game_state in ["playing", "code_challenge"]:
+            quest_manager.draw_progress_bar(screen)
+            quest_manager.draw_quest_list(screen, 10, 60)
+            dialogue_box.draw(screen)
+
+            if game_state == "code_challenge":
+                code_challenge_box.draw(screen)
+
+        elif game_state == "ending_choice":
+            ending_choice.draw(screen)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+# Helper function
+
+
 music_manager.stop()
 pygame.quit()
