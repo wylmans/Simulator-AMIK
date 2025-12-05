@@ -37,9 +37,9 @@ class AnimatedSprite:
         if os.path.exists(spritesheet_path) and os.path.exists(json_path):
             try:
                 self._load_aseprite_sprite(spritesheet_path, json_path)
-                print(f"✅ Loaded animated sprite: {os.path.basename(spritesheet_path)}")
+                print(f"[OK] Loaded animated sprite: {os.path.basename(spritesheet_path)}")
             except Exception as e:
-                print(f"⚠️  Failed to load sprite, using fallback: {e}")
+                print(f"[WARNING] Failed to load sprite, using fallback: {e}")
                 self._create_fallback_sprite()
         else:
             self._create_fallback_sprite()
@@ -65,13 +65,40 @@ class AnimatedSprite:
                 to_frame = tag['to']
 
                 frames = []
-                for i in range(from_frame, to_frame + 1):
-                    frame_key = list(frames_data.keys())[i]
-                    frame_info = frames_data[frame_key]
-                    frames.append({
-                        'rect': frame_info['frame'],
-                        'duration': frame_info['duration']
-                    })
+                frame_keys = list(frames_data.keys())
+
+                # Handle case where we only have one frame entry but multiple tags
+                # (Aseprite grid-based export)
+                if len(frame_keys) == 1 and len(frames_data) == 1:
+                    # Get frame dimensions
+                    single_frame = frames_data[frame_keys[0]]
+                    total_width = single_frame['frame']['w']
+                    frame_height = single_frame['frame']['h']
+                    num_frames = to_frame - from_frame + 1
+                    frame_width = total_width // num_frames
+
+                    # Generate frame rects from the grid
+                    for i in range(from_frame, to_frame + 1):
+                        frame_x = (i - from_frame) * frame_width
+                        frames.append({
+                            'rect': {
+                                'x': frame_x,
+                                'y': 0,
+                                'w': frame_width,
+                                'h': frame_height
+                            },
+                            'duration': single_frame['duration']
+                        })
+                else:
+                    # Standard multi-frame export
+                    for i in range(from_frame, to_frame + 1):
+                        if i < len(frame_keys):
+                            frame_key = frame_keys[i]
+                            frame_info = frames_data[frame_key]
+                            frames.append({
+                                'rect': frame_info['frame'],
+                                'duration': frame_info['duration']
+                            })
 
                 self.animations[anim_name] = frames
         else:
@@ -104,7 +131,7 @@ class AnimatedSprite:
         }
 
         self.using_fallback = True
-        print(f"📦 Using fallback sprite (colored box)")
+        print(f"[FALLBACK] Using fallback sprite (colored box)")
 
     def play_animation(self, animation_name):
         """Ganti animasi"""
@@ -215,7 +242,7 @@ class SimpleAnimatedSprite:
         self.spritesheet.fill(color)
         self.num_frames = 1
         self.using_fallback = True
-        print(f"📦 Using fallback sprite (colored box)")
+        print(f"[FALLBACK] Using fallback sprite (colored box)")
 
     def update(self, dt=16):
         """Update animation"""

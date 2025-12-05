@@ -7,7 +7,7 @@ class Quest:
     def __init__(self, description, giver_name, code_challenge=None):
         self.description = description
         self.giver_name = giver_name
-        self.code_challenge = code_challenge  # Dictionary dengan info challenge
+        self.code_challenge = code_challenge
         self.completed = False
 
     def __str__(self):
@@ -17,7 +17,6 @@ class Quest:
 class CodeChallenge:
     """Mini-game untuk menyelesaikan quest dengan mencari bug dalam code"""
 
-    # Database soal-soal debugging
     CHALLENGES = [
         {
             "code": [
@@ -151,6 +150,47 @@ class CodeChallenge:
             ],
             "correct": 0,
             "explanation": "String di Python immutable (tidak bisa diubah)!"
+        },
+        {
+            "code": [
+                "def proses_data(data):",
+                "    for i in range(len(data)):",
+                "        data[i] = data[i] * 2",
+                "    print('Selesai')",
+                "    # Bug: tidak return data!",
+                "",
+                "angka = [1, 2, 3]",
+                "hasil = proses_data(angka)",
+                "print(hasil)  # None"
+            ],
+            "question": "Apa yang salah?",
+            "options": [
+                "A. Fungsi memodifikasi tapi tidak return data",
+                "B. range() salah",
+                "C. data[i] tidak boleh diubah",
+                "D. print() seharusnya di luar fungsi"
+            ],
+            "correct": 0,
+            "explanation": "Fungsi harus return data setelah modifikasi!"
+        },
+        {
+            "code": [
+                "def cek_genap(n):",
+                "    if n % 2 == 0:",
+                "        return True",
+                "    # Bug: tidak ada else return False!",
+                "",
+                "print(cek_genap(3))  # None"
+            ],
+            "question": "Kenapa hasilnya None?",
+            "options": [
+                "A. Tidak ada return untuk kasus False",
+                "B. n % 2 salah sintaks",
+                "C. == seharusnya =",
+                "D. print() salah posisi"
+            ],
+            "correct": 0,
+            "explanation": "Fungsi butuh return untuk semua kondisi!"
         }
     ]
 
@@ -161,7 +201,7 @@ class CodeChallenge:
 
 
 class CodeChallengeBox:
-    """UI untuk menampilkan dan menyelesaikan code challenge"""
+    """UI untuk menampilkan dan menyelesaikan code challenge dengan scrolling"""
 
     def __init__(self):
         self.active = False
@@ -169,9 +209,13 @@ class CodeChallengeBox:
         self.selected_option = 0
         self.wrong_attempts = 0
         self.max_attempts = 3
-        self.result = None  # "correct", "wrong", atau None
+        self.result = None
         self.show_result = False
         self.result_timer = 0
+
+        # Scrolling untuk code box
+        self.scroll_offset = 0
+        self.max_visible_lines = 5  # Maksimal 5 baris code terlihat
 
         # Fonts
         self.font_title = pygame.font.Font(None, 28)
@@ -192,19 +236,22 @@ class CodeChallengeBox:
             self.correct_sound = pygame.mixer.Sound("sounds/correct.wav")
             self.correct_sound.set_volume(0.6)
         except:
-            print("⚠️  sounds/correct.wav tidak ditemukan")
+            print("[WARNING] sounds/correct.wav tidak ditemukan")
+            pass
 
         try:
             self.wrong_sound = pygame.mixer.Sound("sounds/wrong.wav")
             self.wrong_sound.set_volume(0.6)
         except:
-            print("⚠️  sounds/wrong.wav tidak ditemukan")
+            print("[WARNING] sounds/wrong.wav tidak ditemukan")
+            pass
 
         try:
             self.fail_sound = pygame.mixer.Sound("sounds/fail.wav")
             self.fail_sound.set_volume(0.7)
         except:
-            print("⚠️  sounds/fail.wav tidak ditemukan")
+            print("[WARNING] sounds/fail.wav tidak ditemukan")
+            pass
 
     def show(self, challenge):
         """Tampilkan code challenge"""
@@ -215,6 +262,7 @@ class CodeChallengeBox:
         self.result = None
         self.show_result = False
         self.result_timer = 0
+        self.scroll_offset = 0  # Reset scroll
 
     def hide(self):
         """Sembunyikan challenge"""
@@ -222,12 +270,23 @@ class CodeChallengeBox:
         self.challenge = None
         self.result = None
         self.show_result = False
+        self.scroll_offset = 0
 
     def move_selection(self, direction):
         """Gerakkan selection"""
         if not self.show_result:
             num_options = len(self.challenge["options"])
             self.selected_option = (self.selected_option + direction) % num_options
+
+    def scroll_code(self, direction):
+        """Scroll code box"""
+        if self.challenge:
+            total_lines = len(self.challenge["code"])
+            if total_lines > self.max_visible_lines:
+                self.scroll_offset += direction
+                # Clamp scroll offset
+                max_scroll = total_lines - self.max_visible_lines
+                self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
 
     def submit_answer(self):
         """Submit jawaban yang dipilih"""
@@ -237,30 +296,26 @@ class CodeChallengeBox:
         correct_index = self.challenge["correct"]
 
         if self.selected_option == correct_index:
-            # Jawaban benar!
             self.result = "correct"
             self.show_result = True
-            self.result_timer = 120  # Show result for 2 seconds (120 frames)
+            self.result_timer = 120
             if self.correct_sound:
                 self.correct_sound.play()
             return "correct"
         else:
-            # Jawaban salah
             self.wrong_attempts += 1
 
             if self.wrong_attempts >= self.max_attempts:
-                # Gagal total setelah 3x salah
                 self.result = "failed"
                 self.show_result = True
-                self.result_timer = 180  # 3 seconds
+                self.result_timer = 180
                 if self.fail_sound:
                     self.fail_sound.play()
                 return "failed"
             else:
-                # Masih ada kesempatan
                 self.result = "wrong"
                 self.show_result = True
-                self.result_timer = 60  # 1 second
+                self.result_timer = 60
                 if self.wrong_sound:
                     self.wrong_sound.play()
                 return "wrong"
@@ -271,10 +326,8 @@ class CodeChallengeBox:
             self.result_timer -= 1
             if self.result_timer <= 0:
                 if self.result in ["correct", "failed"]:
-                    # Auto close setelah correct atau failed
-                    return self.result  # Signal untuk close
+                    return self.result
                 else:
-                    # Wrong attempt, reset untuk coba lagi
                     self.show_result = False
                     self.result = None
         return None
@@ -294,7 +347,7 @@ class CodeChallengeBox:
 
         # Main box
         box_width = 700
-        box_height = 500
+        box_height = 520  # Increased height
         box_x = (screen_width - box_width) // 2
         box_y = (screen_height - box_height) // 2
 
@@ -319,21 +372,72 @@ class CodeChallengeBox:
         screen.blit(attempts_text, (box_x + 20, y_offset))
         y_offset += 30
 
-        # Code box
-        code_box_height = 120
+        # Code box with scrolling
+        code_box_height = 150  # Fixed height for scrollable area
+        code_box_width = box_width - 40
+        code_box_x = box_x + 20
+        code_box_y = y_offset
+
+        # Draw code box background
         pygame.draw.rect(screen, (20, 20, 30),
-                        (box_x + 20, y_offset, box_width - 40, code_box_height))
+                        (code_box_x, code_box_y, code_box_width, code_box_height))
         pygame.draw.rect(screen, (80, 80, 120),
-                        (box_x + 20, y_offset, box_width - 40, code_box_height), 2)
+                        (code_box_x, code_box_y, code_box_width, code_box_height), 2)
 
-        # Draw code lines
-        for i, line in enumerate(self.challenge["code"]):
+        # Create clipping rect for code (scrollable area)
+        clip_rect = pygame.Rect(code_box_x + 5, code_box_y + 5,
+                                code_box_width - 10, code_box_height - 10)
+        screen.set_clip(clip_rect)
+
+        # Draw code lines with scroll offset
+        total_lines = len(self.challenge["code"])
+        line_height = 25
+        visible_start = self.scroll_offset
+        visible_end = min(visible_start + self.max_visible_lines, total_lines)
+
+        for i in range(visible_start, visible_end):
+            line = self.challenge["code"][i]
+            relative_y = (i - visible_start) * line_height
+
+            # Line number
             line_num = self.font_code.render(f"{i+1}", True, (100, 100, 100))
-            code_line = self.font_code.render(line, True, (200, 255, 200))
-            screen.blit(line_num, (box_x + 30, y_offset + 10 + i * 25))
-            screen.blit(code_line, (box_x + 60, y_offset + 10 + i * 25))
+            screen.blit(line_num, (code_box_x + 10, code_box_y + 10 + relative_y))
 
-        y_offset += code_box_height + 20
+            # Code line
+            code_line = self.font_code.render(line, True, (200, 255, 200))
+            screen.blit(code_line, (code_box_x + 40, code_box_y + 10 + relative_y))
+
+        # Remove clipping
+        screen.set_clip(None)
+
+        # Scroll indicators
+        if total_lines > self.max_visible_lines:
+            # Scrollbar background
+            scrollbar_x = code_box_x + code_box_width - 15
+            scrollbar_y = code_box_y + 5
+            scrollbar_height = code_box_height - 10
+            pygame.draw.rect(screen, (50, 50, 70),
+                           (scrollbar_x, scrollbar_y, 10, scrollbar_height))
+
+            # Scrollbar thumb
+            thumb_height = max(20, int(scrollbar_height * self.max_visible_lines / total_lines))
+            thumb_y = scrollbar_y + int((scrollbar_height - thumb_height) *
+                                       self.scroll_offset / (total_lines - self.max_visible_lines))
+            pygame.draw.rect(screen, (100, 150, 255),
+                           (scrollbar_x, thumb_y, 10, thumb_height))
+
+            # Scroll hint
+            if self.scroll_offset > 0:
+                hint_up = self.font_small.render("▲ Ada kode di atas", True, (255, 200, 100))
+                screen.blit(hint_up, (code_box_x + code_box_width - hint_up.get_width() - 20,
+                                     code_box_y - 20))
+
+            if self.scroll_offset < total_lines - self.max_visible_lines:
+                hint_down = self.font_small.render("▼ Ada kode di bawah", True, (255, 200, 100))
+                screen.blit(hint_down, (code_box_x + code_box_width - hint_down.get_width() - 20,
+                                       code_box_y + code_box_height + 5))
+
+        y_offset += code_box_height + 25
 
         # Question
         question = self.font_option.render(self.challenge["question"], True, (255, 255, 255))
@@ -360,16 +464,20 @@ class CodeChallengeBox:
             self._draw_result_overlay(screen, box_x, box_y, box_width, box_height)
         else:
             # Instructions
+            scroll_hint = ""
+            if self.challenge and len(self.challenge["code"]) > self.max_visible_lines:
+                scroll_hint = "PgUp/PgDn: Scroll Code  |  "
+
             instruction = self.font_small.render(
-                "↑/↓: Pilih  |  ENTER: Submit  |  ESC: Batalkan",
+                f"{scroll_hint}↑/↓: Pilih  |  ENTER: Submit  |  ESC: Batal",
                 True, (150, 150, 150)
             )
             screen.blit(instruction,
                        (box_x + box_width // 2 - instruction.get_width() // 2,
-                        box_y + box_height - 25))
+                        box_y + box_height - 20))
 
     def _draw_result_overlay(self, screen, box_x, box_y, box_width, box_height):
-        """Draw result overlay (correct/wrong/failed)"""
+        """Draw result overlay"""
         overlay_height = 150
         overlay_y = box_y + box_height // 2 - overlay_height // 2
 
@@ -385,29 +493,25 @@ class CodeChallengeBox:
             title = "❌ GAGAL!"
             message = "Kamu gagal 3x! Tugas dibatalkan."
             sub_message = "-2 Progress sebagai hukuman!"
-        else:  # wrong
+        else:
             color = (150, 100, 50)
             border_color = (255, 200, 100)
             title = "❌ SALAH!"
             message = f"Coba lagi! Kesempatan: {self.max_attempts - self.wrong_attempts}"
             sub_message = ""
 
-        # Draw overlay box
         pygame.draw.rect(screen, color, (box_x + 50, overlay_y, box_width - 100, overlay_height))
         pygame.draw.rect(screen, border_color,
                         (box_x + 50, overlay_y, box_width - 100, overlay_height), 4)
 
-        # Title
         title_surf = self.font_title.render(title, True, (255, 255, 255))
         screen.blit(title_surf,
                    (box_x + box_width // 2 - title_surf.get_width() // 2, overlay_y + 20))
 
-        # Message (word wrap)
         self._draw_wrapped_text(screen, message,
                                box_x + 70, overlay_y + 60,
                                box_width - 140, self.font_small, (255, 255, 255))
 
-        # Sub message
         if sub_message:
             sub_surf = self.font_small.render(sub_message, True, (255, 255, 100))
             screen.blit(sub_surf,
@@ -440,10 +544,10 @@ class CodeChallengeBox:
 class QuestManager:
     """Manager untuk handle multiple active quests"""
 
-    MAX_QUESTS = 5  # Maksimal 5 quest aktif
+    MAX_QUESTS = 5
 
     def __init__(self):
-        self.active_quests = []  # List of Quest objects
+        self.active_quests = []
         self.completed_quests = []
         self.total_progress = 0
         self.game_completed = False
@@ -457,38 +561,33 @@ class QuestManager:
     def start_quest(self, description, giver_name):
         """Tambah quest baru"""
         if not self.can_accept_quest():
-            return False  # Quest penuh
+            return False
 
-        # Create quest dengan code challenge
         challenge = CodeChallenge.get_random_challenge()
         quest = Quest(description, giver_name, challenge)
         self.active_quests.append(quest)
         return True
 
     def complete_quest(self, quest_index):
-        """Selesaikan quest tertentu (dipanggil setelah challenge berhasil)"""
+        """Selesaikan quest tertentu"""
         if 0 <= quest_index < len(self.active_quests):
             quest = self.active_quests.pop(quest_index)
             self.completed_quests.append(quest)
             self.total_progress += 1
 
-            # Check if reached 100
             if self.total_progress >= 100:
                 self.game_completed = True
                 return True
         return False
 
     def fail_quest(self, quest_index):
-        """Gagal menyelesaikan quest (pengurangan progress)"""
+        """Gagal menyelesaikan quest"""
         if 0 <= quest_index < len(self.active_quests):
-            # Remove quest
             self.active_quests.pop(quest_index)
-
-            # Kurangi progress sebanyak 2
             self.total_progress = max(0, self.total_progress - 2)
 
     def get_quest_list(self):
-        """Return list quest aktif untuk display"""
+        """Return list quest aktif"""
         return self.active_quests
 
     def mark_game_completed(self):
@@ -496,7 +595,7 @@ class QuestManager:
         self.game_completed = True
 
     def reset_progress(self):
-        """Reset semua progress (untuk main ulang)"""
+        """Reset semua progress"""
         self.active_quests = []
         self.completed_quests = []
         self.total_progress = 0
@@ -510,26 +609,20 @@ class QuestManager:
         bar_x = (screen_width - bar_width) // 2
         bar_y = 10
 
-        # Background
         pygame.draw.rect(screen, (50, 50, 50), (bar_x, bar_y, bar_width, bar_height))
 
-        # Progress fill
         fill_width = int((self.total_progress / 100) * bar_width)
 
-        # Color gradient based on progress
         if self.total_progress < 30:
-            color = (255, 100, 100)  # Red
+            color = (255, 100, 100)
         elif self.total_progress < 70:
-            color = (255, 200, 100)  # Orange
+            color = (255, 200, 100)
         else:
-            color = (100, 255, 100)  # Green
+            color = (100, 255, 100)
 
         pygame.draw.rect(screen, color, (bar_x, bar_y, fill_width, bar_height))
-
-        # Border
         pygame.draw.rect(screen, (255, 255, 255), (bar_x, bar_y, bar_width, bar_height), 2)
 
-        # Text
         progress_text = f"{self.total_progress} / 100 Tugas"
         text_surface = self.font.render(progress_text, True, (255, 255, 255))
         screen.blit(text_surface,
@@ -543,35 +636,28 @@ class QuestManager:
             screen.blit(no_quest, (x, y))
             return
 
-        # Title
         title = self.font.render(f"Quest Aktif ({len(self.active_quests)}/{self.MAX_QUESTS}):",
                                 True, (255, 255, 100))
         screen.blit(title, (x, y))
         y += 30
 
-        # List quests
         for i, quest in enumerate(self.active_quests):
-            # Quest box background
             box_width = 300
             box_height = 50
             pygame.draw.rect(screen, (40, 40, 60), (x, y, box_width, box_height))
             pygame.draw.rect(screen, (100, 100, 150), (x, y, box_width, box_height), 2)
 
-            # Quest number
             num_text = self.font.render(f"{i+1}.", True, (200, 200, 200))
             screen.blit(num_text, (x + 10, y + 5))
 
-            # Giver name
             giver = self.font_small.render(quest.giver_name, True, (100, 200, 255))
             screen.blit(giver, (x + 10, y + 28))
 
-            # Short description
             desc = quest.description[:25] + "..." if len(quest.description) > 25 else quest.description
             desc_surf = self.font_small.render(desc, True, (200, 200, 200))
             screen.blit(desc_surf, (x + 40, y + 8))
 
-            # Hint
-            hint = self.font_small.render(f"[Tekan {i+1}]", True, (150, 150, 150))
+            hint = self.font_small.render(f"[{i+1}]", True, (150, 150, 150))
             screen.blit(hint, (x + box_width - hint.get_width() - 10, y + 28))
 
             y += box_height + 10

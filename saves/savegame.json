@@ -1,0 +1,16 @@
+{
+  "save_date": "2025-12-05 19:39:46",
+  "version": "1.0",
+  "player": {
+    "name": "Azhar",
+    "x": 565.3485327403786,
+    "y": 218.8963637649587,
+    "facing_direction": "right"
+  },
+  "quest": {
+    "total_progress": 0,
+    "active_quests": [],
+    "completed_count": 0
+  },
+  "game_state": "playing"
+}

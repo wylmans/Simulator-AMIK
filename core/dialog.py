@@ -35,7 +35,7 @@ class DialogueBox:
                 self.text_sound = pygame.mixer.Sound(sound_path)
                 # PENTING: Volume sound effect lebih keras dari music!
                 self.text_sound.set_volume(0.8)  # 80% volume (lebih keras!)
-                print(f"✅ Sound loaded: {sound_path}")
+                print(f"[OK] Sound loaded: {sound_path}")
                 print(f"   Volume: 80% (music background akan diturunkan)")
                 sound_loaded = True
                 break
@@ -43,7 +43,7 @@ class DialogueBox:
                 continue
 
         if not sound_loaded:
-            print("⚠️  WARNING: Tidak ada sound effect ditemukan!")
+            print("[WARNING] WARNING: Tidak ada sound effect ditemukan!")
             print("   Letakkan file sound di salah satu lokasi:")
             for path in sound_paths:
                 print(f"   - {path}")
