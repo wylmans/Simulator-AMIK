@@ -97,59 +97,10 @@ class Button:
         return False
 
 
-class SettingsButton:
-    """Hamburger menu icon button for in-game menu"""
-
-    def __init__(self, x, y, size=40):
-        self.rect = pygame.Rect(x, y, size, size)
-        self.size = size
-        self.is_hovered = False
-
-    def update(self, mouse_pos):
-        """Update hover state"""
-        self.is_hovered = self.rect.collidepoint(mouse_pos)
-
-    def draw(self, screen):
-        """Draw hamburger menu icon"""
-        # Draw background circle
-        color = (150, 150, 255) if self.is_hovered else (100, 100, 200)
-        pygame.draw.circle(screen, color, self.rect.center, self.size // 2)
-        pygame.draw.circle(screen, (255, 255, 255), self.rect.center, self.size // 2, 2)
-
-        # Draw hamburger menu (3 horizontal lines)
-        center_x, center_y = self.rect.center
-        line_width = self.size // 2
-        line_height = 2
-        line_spacing = self.size // 6
-
-        # Top line
-        pygame.draw.line(screen, (255, 255, 255),
-                        (center_x - line_width // 2, center_y - line_spacing),
-                        (center_x + line_width // 2, center_y - line_spacing), line_height)
-
-        # Middle line
-        pygame.draw.line(screen, (255, 255, 255),
-                        (center_x - line_width // 2, center_y),
-                        (center_x + line_width // 2, center_y), line_height)
-
-        # Bottom line
-        pygame.draw.line(screen, (255, 255, 255),
-                        (center_x - line_width // 2, center_y + line_spacing),
-                        (center_x + line_width // 2, center_y + line_spacing), line_height)
-
-    def is_clicked(self, event):
-        """Check if button was clicked"""
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.is_hovered:
-                return True
-        return False
-
-
 class Slider:
     """Slider untuk volume control"""
 
     def __init__(self, x, y, width, label, min_val=0, max_val=100, initial_val=50):
-        self.rect = pygame.Rect(x, y, width, 20)
         self.x = x
         self.y = y
         self.width = width
@@ -193,10 +144,6 @@ class Slider:
 
     def draw(self, screen):
         """Draw slider"""
-        # Update position from rect
-        self.x = self.rect.x
-        self.y = self.rect.y
-
         # Label
         label_surface = self.font.render(self.label, True, (255, 255, 255))
         screen.blit(label_surface, (self.x, self.y - 25))
@@ -228,6 +175,10 @@ class MainMenu:
         self.screen_width = screen_width
         self.screen_height = screen_height
 
+        # Get available resolutions
+        self.resolutions = self._get_available_resolutions()
+        self.current_resolution_index = 0
+
         # Menu states
         self.state = "main"  # "main", "name_input", "settings"
 
@@ -242,8 +193,9 @@ class MainMenu:
         start_y = screen_height // 2
 
         self.start_button = Button(button_x, start_y, button_width, button_height, "Start Game")
-        self.settings_button = Button(button_x, start_y + 80, button_width, button_height, "Settings")
-        self.exit_button = Button(button_x, start_y + 160, button_width, button_height, "Exit")
+        self.load_button = Button(button_x, start_y + 80, button_width, button_height, "Load Game")
+        self.settings_button = Button(button_x, start_y + 160, button_width, button_height, "Settings")
+        self.exit_button = Button(button_x, start_y + 240, button_width, button_height, "Exit")
 
         # Name input
         input_width = 400
@@ -255,20 +207,97 @@ class MainMenu:
         self.name_submit_button = Button(input_x, input_y + 80, input_width, 50, "Continue")
 
         # Settings
-        self.music_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 50,
+        self.music_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 120,
                                    400, "Music Volume", initial_val=30)
-        self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 + 50,
+        self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 40,
                                    400, "Sound Effects", initial_val=60)
 
-        self.fullscreen_toggle = Button(screen_width // 2 - 150, screen_height // 2 + 130,
+        # Resolution selector
+        self.resolution_left = Button(screen_width // 2 - 200, screen_height // 2 + 50,
+                                     60, 40, "<")
+        self.resolution_right = Button(screen_width // 2 + 140, screen_height // 2 + 50,
+                                      60, 40, ">")
+
+        self.fullscreen_toggle = Button(screen_width // 2 - 150, screen_height // 2 + 110,
                                        300, 50, "Fullscreen: OFF")
-        self.back_button = Button(screen_width // 2 - 150, screen_height // 2 + 200,
-                                 300, 50, "Back")
+
+        # Apply and Back buttons
+        self.apply_button = Button(screen_width // 2 - 250, screen_height // 2 + 180,
+                                  200, 50, "Apply", color=(50, 150, 50))
+        self.back_button = Button(screen_width // 2 + 50, screen_height // 2 + 180,
+                                 200, 50, "Back")
 
         self.is_fullscreen = False
 
         # Player name
         self.player_name = ""
+
+        # Settings change notification
+        self.settings_changed = False
+
+        # Ensure layout is consistent (useful when resolution changes)
+        self.update_layout(self.screen_width, self.screen_height)
+    def _get_available_resolutions(self):
+        """Get list of available screen resolutions"""
+        try:
+            modes = pygame.display.list_modes()
+            if modes == -1:  # All resolutions supported
+                return [(1920, 1080), (1600, 900), (1366, 768), (1280, 720), (1080, 720)]
+            else:
+                # Filter to common aspect ratios
+                filtered = []
+                for mode in modes:
+                    if mode[0] >= 800 and mode[1] >= 600:  # Minimum size
+                        filtered.append(mode)
+                return filtered[:10] if filtered else [(1080, 720)]
+        except:
+            return [(1920, 1080), (1600, 900), (1366, 768), (1280, 720), (1080, 720)]
+
+    def update_layout(self, screen_width, screen_height):
+        """Recalculate and apply layout positions based on provided screen size."""
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+
+        # Buttons
+        button_width = 300
+        button_height = 60
+        button_x = (screen_width - button_width) // 2
+        start_y = screen_height // 2
+
+        self.start_button.rect = pygame.Rect(button_x, start_y, button_width, button_height)
+        self.load_button.rect = pygame.Rect(button_x, start_y + 80, button_width, button_height)
+        self.settings_button.rect = pygame.Rect(button_x, start_y + 160, button_width, button_height)
+        self.exit_button.rect = pygame.Rect(button_x, start_y + 240, button_width, button_height)
+
+        # Name input
+        input_width = 400
+        input_height = 50
+        input_x = (screen_width - input_width) // 2
+        input_y = screen_height // 2
+        self.name_input.rect = pygame.Rect(input_x, input_y, input_width, input_height)
+        self.name_submit_button.rect = pygame.Rect(input_x, input_y + 80, input_width, 50)
+
+        # Sliders
+        self.music_slider.x = screen_width // 2 - 200
+        self.music_slider.y = screen_height // 2 - 120
+        self.sound_slider.x = screen_width // 2 - 200
+        self.sound_slider.y = screen_height // 2 - 40
+
+        # Resolution buttons
+        self.resolution_left.rect = pygame.Rect(screen_width // 2 - 200, screen_height // 2 + 50, 60, 40)
+        self.resolution_right.rect = pygame.Rect(screen_width // 2 + 140, screen_height // 2 + 50, 60, 40)
+
+        # Fullscreen toggle and apply/back
+        self.fullscreen_toggle.rect = pygame.Rect(screen_width // 2 - 150, screen_height // 2 + 110, 300, 50)
+        self.apply_button.rect = pygame.Rect(screen_width // 2 - 250, screen_height // 2 + 180, 200, 50)
+        self.back_button.rect = pygame.Rect(screen_width // 2 + 50, screen_height // 2 + 180, 200, 50)
+
+    def get_resolution_text(self):
+        """Get current resolution as text"""
+        if 0 <= self.current_resolution_index < len(self.resolutions):
+            w, h = self.resolutions[self.current_resolution_index]
+            return f"{w} x {h}"
+        return "1080 x 720"
 
     def handle_event(self, event):
         """Handle menu events"""
@@ -276,6 +305,7 @@ class MainMenu:
 
         if self.state == "main":
             self.start_button.update(mouse_pos)
+            self.load_button.update(mouse_pos)
             self.settings_button.update(mouse_pos)
             self.exit_button.update(mouse_pos)
 
@@ -284,8 +314,12 @@ class MainMenu:
                 self.name_input.active = True
                 return None
 
+            if self.load_button.is_clicked(event):
+                return "load_game"
+
             if self.settings_button.is_clicked(event):
                 self.state = "settings"
+                self.settings_changed = False
                 return None
 
             if self.exit_button.is_clicked(event):
@@ -304,14 +338,35 @@ class MainMenu:
             self.music_slider.handle_event(event)
             self.sound_slider.handle_event(event)
             self.fullscreen_toggle.update(mouse_pos)
+            self.resolution_left.update(mouse_pos)
+            self.resolution_right.update(mouse_pos)
+            self.apply_button.update(mouse_pos)
             self.back_button.update(mouse_pos)
+
+            # Mark as changed if sliders moved
+            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging):
+                self.settings_changed = True
 
             if self.fullscreen_toggle.is_clicked(event):
                 self.is_fullscreen = not self.is_fullscreen
                 self.fullscreen_toggle.text = f"Fullscreen: {'ON' if self.is_fullscreen else 'OFF'}"
-                return "toggle_fullscreen"
+                self.settings_changed = True
+
+            # Resolution navigation
+            if self.resolution_left.is_clicked(event):
+                self.current_resolution_index = (self.current_resolution_index - 1) % len(self.resolutions)
+                self.settings_changed = True
+
+            if self.resolution_right.is_clicked(event):
+                self.current_resolution_index = (self.current_resolution_index + 1) % len(self.resolutions)
+                self.settings_changed = True
+
+            if self.apply_button.is_clicked(event):
+                self.settings_changed = False
+                return "apply_settings"
 
             if self.back_button.is_clicked(event):
+                self.settings_changed = False
                 self.state = "main"
 
         return None
@@ -323,112 +378,97 @@ class MainMenu:
 
     def draw(self, screen):
         """Draw menu"""
-        # Get actual screen dimensions
-        actual_width = screen.get_width()
-        actual_height = screen.get_height()
-
         # Background gradient
-        for y in range(actual_height):
-            color_value = int(30 + (y / actual_height) * 50)
+        for y in range(screen.get_height()):
+            color_value = int(30 + (y / screen.get_height()) * 50)
             pygame.draw.line(screen, (color_value, color_value // 2, color_value),
-                           (0, y), (actual_width, y))
+                           (0, y), (screen.get_width(), y))
 
         if self.state == "main":
-            self._draw_main_menu(screen, actual_width, actual_height)
+            self._draw_main_menu(screen)
         elif self.state == "name_input":
-            self._draw_name_input(screen, actual_width, actual_height)
+            self._draw_name_input(screen)
         elif self.state == "settings":
-            self._draw_settings(screen, actual_width, actual_height)
+            self._draw_settings(screen)
 
-    def _draw_main_menu(self, screen, width, height):
+    def _draw_main_menu(self, screen):
         """Draw main menu screen"""
         # Title
         title = self.title_font.render("Simulasi AMIK", True, (255, 255, 100))
-        title_rect = title.get_rect(center=(width // 2, 150))
+        title_rect = title.get_rect(center=(self.screen_width // 2, 150))
         screen.blit(title, title_rect)
 
         # Subtitle
         subtitle = self.subtitle_font.render("Kehidupan Mahasiswa Informatika", True, (200, 200, 200))
-        subtitle_rect = subtitle.get_rect(center=(width // 2, 200))
+        subtitle_rect = subtitle.get_rect(center=(self.screen_width // 2, 200))
         screen.blit(subtitle, subtitle_rect)
 
-        # Buttons - recalculate positions for current screen size
-        button_width = 300
-        button_height = 60
-        button_x = (width - button_width) // 2
-        start_y = height // 2
-
-        # Update button positions
-        self.start_button.rect.x = button_x
-        self.start_button.rect.y = start_y
-        self.settings_button.rect.x = button_x
-        self.settings_button.rect.y = start_y + 80
-        self.exit_button.rect.x = button_x
-        self.exit_button.rect.y = start_y + 160
-
+        # Buttons
         self.start_button.draw(screen)
+        self.load_button.draw(screen)
         self.settings_button.draw(screen)
         self.exit_button.draw(screen)
 
         # Version
         version = self.subtitle_font.render("v1.0", True, (100, 100, 100))
-        screen.blit(version, (10, height - 30))
+        screen.blit(version, (10, self.screen_height - 30))
 
-    def _draw_name_input(self, screen, width, height):
+    def _draw_name_input(self, screen):
         """Draw name input screen"""
         # Title
         title = self.title_font.render("Masukkan Nama", True, (255, 255, 100))
-        title_rect = title.get_rect(center=(width // 2, 150))
+        title_rect = title.get_rect(center=(self.screen_width // 2, 150))
         screen.blit(title, title_rect)
 
         # Instruction
         instruction = self.subtitle_font.render("Siapa nama kamu?", True, (200, 200, 200))
-        instruction_rect = instruction.get_rect(center=(width // 2, 250))
+        instruction_rect = instruction.get_rect(center=(self.screen_width // 2, 250))
         screen.blit(instruction, instruction_rect)
 
-        # Input box - recalculate position
-        input_width = 400
-        input_height = 50
-        input_x = (width - input_width) // 2
-        input_y = height // 2
-
-        self.name_input.rect.x = input_x
-        self.name_input.rect.y = input_y
+        # Input box
         self.name_input.draw(screen)
 
         # Submit button
-        self.name_submit_button.rect.x = input_x
-        self.name_submit_button.rect.y = input_y + 80
         self.name_submit_button.draw(screen)
 
         # Hint
         hint = self.subtitle_font.render("Tekan ENTER atau klik Continue", True, (150, 150, 150))
-        hint_rect = hint.get_rect(center=(width // 2, height - 100))
+        hint_rect = hint.get_rect(center=(self.screen_width // 2, self.screen_height - 100))
         screen.blit(hint, hint_rect)
 
-    def _draw_settings(self, screen, width, height):
+    def _draw_settings(self, screen):
         """Draw settings screen"""
         # Title
         title = self.title_font.render("Settings", True, (255, 255, 100))
-        title_rect = title.get_rect(center=(width // 2, 100))
+        title_rect = title.get_rect(center=(self.screen_width // 2, 100))
         screen.blit(title, title_rect)
 
-        # Sliders - recalculate positions
-        self.music_slider.rect.x = width // 2 - 200
-        self.music_slider.rect.y = height // 2 - 50
-        self.sound_slider.rect.x = width // 2 - 200
-        self.sound_slider.rect.y = height // 2 + 50
-        self.fullscreen_toggle.rect.x = width // 2 - 150
-        self.fullscreen_toggle.rect.y = height // 2 + 130
-        self.back_button.rect.x = width // 2 - 150
-        self.back_button.rect.y = height // 2 + 200
-
+        # Sliders
         self.music_slider.draw(screen)
         self.sound_slider.draw(screen)
 
+        # Resolution selector
+        res_label = self.subtitle_font.render("Resolution:", True, (255, 255, 255))
+        screen.blit(res_label, (self.screen_width // 2 - 200, self.screen_height // 2 + 30))
+
+        self.resolution_left.draw(screen)
+        self.resolution_right.draw(screen)
+
+        # Current resolution text
+        res_text = self.subtitle_font.render(self.get_resolution_text(), True, (255, 255, 255))
+        res_text_rect = res_text.get_rect(center=(self.screen_width // 2 + 40, self.screen_height // 2 + 70))
+        screen.blit(res_text, res_text_rect)
+
         # Buttons
         self.fullscreen_toggle.draw(screen)
+        self.apply_button.draw(screen)
         self.back_button.draw(screen)
+
+        # Changes notification
+        if self.settings_changed:
+            notif = self.subtitle_font.render("* Click Apply to save changes", True, (255, 200, 100))
+            notif_rect = notif.get_rect(center=(self.screen_width // 2, self.screen_height // 2 + 250))
+            screen.blit(notif, notif_rect)
 
 
 class PauseMenu:
@@ -445,6 +485,11 @@ class PauseMenu:
         # Fonts
         self.title_font = pygame.font.Font(None, 64)
         self.font = pygame.font.Font(None, 32)
+        self.subtitle_font = pygame.font.Font(None, 24)
+
+        # Get available resolutions
+        self.resolutions = self._get_available_resolutions()
+        self.current_resolution_index = 0
 
         # Pause menu buttons
         button_width = 300
@@ -457,23 +502,91 @@ class PauseMenu:
         self.load_button = Button(button_x, start_y + 160, button_width, button_height, "Load Game")
         self.settings_button = Button(button_x, start_y + 240, button_width, button_height, "Settings")
         self.menu_button = Button(button_x, start_y + 320, button_width, button_height, "Main Menu")
-        self.exit_button = Button(button_x, start_y + 400, button_width, button_height, "Exit Game")
 
         # Settings (same as main menu)
-        self.music_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 50,
+        self.music_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 120,
                                    400, "Music Volume", initial_val=30)
-        self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 + 50,
+        self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 40,
                                    400, "Sound Effects", initial_val=60)
-        self.fullscreen_toggle = Button(screen_width // 2 - 150, screen_height // 2 + 130,
+
+        # Resolution selector
+        self.resolution_left = Button(screen_width // 2 - 200, screen_height // 2 + 50,
+                                     60, 40, "<")
+        self.resolution_right = Button(screen_width // 2 + 140, screen_height // 2 + 50,
+                                      60, 40, ">")
+
+        self.fullscreen_toggle = Button(screen_width // 2 - 150, screen_height // 2 + 110,
                                        300, 50, "Fullscreen: OFF")
-        self.back_button = Button(screen_width // 2 - 150, screen_height // 2 + 200,
-                                 300, 50, "Back")
+
+        # Apply and Back
+        self.apply_button = Button(screen_width // 2 - 250, screen_height // 2 + 180,
+                                  200, 50, "Apply", color=(50, 150, 50))
+        self.back_button = Button(screen_width // 2 + 50, screen_height // 2 + 180,
+                                 200, 50, "Back")
 
         self.is_fullscreen = False
+        self.settings_changed = False
 
         # Save notification
         self.save_notification = ""
         self.save_notification_timer = 0
+
+        # Ensure layout matches screen size
+        self.update_layout(self.screen_width, self.screen_height)
+
+    def _get_available_resolutions(self):
+        """Get list of available screen resolutions"""
+        try:
+            modes = pygame.display.list_modes()
+            if modes == -1:
+                return [(1920, 1080), (1600, 900), (1366, 768), (1280, 720), (1080, 720)]
+            else:
+                filtered = []
+                for mode in modes:
+                    if mode[0] >= 800 and mode[1] >= 600:
+                        filtered.append(mode)
+                return filtered[:10] if filtered else [(1080, 720)]
+        except:
+            return [(1920, 1080), (1600, 900), (1366, 768), (1280, 720), (1080, 720)]
+
+    def update_layout(self, screen_width, screen_height):
+        """Recalculate layout for pause menu based on screen size."""
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+
+        button_width = 300
+        button_height = 60
+        button_x = (screen_width - button_width) // 2
+        start_y = screen_height // 2 - 100
+
+        # Buttons
+        self.resume_button.rect = pygame.Rect(button_x, start_y, button_width, button_height)
+        self.save_button.rect = pygame.Rect(button_x, start_y + 80, button_width, button_height)
+        self.load_button.rect = pygame.Rect(button_x, start_y + 160, button_width, button_height)
+        self.settings_button.rect = pygame.Rect(button_x, start_y + 240, button_width, button_height)
+        self.menu_button.rect = pygame.Rect(button_x, start_y + 320, button_width, button_height)
+
+        # Sliders
+        self.music_slider.x = screen_width // 2 - 200
+        self.music_slider.y = screen_height // 2 - 120
+        self.sound_slider.x = screen_width // 2 - 200
+        self.sound_slider.y = screen_height // 2 - 40
+
+        # Resolution buttons
+        self.resolution_left.rect = pygame.Rect(screen_width // 2 - 200, screen_height // 2 + 50, 60, 40)
+        self.resolution_right.rect = pygame.Rect(screen_width // 2 + 140, screen_height // 2 + 50, 60, 40)
+
+        # Fullscreen toggle and apply/back
+        self.fullscreen_toggle.rect = pygame.Rect(screen_width // 2 - 150, screen_height // 2 + 110, 300, 50)
+        self.apply_button.rect = pygame.Rect(screen_width // 2 - 250, screen_height // 2 + 180, 200, 50)
+        self.back_button.rect = pygame.Rect(screen_width // 2 + 50, screen_height // 2 + 180, 200, 50)
+
+    def get_resolution_text(self):
+        """Get current resolution as text"""
+        if 0 <= self.current_resolution_index < len(self.resolutions):
+            w, h = self.resolutions[self.current_resolution_index]
+            return f"{w} x {h}"
+        return "1080 x 720"
 
     def show(self):
         """Show pause menu"""
@@ -497,7 +610,6 @@ class PauseMenu:
             self.load_button.update(mouse_pos)
             self.settings_button.update(mouse_pos)
             self.menu_button.update(mouse_pos)
-            self.exit_button.update(mouse_pos)
 
             if self.resume_button.is_clicked(event):
                 return "resume"
@@ -510,26 +622,44 @@ class PauseMenu:
 
             if self.settings_button.is_clicked(event):
                 self.state = "settings"
+                self.settings_changed = False
                 return None
 
             if self.menu_button.is_clicked(event):
                 return "main_menu"
 
-            if self.exit_button.is_clicked(event):
-                return "exit"
-
         elif self.state == "settings":
             self.music_slider.handle_event(event)
             self.sound_slider.handle_event(event)
             self.fullscreen_toggle.update(mouse_pos)
+            self.resolution_left.update(mouse_pos)
+            self.resolution_right.update(mouse_pos)
+            self.apply_button.update(mouse_pos)
             self.back_button.update(mouse_pos)
+
+            # Mark as changed
+            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging):
+                self.settings_changed = True
 
             if self.fullscreen_toggle.is_clicked(event):
                 self.is_fullscreen = not self.is_fullscreen
                 self.fullscreen_toggle.text = f"Fullscreen: {'ON' if self.is_fullscreen else 'OFF'}"
-                return "toggle_fullscreen"
+                self.settings_changed = True
+
+            if self.resolution_left.is_clicked(event):
+                self.current_resolution_index = (self.current_resolution_index - 1) % len(self.resolutions)
+                self.settings_changed = True
+
+            if self.resolution_right.is_clicked(event):
+                self.current_resolution_index = (self.current_resolution_index + 1) % len(self.resolutions)
+                self.settings_changed = True
+
+            if self.apply_button.is_clicked(event):
+                self.settings_changed = False
+                return "apply_settings"
 
             if self.back_button.is_clicked(event):
+                self.settings_changed = False
                 self.state = "pause"
 
         return None
@@ -552,26 +682,22 @@ class PauseMenu:
         if not self.active:
             return
 
-        # Get actual screen dimensions
-        actual_width = screen.get_width()
-        actual_height = screen.get_height()
-
         # Semi-transparent overlay
-        overlay = pygame.Surface((actual_width, actual_height))
+        overlay = pygame.Surface((self.screen_width, self.screen_height))
         overlay.set_alpha(200)
         overlay.fill((0, 0, 0))
         screen.blit(overlay, (0, 0))
 
         if self.state == "pause":
-            self._draw_pause_menu(screen, actual_width, actual_height)
+            self._draw_pause_menu(screen)
         elif self.state == "settings":
-            self._draw_settings(screen, actual_width, actual_height)
+            self._draw_settings(screen)
 
         # Save notification
         if self.save_notification_timer > 0:
             notif_font = pygame.font.Font(None, 28)
             notif_surface = notif_font.render(self.save_notification, True, (100, 255, 100))
-            notif_rect = notif_surface.get_rect(center=(actual_width // 2, 50))
+            notif_rect = notif_surface.get_rect(center=(self.screen_width // 2, 50))
 
             # Background
             bg_rect = notif_rect.inflate(20, 10)
@@ -580,42 +706,12 @@ class PauseMenu:
 
             screen.blit(notif_surface, notif_rect)
 
-    def _draw_pause_menu(self, screen, width, height):
+    def _draw_pause_menu(self, screen):
         """Draw pause menu"""
         # Title
         title = self.title_font.render("PAUSED", True, (255, 255, 100))
-        title_rect = title.get_rect(center=(width // 2, 80))
+        title_rect = title.get_rect(center=(self.screen_width // 2, 150))
         screen.blit(title, title_rect)
-
-        # Update button positions
-        button_width = 300
-        button_height = 50
-        button_x = (width - button_width) // 2
-        start_y = height // 2 - 120
-
-        self.resume_button.rect.x = button_x
-        self.resume_button.rect.y = start_y
-        self.resume_button.rect.height = button_height
-
-        self.save_button.rect.x = button_x
-        self.save_button.rect.y = start_y + 60
-        self.save_button.rect.height = button_height
-
-        self.load_button.rect.x = button_x
-        self.load_button.rect.y = start_y + 120
-        self.load_button.rect.height = button_height
-
-        self.settings_button.rect.x = button_x
-        self.settings_button.rect.y = start_y + 180
-        self.settings_button.rect.height = button_height
-
-        self.menu_button.rect.x = button_x
-        self.menu_button.rect.y = start_y + 240
-        self.menu_button.rect.height = button_height
-
-        self.exit_button.rect.x = button_x
-        self.exit_button.rect.y = start_y + 300
-        self.exit_button.rect.height = button_height
 
         # Buttons
         self.resume_button.draw(screen)
@@ -623,29 +719,37 @@ class PauseMenu:
         self.load_button.draw(screen)
         self.settings_button.draw(screen)
         self.menu_button.draw(screen)
-        self.exit_button.draw(screen)
 
-    def _draw_settings(self, screen, width, height):
+    def _draw_settings(self, screen):
         """Draw settings in pause menu"""
         # Title
         title = self.title_font.render("Settings", True, (255, 255, 100))
-        title_rect = title.get_rect(center=(width // 2, 100))
+        title_rect = title.get_rect(center=(self.screen_width // 2, 100))
         screen.blit(title, title_rect)
-
-        # Update slider positions
-        self.music_slider.rect.x = width // 2 - 200
-        self.music_slider.rect.y = height // 2 - 50
-        self.sound_slider.rect.x = width // 2 - 200
-        self.sound_slider.rect.y = height // 2 + 50
-        self.fullscreen_toggle.rect.x = width // 2 - 150
-        self.fullscreen_toggle.rect.y = height // 2 + 130
-        self.back_button.rect.x = width // 2 - 150
-        self.back_button.rect.y = height // 2 + 200
 
         # Sliders
         self.music_slider.draw(screen)
         self.sound_slider.draw(screen)
 
+        # Resolution selector
+        res_label = self.subtitle_font.render("Resolution:", True, (255, 255, 255))
+        screen.blit(res_label, (self.screen_width // 2 - 200, self.screen_height // 2 + 30))
+
+        self.resolution_left.draw(screen)
+        self.resolution_right.draw(screen)
+
+        # Current resolution text
+        res_text = self.subtitle_font.render(self.get_resolution_text(), True, (255, 255, 255))
+        res_text_rect = res_text.get_rect(center=(self.screen_width // 2 + 40, self.screen_height // 2 + 70))
+        screen.blit(res_text, res_text_rect)
+
         # Buttons
         self.fullscreen_toggle.draw(screen)
+        self.apply_button.draw(screen)
         self.back_button.draw(screen)
+
+        # Changes notification
+        if self.settings_changed:
+            notif = self.subtitle_font.render("* Click Apply to save changes", True, (255, 200, 100))
+            notif_rect = notif.get_rect(center=(self.screen_width // 2, self.screen_height // 2 + 250))
+            screen.blit(notif, notif_rect)

@@ -142,6 +142,7 @@ class GameSettings:
 
     def __init__(self):
         self.settings = self.load_settings()
+        self.pending_settings = self.settings.copy()  # Temp settings before apply
 
     def load_settings(self):
         """Load settings dari file"""
@@ -158,11 +159,13 @@ class GameSettings:
         return {
             "music_volume": 0.3,
             "sound_volume": 0.6,
-            "fullscreen": False
+            "fullscreen": False,
+            "resolution_width": 1080,
+            "resolution_height": 720
         }
 
     def save_settings(self):
-        """Save settings ke file"""
+        """Save settings ke file (manual call only)"""
         try:
             with open(self.SETTINGS_FILE, 'w') as f:
                 json.dump(self.settings, f, indent=2)
@@ -172,11 +175,28 @@ class GameSettings:
             print(f"[SETTINGS] Error saving: {e}")
             return False
 
+    def set_pending(self, key, value):
+        """Set pending setting value (not saved yet)"""
+        self.pending_settings[key] = value
+
+    def apply_settings(self):
+        """Apply pending settings (call this when user clicks Apply)"""
+        self.settings = self.pending_settings.copy()
+        return self.save_settings()
+
+    def discard_pending(self):
+        """Discard pending changes"""
+        self.pending_settings = self.settings.copy()
+
     def set(self, key, value):
-        """Set setting value"""
+        """Set setting value immediately (legacy, use sparingly)"""
         self.settings[key] = value
-        self.save_settings()
+        # Don't auto-save to prevent spam
 
     def get(self, key, default=None):
         """Get setting value"""
         return self.settings.get(key, default)
+
+    def get_pending(self, key, default=None):
+        """Get pending setting value"""
+        return self.pending_settings.get(key, default)

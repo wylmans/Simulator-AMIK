@@ -13,7 +13,7 @@ from core.npc import NPCManager, create_sample_npcs
 from core.quest import QuestManager, CodeChallengeBox
 from core.dialog import DialogueBox, EndingChoice
 from core.ending import EndingScreen
-from core.menu import MainMenu, PauseMenu, SettingsButton
+from core.menu import MainMenu, PauseMenu
 from core.save_system import SaveSystem, GameSettings
 
 # Map imports
@@ -60,13 +60,16 @@ pause_menu.sound_slider.value = main_menu.sound_slider.value
 pause_menu.is_fullscreen = main_menu.is_fullscreen
 pause_menu.fullscreen_toggle.text = main_menu.fullscreen_toggle.text
 
-# Settings button (gear icon) for in-game
-settings_button = SettingsButton(SCREEN_WIDTH - 60, 20, size=50)
-
 # Game state management
 current_screen = "main_menu"  # "main_menu", "game", "ending"
 game_state = "playing"
 debug_mode = False
+
+# New-game warning modal state
+newgame_warning_active = False
+newgame_warning_seconds = 3
+newgame_warning_timer = 0
+newgame_pending_player_name = ""
 
 # Game objects (will be initialized when game starts)
 player = None
@@ -214,6 +217,12 @@ def toggle_fullscreen():
     main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
     pause_menu.is_fullscreen = is_fullscreen
     pause_menu.fullscreen_toggle.text = main_menu.fullscreen_toggle.text
+    # Recompute layouts for menus so buttons remain centered
+    try:
+        main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+        pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+    except Exception:
+        pass
 
 
 def start_quest_challenge(quest_index):
@@ -239,32 +248,118 @@ while running:
 
         # ===== MAIN MENU =====
         if current_screen == "main_menu":
-            result = main_menu.handle_event(event)
+            # If the modal is active, only handle modal events; otherwise forward to menu
+            result = None
+            if not newgame_warning_active:
+                result = main_menu.handle_event(event)
+            else:
+                # Modal handling: check mouse clicks for OK/Cancel when appropriate
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mx, my = event.pos
+                    # Compute modal button rects (match drawing logic below)
+                    modal_w, modal_h = 700, 220
+                    modal_x = (SCREEN_WIDTH - modal_w) // 2
+                    modal_y = (SCREEN_HEIGHT - modal_h) // 2
 
-            if result == "exit":
-                running = False
+                    btn_w, btn_h = 140, 48
+                    gap = 20
+                    cancel_rect = pygame.Rect(modal_x + modal_w - btn_w - gap, modal_y + modal_h - btn_h - gap, btn_w, btn_h)
+                    ok_rect = pygame.Rect(modal_x + modal_w - btn_w * 2 - gap * 2, modal_y + modal_h - btn_h - gap, btn_w, btn_h)
 
-            elif result == "start_game":
-                player_name = main_menu.player_name
+                    if cancel_rect.collidepoint((mx, my)):
+                        # Close modal without starting and return to main menu
+                        newgame_warning_active = False
+                        newgame_warning_timer = 0
+                        newgame_pending_player_name = ""
+                        try:
+                            main_menu.state = "main"
+                            main_menu.name_input.active = False
+                        except Exception:
+                            pass
 
-                # Check if load save
+                    # OK only allowed when countdown finished
+                    if newgame_warning_timer <= 0 and ok_rect.collidepoint((mx, my)):
+                        # Start a fresh game using the pending name
+                        initialize_game(newgame_pending_player_name)
+                        current_screen = "game"
+                        newgame_warning_active = False
+                        newgame_pending_player_name = ""
+
+            if not newgame_warning_active:
+                if result == "exit":
+                    running = False
+
+                elif result == "start_game":
+                    player_name = main_menu.player_name
+
+                    # If there's an existing save, preserve previous auto-load behavior
+                    # (auto-load when no name entered). If a name was provided, show
+                    # the warning modal before starting a new game.
+                    if save_system.save_exists():
+                        if not player_name or not player_name.strip():
+                            save_data = save_system.load_game()
+                            if save_data:
+                                saved_name = save_data["player"]["name"]
+                                initialize_game(saved_name, save_data)
+                                current_screen = "game"
+                            else:
+                                initialize_game(player_name)
+                                current_screen = "game"
+                        else:
+                            # Show warning modal: user is attempting to start a new game
+                            newgame_warning_active = True
+                            newgame_warning_seconds = 3
+                            newgame_warning_timer = newgame_warning_seconds * 60
+                            newgame_pending_player_name = player_name
+                    else:
+                        initialize_game(player_name)
+                        current_screen = "game"
+
+            elif result == "load_game":
+                # Load existing save and start from it
                 if save_system.save_exists():
                     save_data = save_system.load_game()
                     if save_data:
-                        initialize_game(player_name, save_data)
+                        saved_name = save_data.get("player", {}).get("name", "Player")
+                        initialize_game(saved_name, save_data)
+                        current_screen = "game"
                     else:
-                        initialize_game(player_name)
+                        print("[SAVE] Failed to load save file.")
                 else:
-                    initialize_game(player_name)
+                    print("[SAVE] No save file to load.")
 
-                current_screen = "game"
+            elif result == "apply_settings":
+                # Apply settings without spam
+                settings.set_pending("music_volume", main_menu.music_slider.get_value())
+                settings.set_pending("sound_volume", main_menu.sound_slider.get_value())
+                settings.set_pending("fullscreen", main_menu.is_fullscreen)
 
-            elif result == "toggle_fullscreen":
-                toggle_fullscreen()
+                # Get selected resolution
+                if 0 <= main_menu.current_resolution_index < len(main_menu.resolutions):
+                    res_w, res_h = main_menu.resolutions[main_menu.current_resolution_index]
+                    settings.set_pending("resolution_width", res_w)
+                    settings.set_pending("resolution_height", res_h)
 
-            # Update settings from menu
-            settings.set("music_volume", main_menu.music_slider.get_value())
-            settings.set("sound_volume", main_menu.sound_slider.get_value())
+                # Save all at once
+                settings.apply_settings()
+
+                # Apply resolution change
+                SCREEN_WIDTH = settings.get("resolution_width", 1080)
+                SCREEN_HEIGHT = settings.get("resolution_height", 720)
+
+                if settings.get("fullscreen"):
+                    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+                else:
+                    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+                camera.width = SCREEN_WIDTH
+                camera.height = SCREEN_HEIGHT
+                # Update menu layouts to reflect new resolution
+                try:
+                    main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+                    pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+                except Exception:
+                    pass
 
         # ===== IN-GAME =====
         elif current_screen == "game":
@@ -279,44 +374,50 @@ while running:
                     success = save_system.save_game(player, quest_manager, game_state)
                     pause_menu.show_save_notification(success)
 
-                elif result == "load":
-                    # Load game from save
-                    if save_system.save_exists():
-                        save_data = save_system.load_game()
-                        if save_data:
-                            initialize_game(player.name, save_data)
-                            pause_menu.hide()
-                            pause_menu.show_save_notification(True)
-                    else:
-                        pause_menu.show_save_notification(False)
-
                 elif result == "main_menu":
-                    # Return to main menu
+                    # Confirm dialog could be added here
                     pause_menu.hide()
                     current_screen = "main_menu"
                     main_menu.state = "main"
                     if music_manager:
                         music_manager.stop()
 
-                elif result == "exit":
-                    # Exit game
-                    running = False
+                elif result == "apply_settings":
+                    # Apply settings without spam
+                    settings.set_pending("music_volume", pause_menu.music_slider.get_value())
+                    settings.set_pending("sound_volume", pause_menu.sound_slider.get_value())
+                    settings.set_pending("fullscreen", pause_menu.is_fullscreen)
 
-                elif result == "toggle_fullscreen":
-                    toggle_fullscreen()
+                    # Get selected resolution
+                    if 0 <= pause_menu.current_resolution_index < len(pause_menu.resolutions):
+                        res_w, res_h = pause_menu.resolutions[pause_menu.current_resolution_index]
+                        settings.set_pending("resolution_width", res_w)
+                        settings.set_pending("resolution_height", res_h)
 
-                # Update settings
-                settings.set("music_volume", pause_menu.music_slider.get_value())
-                settings.set("sound_volume", pause_menu.sound_slider.get_value())
-                if music_manager:
-                    music_manager.set_volume(pause_menu.music_slider.get_value())
+                    # Save all at once
+                    settings.apply_settings()
 
-            # Settings button click (when not in pause menu)
-            elif event.type == pygame.MOUSEBUTTONDOWN and game_state == "playing":
-                if settings_button.is_clicked(event):
-                    pause_menu.show()
-                    pause_menu.music_slider.value = settings.get("music_volume", 0.3) * 100
-                    pause_menu.sound_slider.value = settings.get("sound_volume", 0.6) * 100
+                    # Apply music volume immediately
+                    if music_manager:
+                        music_manager.set_volume(pause_menu.music_slider.get_value())
+
+                    # Apply resolution change
+                    SCREEN_WIDTH = settings.get("resolution_width", 1080)
+                    SCREEN_HEIGHT = settings.get("resolution_height", 720)
+
+                    if settings.get("fullscreen"):
+                        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+                    else:
+                        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+                    camera.width = SCREEN_WIDTH
+                    camera.height = SCREEN_HEIGHT
+                    # Update menu layouts after applying settings
+                    try:
+                        main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+                        pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+                    except Exception:
+                        pass
 
             # Game controls
             elif event.type == pygame.KEYDOWN:
@@ -429,6 +530,10 @@ while running:
     # ===== UPDATE =====
     if current_screen == "main_menu":
         main_menu.update()
+        # Update new-game warning countdown if active
+        if newgame_warning_active:
+            if newgame_warning_timer > 0:
+                newgame_warning_timer -= 1
 
     elif current_screen == "game":
         if pause_menu.active:
@@ -468,6 +573,72 @@ while running:
     # ===== DRAW =====
     if current_screen == "main_menu":
         main_menu.draw(screen)
+
+        # Draw new-game warning modal if active
+        if newgame_warning_active:
+            # Semi-transparent overlay
+            overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+            overlay.set_alpha(200)
+            overlay.fill((0, 0, 0))
+            screen.blit(overlay, (0, 0))
+
+            # Modal box
+            modal_w, modal_h = 700, 220
+            modal_x = (SCREEN_WIDTH - modal_w) // 2
+            modal_y = (SCREEN_HEIGHT - modal_h) // 2
+
+            pygame.draw.rect(screen, (20, 20, 40), (modal_x, modal_y, modal_w, modal_h))
+            pygame.draw.rect(screen, (200, 200, 200), (modal_x, modal_y, modal_w, modal_h), 2)
+
+            # Warning text (Indonesian)
+            font = pygame.font.Font(None, 28)
+            warning = "Jika Kamu Memulai Permainan Baru Maka saat melakukan Save game saat permainan berjalan, save game lama kamu akan di hilang"
+
+            # Simple word-wrap
+            words = warning.split(' ')
+            lines = []
+            cur = ''
+            max_w = modal_w - 40
+            for w in words:
+                test = (cur + ' ' + w).strip()
+                if font.size(test)[0] <= max_w:
+                    cur = test
+                else:
+                    lines.append(cur)
+                    cur = w
+            if cur:
+                lines.append(cur)
+
+            for i, line in enumerate(lines):
+                surf = font.render(line, True, (255, 255, 255))
+                screen.blit(surf, (modal_x + 20, modal_y + 20 + i * 30))
+
+            # Buttons
+            btn_w, btn_h = 140, 48
+            gap = 20
+            ok_x = modal_x + modal_w - btn_w * 2 - gap * 2
+            ok_y = modal_y + modal_h - btn_h - gap
+            cancel_x = modal_x + modal_w - btn_w - gap
+            cancel_y = ok_y
+
+            # OK button shows countdown
+            seconds_left = max(0, (newgame_warning_timer + 59) // 60)
+            ok_label = f"OK ({seconds_left})" if newgame_warning_timer > 0 else "OK"
+
+            # OK button appearance depends on enabled state
+            ok_color = (100, 100, 100) if newgame_warning_timer > 0 else (50, 150, 50)
+            pygame.draw.rect(screen, ok_color, (ok_x, ok_y, btn_w, btn_h))
+            pygame.draw.rect(screen, (255, 255, 255), (ok_x, ok_y, btn_w, btn_h), 2)
+            ok_surf = font.render(ok_label, True, (255, 255, 255))
+            ok_rect = ok_surf.get_rect(center=(ok_x + btn_w // 2, ok_y + btn_h // 2))
+            screen.blit(ok_surf, ok_rect)
+
+            # Cancel button
+            pygame.draw.rect(screen, (150, 50, 50), (cancel_x, cancel_y, btn_w, btn_h))
+            pygame.draw.rect(screen, (255, 255, 255), (cancel_x, cancel_y, btn_w, btn_h), 2)
+            cancel_surf = font.render("Cancel", True, (255, 255, 255))
+            cancel_rect = cancel_surf.get_rect(center=(cancel_x + btn_w // 2, cancel_y + btn_h // 2))
+            screen.blit(cancel_surf, cancel_rect)
 
     elif current_screen == "game":
         screen.fill((30, 150, 50))
@@ -520,12 +691,6 @@ while running:
 
         # Pause menu overlay
         pause_menu.draw(screen)
-
-        # Settings button (when not paused)
-        if not pause_menu.active and game_state == "playing":
-            mouse_pos = pygame.mouse.get_pos()
-            settings_button.update(mouse_pos)
-            settings_button.draw(screen)
 
     pygame.display.flip()
     clock.tick(60)
