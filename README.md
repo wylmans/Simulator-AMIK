@@ -106,10 +106,10 @@ python -m pygame --version
 
 ## ▶ Menjalankan Program
 
-Masuk ke direktori proyek, lalu jalankan file utama (misalnya `main.py`):
+Masuk ke direktori proyek, lalu jalankan file utama yaitu game.py
 
 ```bash
-python main.py
+python game.py
 ```
 
 Jika berhasil, jendela simulasi Pygame akan muncul.
