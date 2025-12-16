@@ -1,6 +1,6 @@
 # Simulator-AMIK
 
-Simulator-AMIK adalah sebuah program simulasi berbasis **Python** dan **Pygame** yang dirancang untuk berjalan pada sistem Windows. Program ini ringan dan dapat dijalankan pada perangkat dengan spesifikasi menengah ke bawah.
+Simulator-AMIK adalah sebuah program game simulasi dari kegiatan sebagai seorang mahasiswa di kampus STMIK AMIK Bandung Program ini berbasis **Python** dan **Pygame** yang dirancang untuk berjalan pada sistem Windows. Program ini ringan dan dapat dijalankan pada perangkat dengan spesifikasi menengah ke bawah.
 
 ---
 
