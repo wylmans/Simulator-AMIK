@@ -1,310 +1,151 @@
-# 🎉 Update Summary - Fitur Dialog & Interaksi
+# Simulator-AMIK
 
-## ✨ 3 Fitur Utama yang Ditambahkan
-
-### 1. 🔊 **Sound Effect Bubble**
-Dialog sekarang punya sound effect yang bunyi setiap karakter muncul!
-
-**File yang diperlukan:**
-```
-sounds/bubble.mp3
-```
-
-**Cara setup:**
-- Letakkan file `bubble.mp3` di folder `sounds/`
-- Atau generate dengan: `python generate_sound.py`
-- Game tetap jalan tanpa sound jika file tidak ada
+Simulator-AMIK adalah sebuah program simulasi berbasis **Python** dan **Pygame** yang dirancang untuk berjalan pada sistem Windows. Program ini ringan dan dapat dijalankan pada perangkat dengan spesifikasi menengah ke bawah.
 
 ---
 
-### 2. 📊 **Progress Bar di Tengah Atas**
-Progress bar sekarang otomatis centered di tengah atas layar!
+## 📌 Spesifikasi Sistem
 
-**Before:**
-```
-┌─────────────────────────┐
-│[====] 10/100 Tugas     │ ← Di kiri atas
-│                        │
-│        GAME            │
-└────────────────────────┘
-```
+Program ini telah diuji dan berjalan dengan baik pada konfigurasi berikut:
 
-**After:**
-```
-┌─────────────────────────┐
-│   [========] 10/100    │ ← CENTERED!
-│                        │
-│        GAME            │
-└────────────────────────┘
-```
+* **Sistem Operasi**: Windows 10 (64-bit)
+* **Prosesor**: AMD A8-6410 APU
+* **RAM**: 8 GB
+* **Python**: 3.13.9
+* **Pygame**: 2.6.1
 
 ---
 
-### 3. 🚫 **Player Freeze Saat Dialog**
-Player tidak bisa bergerak saat berbicara dengan NPC!
+## 📦 Dependensi
 
-**Behavior:**
-- Dialog AKTIF → Arrow keys diabaikan, player freeze
-- Dialog TUTUP → Player bisa bergerak normal lagi
-- Tombol Q juga disabled saat dialog aktif
+Pastikan dependensi berikut telah terpasang:
+
+* Python **3.13.9**
+* Pygame **2.6.1**
 
 ---
 
-## 📋 Checklist Implementasi
+## 🔽 Mengunduh Proyek
 
-### Step 1: Update File ✅
-Pastikan file-file ini sudah diupdate:
-- [x] `core/dialogue.py` - Sound system
-- [x] `core/quest.py` - Progress bar centered
-- [x] `game.py` - Player freeze logic
+Anda dapat mengunduh proyek ini dengan **dua cara**:
 
-### Step 2: Setup Sound 🔊
+### Opsi 1 — Menggunakan Git (Direkomendasikan)
+
+Pastikan Git sudah terinstal di sistem Anda.
+
+Unduh Git dari:
+
+```
+https://git-scm.com/downloads
+```
+
+Setelah Git terpasang, jalankan perintah berikut di Command Prompt atau PowerShell:
+
 ```bash
-# Option A: Generate otomatis
-python generate_sound.py
-
-# Option B: Download manual
-# Letakkan file di: sounds/bubble.mp3
-```
-
-### Step 3: Test 🎮
-- [ ] Dekati NPC → Tanda ! muncul
-- [ ] Tekan E → Dialog muncul
-- [ ] **BARU:** Sound bubble bunyi saat typing
-- [ ] **BARU:** Coba gerakkan player → Tidak bisa!
-- [ ] Tekan Space → Dialog tutup
-- [ ] **BARU:** Player bisa bergerak lagi
-- [ ] **BARU:** Progress bar di tengah atas
-
----
-
-## 🎮 Kontrol Game (Updated)
-
-### Saat Dialog TIDAK Aktif:
-```
-Arrow Keys  → Gerak player ✅
-E / Space   → Bicara dengan NPC ✅
-Q           → Complete quest ✅
-N / P / M   → Kontrol musik ✅
-```
-
-### Saat Dialog AKTIF:
-```
-Arrow Keys  → TIDAK BERFUNGSI ❌
-E / Space   → Skip typing / Tutup dialog ✅
-Q           → TIDAK BERFUNGSI ❌
-N / P / M   → Kontrol musik ✅
+git clone https://github.com/wylmans/Simulator-AMIK.git
+cd Simulator-AMIK
 ```
 
 ---
 
-## 🔧 Konfigurasi
+### Opsi 2 — Download ZIP (Tanpa Git)
 
-### Ubah Volume Sound
-File: `core/dialogue.py` (baris 14)
-```python
-self.text_sound.set_volume(0.4)  # 0.0 - 1.0
-```
+1. Buka halaman repository:
 
-### Ubah Frekuensi Sound
-File: `core/dialogue.py` (baris 18)
-```python
-self.sound_interval = 3  # Play setiap N karakter
-```
-
-### Ubah Posisi Progress Bar
-File: `game.py` (baris 138)
-```python
-# Auto centered (default)
-quest_manager.draw_progress_bar(screen)
-
-# Custom position
-quest_manager.draw_progress_bar(screen, x=10, y=10, width=300, height=25)
-```
-
-### Ubah Typing Speed
-File: `core/dialogue.py` (baris 10)
-```python
-self.typing_speed = 2  # Lebih tinggi = lebih cepat
-```
-
-### Disable Player Freeze (Optional)
-Jika ingin player tetap bisa gerak saat dialog:
-
-File: `game.py` (baris 101)
-```python
-# Ubah dari:
-if not dialogue_box.active:
-    player.update()
-
-# Menjadi:
-player.update()  # Always update
-```
+   ```
+   https://github.com/wylmans/Simulator-AMIK
+   ```
+2. Klik tombol **Code** → **Download ZIP**
+3. Ekstrak file ZIP ke folder yang diinginkan
+4. Masuk ke folder hasil ekstraksi sebelum menjalankan program
 
 ---
 
-## 🎵 Sound Effect Options
+## 🔧 Instalasi Python
 
-### Option 1: Generate (Recommended)
+Unduh Python dari situs resmi:
+
+```
+https://www.python.org/downloads/
+```
+
+Saat instalasi, pastikan:
+
+* ✔ Centang **Add Python to PATH**
+* ✔ Gunakan versi **Python 3.13.9**
+
+Verifikasi instalasi:
+
 ```bash
-pip install numpy scipy pydub
-python generate_sound.py
+python --version
 ```
 
-Output:
-- `sounds/bubble.mp3` ← Gunakan ini
-- `sounds/bubble_high.mp3` (alternatif)
-- `sounds/bubble_low.mp3` (alternatif)
+Output yang diharapkan:
 
-### Option 2: Download
-Source gratis:
-- Freesound.org → Search "text blip" / "bubble pop"
-- Zapsplat.com → Kategori UI Sounds
-- Mixkit.co → Game Sound Effects
-
-**Karakteristik:**
-- Durasi: 0.05 - 0.15 detik
-- Format: MP3 atau WAV
-- Style: Retro game / Pixel game bubble
-
-### Option 3: Gunakan WAV
-Jika tidak bisa convert ke MP3:
-
-Edit `core/dialogue.py`:
-```python
-self.text_sound = pygame.mixer.Sound("sounds/bubble.wav")
+```
+Python 3.13.9
 ```
 
 ---
 
-## 📊 Progress Bar Details
+## 📥 Instalasi Pygame
 
-### Default Settings:
-- **Position:** Centered horizontal, 15px dari top
-- **Size:** 400px wide, 30px tall
-- **Colors:**
-  - 0-49%: Red `(255, 100, 100)`
-  - 50-79%: Yellow `(255, 255, 100)`
-  - 80-100%: Green `(100, 255, 100)`
+Gunakan `pip` untuk menginstal Pygame:
 
-### Current Quest Display:
-- **Position:** Top-left (10, 60)
-- **Size:** 400x80 panel
-- **Info:** Quest description + instruction
-
----
-
-## 🐛 Troubleshooting
-
-### Sound tidak bunyi
 ```bash
-# Check file exists
-ls sounds/bubble.mp3
-
-# Check console untuk warning message
-# Game akan print: "Warning: sounds/bubble.mp3 tidak ditemukan..."
-
-# Try generate ulang
-python generate_sound.py
+pip install pygame==2.6.1
 ```
 
-### Player masih bisa gerak saat dialog
-```python
-# Di game.py, pastikan ada:
-if not dialogue_box.active:
-    player.update()
+Verifikasi instalasi:
 
-# Bukan:
-player.update()  # Tanpa kondisi
-```
-
-### Progress bar tidak centered
-```python
-# Pastikan call tanpa x, y parameter:
-quest_manager.draw_progress_bar(screen)
-
-# Jangan:
-quest_manager.draw_progress_bar(screen, 10, 10, 300, 25)
-```
-
-### Sound terlalu keras
-```python
-# Edit volume di core/dialogue.py:
-self.text_sound.set_volume(0.2)  # Lebih kecil = lebih pelan
+```bash
+python -m pygame --version
 ```
 
 ---
 
-## 📈 Before vs After Comparison
+## ▶ Menjalankan Program
 
-### Before:
-- ❌ Dialog tanpa sound (membosankan)
-- ❌ Progress bar di pojok kiri (kurang terlihat)
-- ❌ Player bisa jalan saat dialog (aneh/tidak immersive)
+Masuk ke direktori proyek, lalu jalankan file utama (misalnya `main.py`):
 
-### After:
-- ✅ Dialog dengan bubble sound (lebih hidup!)
-- ✅ Progress bar centered (jelas terlihat)
-- ✅ Player freeze saat dialog (lebih natural)
+```bash
+python main.py
+```
+
+Jika berhasil, jendela simulasi Pygame akan muncul.
 
 ---
 
-## 🎯 Testing Checklist
+## 📂 Struktur Direktori (Contoh)
 
-### Sound System:
-- [ ] Sound bunyi saat typing
-- [ ] Sound berhenti saat dialog tutup
-- [ ] Volume tidak terlalu keras
-- [ ] Game jalan normal tanpa sound file
-
-### Freeze System:
-- [ ] Arrow keys diabaikan saat dialog
-- [ ] Player tidak bergerak saat dialog
-- [ ] Tombol Q disabled saat dialog
-- [ ] Player bisa gerak setelah dialog tutup
-
-### Progress Bar:
-- [ ] Bar di tengah atas layar
-- [ ] Counter update dengan benar
-- [ ] Warna berubah sesuai progress
-- [ ] Tidak overlap dengan UI lain
+```text
+Simulator-AMIK/
+│
+├─ assets/        # Asset gambar / audio
+├─ src/           # Source code (jika dipisah)
+├─ main.py        # Entry point program
+├─ README.md
+```
 
 ---
 
-## 📚 File References
+## 🧪 Catatan Tambahan
 
-| File | Line | What to Change |
-|------|------|----------------|
-| `core/dialogue.py` | 13 | Sound file path |
-| `core/dialogue.py` | 14 | Sound volume |
-| `core/dialogue.py` | 18 | Sound frequency |
-| `core/quest.py` | 66 | Progress bar positioning |
-| `game.py` | 101 | Player freeze logic |
-| `game.py` | 138 | Progress bar call |
+* Program tidak memerlukan GPU diskrit
+* Gunakan Python dan Pygame pada environment yang sama
+* Jika terjadi error `pygame`, pastikan PATH Python sudah benar
 
 ---
 
-## ✨ What's Next?
+## 📜 Lisensi
 
-Ide pengembangan lanjutan:
-- [ ] Multiple sound effects untuk karakter berbeda
-- [ ] Dialog choices (pilihan respons)
-- [ ] NPC sprite animation saat bicara
-- [ ] Text color & formatting
-- [ ] Quest difficulty system
-- [ ] Achievement badges
+Silakan lihat file `LICENSE` pada repository ini untuk informasi lisensi.
 
 ---
 
-## 🎊 Done!
+## 👤 Pengembang
 
-**3 fitur baru telah diimplementasikan:**
-1. 🔊 Sound Effect Bubble
-2. 📊 Progress Bar Centered
-3. 🚫 Player Freeze During Dialog
+Dikembangkan oleh **Wylmans Haryamukti**
 
-**Selamat! Game sekarang lebih immersive! 🎮✨**
-
----
-
-*Untuk detail lengkap, baca: DIALOGUE_CONTROLS.md*
+GitHub:
+[https://github.com/wylmans](https://github.com/wylmans)
