@@ -1,6 +1,7 @@
 """
 Game Simulasi Mahasiswa - Complete Version
 With Menu System, Save/Load, and Settings
+FIXED: Fullscreen & Resolution bugs
 """
 
 import pygame
@@ -29,15 +30,53 @@ except ImportError:
 
 pygame.init()
 
-# Initial screen setup
-SCREEN_WIDTH = 1080
-SCREEN_HEIGHT = 720
-screen = create_screen(SCREEN_WIDTH, SCREEN_HEIGHT, "Simulasi AMIK")
-clock = pygame.time.Clock()
+# Get available display modes from system
+def get_available_resolutions():
+    """Get list of supported resolutions from the display"""
+    modes = pygame.display.list_modes()
+    if modes == -1:  # All resolutions supported
+        # Return common 16:9 resolutions
+        return [
+            (1920, 1080),
+            (1680, 1050),
+            (1600, 900),
+            (1440, 900),
+            (1366, 768),
+            (1280, 720),
+            (1080, 720),
+            (960, 540)
+        ]
+    else:
+        # Filter for 16:9 and 16:10 aspect ratios
+        filtered = []
+        for width, height in modes:
+            aspect = width / height
+            # Accept 16:9 (1.777) and 16:10 (1.6)
+            if 1.5 <= aspect <= 1.8:
+                filtered.append((width, height))
+        return filtered if filtered else modes
 
-# Game systems
+# Get system's current resolution
+info = pygame.display.Info()
+SYSTEM_WIDTH = info.current_w
+SYSTEM_HEIGHT = info.current_h
+
+# Initial screen setup
 save_system = SaveSystem()
 settings = GameSettings()
+
+# Load saved resolution or use default
+SCREEN_WIDTH = settings.get("resolution_width", 1080)
+SCREEN_HEIGHT = settings.get("resolution_height", 720)
+
+# Ensure resolution is valid
+available_resolutions = get_available_resolutions()
+if (SCREEN_WIDTH, SCREEN_HEIGHT) not in available_resolutions:
+    SCREEN_WIDTH = 1080
+    SCREEN_HEIGHT = 720
+
+screen = create_screen(SCREEN_WIDTH, SCREEN_HEIGHT, "Simulasi AMIK")
+clock = pygame.time.Clock()
 
 # Apply settings
 is_fullscreen = settings.get("fullscreen", False)
@@ -52,6 +91,18 @@ main_menu.music_slider.value = settings.get("music_volume", 0.3) * 100
 main_menu.sound_slider.value = settings.get("sound_volume", 0.6) * 100
 main_menu.is_fullscreen = is_fullscreen
 main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+
+# Add available resolutions to menu if it has resolution support
+if hasattr(main_menu, 'available_resolutions'):
+    main_menu.available_resolutions = available_resolutions
+    main_menu.current_resolution_index = 0
+    # Find current resolution in list
+    for i, (w, h) in enumerate(available_resolutions):
+        if w == SCREEN_WIDTH and h == SCREEN_HEIGHT:
+            main_menu.current_resolution_index = i
+            break
+    if hasattr(main_menu, 'update_resolution_text'):
+        main_menu.update_resolution_text()
 
 # Pause menu
 pause_menu = PauseMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -88,6 +139,9 @@ current_challenge_quest_index = -1
 
 print("=" * 60)
 print("[GAME] SIMULASI MAHASISWA - AMIK")
+print(f"[INFO] System Resolution: {SYSTEM_WIDTH}x{SYSTEM_HEIGHT}")
+print(f"[INFO] Game Resolution: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+print(f"[INFO] Available Resolutions: {len(available_resolutions)}")
 print("=" * 60)
 
 
@@ -197,8 +251,87 @@ def initialize_game(player_name, load_save_data=None):
     print("=" * 60)
 
 
+def apply_settings(new_width, new_height, new_fullscreen):
+    """Apply new settings and recreate screen"""
+    global screen, SCREEN_WIDTH, SCREEN_HEIGHT, is_fullscreen
+    global main_menu, pause_menu
+
+    print(f"\n[SETTINGS] Applying new settings...")
+    print(f"[SETTINGS] Resolution: {new_width}x{new_height}")
+    print(f"[SETTINGS] Fullscreen: {new_fullscreen}")
+
+    # Save old values
+    old_music_volume = settings.get("music_volume", 0.3)
+    old_sound_volume = settings.get("sound_volume", 0.6)
+    if main_menu:
+        old_music_volume = main_menu.music_slider.value / 100
+        old_sound_volume = main_menu.sound_slider.value / 100
+
+    # Update globals
+    SCREEN_WIDTH = new_width
+    SCREEN_HEIGHT = new_height
+    is_fullscreen = new_fullscreen
+
+    # Save to settings
+    settings.set("resolution_width", SCREEN_WIDTH)
+    settings.set("resolution_height", SCREEN_HEIGHT)
+    settings.set("fullscreen", is_fullscreen)
+
+    # Recreate screen with new settings
+    flags = 0
+    if is_fullscreen:
+        flags = pygame.FULLSCREEN
+
+    try:
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags)
+    except Exception:
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    pygame.display.set_caption("Simulasi AMIK")
+
+    # Use actual surface size (handles DPI/scaling / compositor differences)
+    real_w, real_h = screen.get_size()
+    SCREEN_WIDTH = real_w
+    SCREEN_HEIGHT = real_h
+
+    # Update camera
+    camera.width = SCREEN_WIDTH
+    camera.height = SCREEN_HEIGHT
+
+    # Recreate menus with new resolution - this ensures they're centered correctly
+    main_menu = MainMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+    main_menu.music_slider.value = old_music_volume * 100
+    main_menu.sound_slider.value = old_sound_volume * 100
+    main_menu.is_fullscreen = is_fullscreen
+    main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+
+    # Update available resolutions in menu (if supported)
+    if hasattr(main_menu, 'available_resolutions'):
+        main_menu.available_resolutions = available_resolutions
+        main_menu.current_resolution_index = 0
+        for i, (w, h) in enumerate(available_resolutions):
+            if w == SCREEN_WIDTH and h == SCREEN_HEIGHT:
+                main_menu.current_resolution_index = i
+                break
+        if hasattr(main_menu, 'update_resolution_text'):
+            try:
+                main_menu.update_resolution_text()
+            except Exception:
+                pass
+
+    pause_menu = PauseMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
+    pause_menu.music_slider.value = old_music_volume * 100
+    pause_menu.sound_slider.value = old_sound_volume * 100
+    pause_menu.is_fullscreen = is_fullscreen
+    pause_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+
+    print("[OK] Settings applied!")
+    print(f"[OK] Screen recreated: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+    print(f"[OK] Menus recreated and centered")
+
+
 def toggle_fullscreen():
-    """Toggle fullscreen mode"""
+    """Toggle fullscreen mode (legacy function, use apply_settings instead)"""
     global screen, is_fullscreen
 
     is_fullscreen = not is_fullscreen
@@ -216,279 +349,280 @@ def toggle_fullscreen():
     main_menu.is_fullscreen = is_fullscreen
     main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
     pause_menu.is_fullscreen = is_fullscreen
-    pause_menu.fullscreen_toggle.text = main_menu.fullscreen_toggle.text
-    # Recompute layouts for menus so buttons remain centered
-    try:
-        main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
-        pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
-    except Exception:
-        pass
+    pause_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
 
 
 def start_quest_challenge(quest_index):
-    """Start code challenge untuk quest"""
+    """Start code challenge for a quest"""
     global game_state, current_challenge_quest_index
 
-    if game_state == "playing" and not dialogue_box.active:
-        quests = quest_manager.get_quest_list()
-        if 0 <= quest_index < len(quests):
-            quest = quests[quest_index]
-            if quest.code_challenge:
-                code_challenge_box.show(quest.code_challenge)
-                game_state = "code_challenge"
-                current_challenge_quest_index = quest_index
+    if not quest_manager:
+        return
+
+    if 0 <= quest_index < len(quest_manager.active_quests):
+        quest = quest_manager.active_quests[quest_index]
+        # Quest is a `Quest` object; show its code_challenge payload
+        try:
+            code_challenge_box.show(quest.code_challenge)
+        except Exception:
+            # Fallback if attribute missing
+            try:
+                code_challenge_box.show(quest["code_challenge"])
+            except Exception:
+                pass
+        game_state = "code_challenge"
+        current_challenge_quest_index = quest_index
 
 
-# Main game loop
+# ===== MAIN LOOP =====
 running = True
 while running:
+    # ===== EVENTS =====
     for event in pygame.event.get():
+        # Keep input state consistent
+        try:
+            Input.process_input(event)
+        except Exception:
+            pass
         if event.type == pygame.QUIT:
             running = False
 
-        # ===== MAIN MENU =====
+        # Main menu events
         if current_screen == "main_menu":
-            # If the modal is active, only handle modal events; otherwise forward to menu
-            result = None
-            if not newgame_warning_active:
-                result = main_menu.handle_event(event)
-            else:
-                # Modal handling: check mouse clicks for OK/Cancel when appropriate
+            # Handle modal events FIRST (before main menu)
+            if newgame_warning_active:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mx, my = event.pos
-                    # Compute modal button rects (match drawing logic below)
                     modal_w, modal_h = 700, 220
                     modal_x = (SCREEN_WIDTH - modal_w) // 2
                     modal_y = (SCREEN_HEIGHT - modal_h) // 2
 
                     btn_w, btn_h = 140, 48
                     gap = 20
-                    cancel_rect = pygame.Rect(modal_x + modal_w - btn_w - gap, modal_y + modal_h - btn_h - gap, btn_w, btn_h)
-                    ok_rect = pygame.Rect(modal_x + modal_w - btn_w * 2 - gap * 2, modal_y + modal_h - btn_h - gap, btn_w, btn_h)
+                    ok_x = modal_x + modal_w - btn_w * 2 - gap * 2
+                    ok_y = modal_y + modal_h - btn_h - gap
+                    cancel_x = modal_x + modal_w - btn_w - gap
+                    cancel_y = ok_y
 
-                    if cancel_rect.collidepoint((mx, my)):
-                        # Close modal without starting and return to main menu
-                        newgame_warning_active = False
-                        newgame_warning_timer = 0
-                        newgame_pending_player_name = ""
-                        try:
-                            main_menu.state = "main"
-                            main_menu.name_input.active = False
-                        except Exception:
-                            pass
+                    # Check OK button (only if countdown finished)
+                    if newgame_warning_timer == 0:
+                        if ok_x <= mx <= ok_x + btn_w and ok_y <= my <= ok_y + btn_h:
+                            newgame_warning_active = False
+                            initialize_game(newgame_pending_player_name)
+                            current_screen = "game"
 
-                    # OK only allowed when countdown finished
-                    if newgame_warning_timer <= 0 and ok_rect.collidepoint((mx, my)):
-                        # Start a fresh game using the pending name
-                        initialize_game(newgame_pending_player_name)
-                        current_screen = "game"
+                    # Check Cancel button
+                    if cancel_x <= mx <= cancel_x + btn_w and cancel_y <= my <= cancel_y + btn_h:
                         newgame_warning_active = False
                         newgame_pending_player_name = ""
+                # Don't process other events when modal is active
+                continue
 
-            if not newgame_warning_active:
-                if result == "exit":
-                    running = False
+            # Process main menu events when modal is not active
+            result = main_menu.handle_event(event)
 
-                elif result == "start_game":
+            if result in ("new_game", "start_game"):
+                # Get player name from menu
+                player_name = "Player"
+                if hasattr(main_menu, 'player_name') and main_menu.player_name:
                     player_name = main_menu.player_name
+                elif hasattr(main_menu, 'name_input') and hasattr(main_menu.name_input, 'text'):
+                    player_name = main_menu.name_input.text or "Player"
 
-                    # If there's an existing save, preserve previous auto-load behavior
-                    # (auto-load when no name entered). If a name was provided, show
-                    # the warning modal before starting a new game.
-                    if save_system.save_exists():
-                        if not player_name or not player_name.strip():
-                            save_data = save_system.load_game()
-                            if save_data:
-                                saved_name = save_data["player"]["name"]
-                                initialize_game(saved_name, save_data)
-                                current_screen = "game"
-                            else:
-                                initialize_game(player_name)
-                                current_screen = "game"
-                        else:
-                            # Show warning modal: user is attempting to start a new game
-                            newgame_warning_active = True
-                            newgame_warning_seconds = 3
-                            newgame_warning_timer = newgame_warning_seconds * 60
-                            newgame_pending_player_name = player_name
-                    else:
-                        initialize_game(player_name)
-                        current_screen = "game"
+                # Fallback: check for input field text directly
+                if hasattr(main_menu, 'name_input'):
+                    input_text = main_menu.name_input.text if hasattr(main_menu.name_input, 'text') else ""
+                    if input_text and input_text.strip():
+                        player_name = input_text.strip()
+
+                print(f"[DEBUG] New game - Player name: '{player_name}'")
+
+                # Show new-game warning modal if save exists
+                if save_system.save_exists():
+                    print("[DEBUG] Save exists, showing modal")
+                    newgame_warning_active = True
+                    newgame_warning_timer = newgame_warning_seconds * 60
+                    newgame_pending_player_name = player_name
+                else:
+                    # No save exists, start directly
+                    print("[DEBUG] No save, starting game directly")
+                    initialize_game(player_name)
+                    current_screen = "game"
 
             elif result == "load_game":
-                # Load existing save and start from it
-                if save_system.save_exists():
-                    save_data = save_system.load_game()
-                    if save_data:
-                        saved_name = save_data.get("player", {}).get("name", "Player")
-                        initialize_game(saved_name, save_data)
-                        current_screen = "game"
-                    else:
-                        print("[SAVE] Failed to load save file.")
-                else:
-                    print("[SAVE] No save file to load.")
+                save_data = save_system.load_game()
+                if save_data:
+                    player_name = save_data["player"]["name"]
+                    initialize_game(player_name, save_data)
+                    current_screen = "game"
+                    print("[OK] Game loaded!")
+
+            elif result in ("quit", "exit"):
+                running = False
+
+            elif result == "toggle_fullscreen":
+                # Use new apply_settings instead
+                new_fullscreen = main_menu.is_fullscreen
+                apply_settings(SCREEN_WIDTH, SCREEN_HEIGHT, new_fullscreen)
 
             elif result == "apply_settings":
-                # Apply settings without spam
-                settings.set_pending("music_volume", main_menu.music_slider.get_value())
-                settings.set_pending("sound_volume", main_menu.sound_slider.get_value())
-                settings.set_pending("fullscreen", main_menu.is_fullscreen)
+                # Apply ALL settings at once
+                new_music_volume = main_menu.music_slider.value / 100
+                new_sound_volume = main_menu.sound_slider.value / 100
+                new_fullscreen = main_menu.is_fullscreen
 
-                # Get selected resolution
-                if 0 <= main_menu.current_resolution_index < len(main_menu.resolutions):
-                    res_w, res_h = main_menu.resolutions[main_menu.current_resolution_index]
-                    settings.set_pending("resolution_width", res_w)
-                    settings.set_pending("resolution_height", res_h)
+                # Get resolution from menu if available
+                new_width = SCREEN_WIDTH
+                new_height = SCREEN_HEIGHT
+                if hasattr(main_menu, 'current_resolution_index') and hasattr(main_menu, 'available_resolutions'):
+                    res_idx = main_menu.current_resolution_index
+                    if 0 <= res_idx < len(main_menu.available_resolutions):
+                        new_width, new_height = main_menu.available_resolutions[res_idx]
 
-                # Save all at once
-                settings.apply_settings()
+                # Save audio settings
+                settings.set("music_volume", new_music_volume)
+                settings.set("sound_volume", new_sound_volume)
 
-                # Apply resolution change
-                SCREEN_WIDTH = settings.get("resolution_width", 1080)
-                SCREEN_HEIGHT = settings.get("resolution_height", 720)
+                # Apply display settings (resolution + fullscreen)
+                apply_settings(new_width, new_height, new_fullscreen)
 
-                if settings.get("fullscreen"):
-                    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-                else:
-                    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+                # Update music volume if game is running
+                if music_manager:
+                    music_manager.set_volume(new_music_volume)
 
-                camera.width = SCREEN_WIDTH
-                camera.height = SCREEN_HEIGHT
-                # Update menu layouts to reflect new resolution
-                try:
-                    main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
-                    pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
-                except Exception:
-                    pass
+                print("[OK] All settings applied!")
 
-        # ===== IN-GAME =====
+        # Game events
         elif current_screen == "game":
-            # Pause menu
+            if game_state == "ending_choice":
+                choice = ending_choice.handle_event(event)
+                if choice:
+                    ending_screen.set_ending(choice, quest_manager.completed_quests)
+                    game_state = "ending_screen"
+                    ending_choice.hide()
+
+            elif game_state == "ending_screen":
+                action = ending_screen.handle_event(event)
+                if action == "main_menu":
+                    current_screen = "main_menu"
+                    if music_manager:
+                        music_manager.stop()
+
+            # Pause menu events
             if pause_menu.active:
                 result = pause_menu.handle_event(event)
 
                 if result == "resume":
-                    pause_menu.hide()
+                    pause_menu.active = False
 
                 elif result == "save":
-                    success = save_system.save_game(player, quest_manager, game_state)
-                    pause_menu.show_save_notification(success)
+                    if player and quest_manager:
+                        # Save using SaveSystem API (player, quest_manager, game_state)
+                        success = save_system.save_game(player, quest_manager, game_state)
+                        # Show in-game save notification box
+                        try:
+                            pause_menu.show_save_notification(success)
+                        except Exception:
+                            pass
+                        if success:
+                            print("[OK] Game saved!")
+                        else:
+                            print("[SAVE] Failed to save game.")
+
+                elif result == "load":
+                    # Load existing save and resume game
+                    if save_system.save_exists():
+                        save_data = save_system.load_game()
+                        if save_data:
+                            saved_name = save_data.get("player", {}).get("name", "Player")
+                            initialize_game(saved_name, save_data)
+                            pause_menu.active = False
+                            current_screen = "game"
+                            print("[OK] Game loaded from pause menu!")
+                        else:
+                            pause_menu.show_save_notification(False)
+                    else:
+                        pause_menu.show_save_notification(False)
 
                 elif result == "main_menu":
-                    # Confirm dialog could be added here
-                    pause_menu.hide()
+                    pause_menu.active = False
                     current_screen = "main_menu"
-                    main_menu.state = "main"
-                    if music_manager:
-                        music_manager.stop()
-
-                elif result == "apply_settings":
-                    # Apply settings without spam
-                    settings.set_pending("music_volume", pause_menu.music_slider.get_value())
-                    settings.set_pending("sound_volume", pause_menu.sound_slider.get_value())
-                    settings.set_pending("fullscreen", pause_menu.is_fullscreen)
-
-                    # Get selected resolution
-                    if 0 <= pause_menu.current_resolution_index < len(pause_menu.resolutions):
-                        res_w, res_h = pause_menu.resolutions[pause_menu.current_resolution_index]
-                        settings.set_pending("resolution_width", res_w)
-                        settings.set_pending("resolution_height", res_h)
-
-                    # Save all at once
-                    settings.apply_settings()
-
-                    # Apply music volume immediately
-                    if music_manager:
-                        music_manager.set_volume(pause_menu.music_slider.get_value())
-
-                    # Apply resolution change
-                    SCREEN_WIDTH = settings.get("resolution_width", 1080)
-                    SCREEN_HEIGHT = settings.get("resolution_height", 720)
-
-                    if settings.get("fullscreen"):
-                        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-                    else:
-                        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-                    camera.width = SCREEN_WIDTH
-                    camera.height = SCREEN_HEIGHT
-                    # Update menu layouts after applying settings
+                    # Ensure main menu shows the main panel, not name input
                     try:
-                        main_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
-                        pause_menu.update_layout(SCREEN_WIDTH, SCREEN_HEIGHT)
+                        main_menu.state = "main"
+                        main_menu.name_input.active = False
                     except Exception:
                         pass
-
-            # Game controls
-            elif event.type == pygame.KEYDOWN:
-                Input.keys_down.add(event.key)
-
-                # ESC to pause
-                if event.key == pygame.K_ESCAPE:
-                    if game_state == "playing":
-                        pause_menu.show()
-                        pause_menu.music_slider.value = settings.get("music_volume", 0.3) * 100
-                        pause_menu.sound_slider.value = settings.get("sound_volume", 0.6) * 100
-                    elif game_state == "code_challenge":
-                        code_challenge_box.hide()
-                        game_state = "playing"
-                        current_challenge_quest_index = -1
-
-                # F3 for debug
-                if event.key == pygame.K_F3:
-                    debug_mode = not debug_mode
-
-                # Code challenge controls
-                if game_state == "code_challenge":
-                    if event.key == pygame.K_UP:
-                        code_challenge_box.move_selection(-1)
-                    elif event.key == pygame.K_DOWN:
-                        code_challenge_box.move_selection(1)
-                    elif event.key == pygame.K_PAGEUP:
-                        code_challenge_box.scroll_code(-1)
-                    elif event.key == pygame.K_PAGEDOWN:
-                        code_challenge_box.scroll_code(1)
-                    elif event.key == pygame.K_RETURN:
-                        code_challenge_box.submit_answer()
-
-                # Ending choice
-                elif game_state == "ending_choice":
-                    if event.key == pygame.K_UP:
-                        ending_choice.move_selection(-1)
-                    elif event.key == pygame.K_DOWN:
-                        ending_choice.move_selection(1)
-                    elif event.key == pygame.K_RETURN:
-                        choice = ending_choice.get_choice()
-                        ending_choice.hide()
-                        if choice == 0:
-                            game_state = "playing"
-                        else:
-                            quest_manager.mark_game_completed()
-                            ending_screen.show()
-                            game_state = "ending_screen"
-
-                # Ending screen
-                elif game_state == "ending_screen":
-                    if event.key == pygame.K_ESCAPE:
-                        current_screen = "main_menu"
+                    if music_manager:
                         music_manager.stop()
-                    elif event.key == pygame.K_r:
-                        quest_manager.reset_progress()
-                        ending_screen.hide()
-                        game_state = "playing"
 
-                # Playing state
-                elif game_state == "playing":
-                    # Music controls
-                    if event.key == pygame.K_n:
-                        music_manager.next_track()
-                    elif event.key == pygame.K_p:
-                        music_manager.previous_track()
+                elif result == "toggle_fullscreen":
+                    # Use new apply_settings instead
+                    new_fullscreen = pause_menu.is_fullscreen
+                    apply_settings(SCREEN_WIDTH, SCREEN_HEIGHT, new_fullscreen)
+
+                elif result == "apply_settings":
+                    # Apply ALL settings at once from pause menu
+                    new_music_volume = pause_menu.music_slider.value / 100
+                    new_sound_volume = pause_menu.sound_slider.value / 100
+                    new_fullscreen = pause_menu.is_fullscreen
+
+                    # Get resolution from menu if available
+                    new_width = SCREEN_WIDTH
+                    new_height = SCREEN_HEIGHT
+                    if hasattr(pause_menu, 'current_resolution_index') and hasattr(pause_menu, 'available_resolutions'):
+                        res_idx = pause_menu.current_resolution_index
+                        if 0 <= res_idx < len(pause_menu.available_resolutions):
+                            new_width, new_height = pause_menu.available_resolutions[res_idx]
+
+                    # Save audio settings
+                    settings.set("music_volume", new_music_volume)
+                    settings.set("sound_volume", new_sound_volume)
+
+                    # Apply display settings
+                    apply_settings(new_width, new_height, new_fullscreen)
+
+                    # Update music volume
+                    if music_manager:
+                        music_manager.set_volume(new_music_volume)
+
+                    print("[OK] All settings applied from pause menu!")
+
+            # Game input
+            else:
+                if event.type == pygame.KEYDOWN:
+                    # If in code challenge mode, route keys to the challenge UI
+                    if game_state == "code_challenge" and code_challenge_box and code_challenge_box.active:
+                        if event.key == pygame.K_UP:
+                            code_challenge_box.move_selection(-1)
+                        elif event.key == pygame.K_DOWN:
+                            code_challenge_box.move_selection(1)
+                        elif event.key == pygame.K_PAGEUP:
+                            code_challenge_box.scroll_code(-1)
+                        elif event.key == pygame.K_PAGEDOWN:
+                            code_challenge_box.scroll_code(1)
+                        elif event.key == pygame.K_RETURN:
+                            code_challenge_box.submit_answer()
+                        # don't fall through to other handlers for these keys
+                        continue
+                    # Pause menu
+                    if event.key == pygame.K_ESCAPE:
+                        if game_state in ["playing", "code_challenge"]:
+                            pause_menu.active = True
+                            pause_menu.current_tab = "main"
+
+                    # Debug toggle
+                    elif event.key == pygame.K_F3:
+                        debug_mode = not debug_mode
+                        print(f"Debug mode: {debug_mode}")
+
+                    # Music mute
                     elif event.key == pygame.K_m:
-                        if music_manager.volume > 0:
-                            music_manager.set_volume(0)
-                        else:
-                            music_manager.set_volume(settings.get("music_volume", 0.3))
+                        if music_manager:
+                            if music_manager.volume > 0:
+                                music_manager.set_volume(0)
+                            else:
+                                music_manager.set_volume(settings.get("music_volume", 0.3))
 
                     # NPC interaction
                     elif event.key in [pygame.K_e, pygame.K_SPACE]:
@@ -520,9 +654,8 @@ while running:
                     elif event.key == pygame.K_5:
                         start_quest_challenge(4)
 
-            elif event.type == pygame.KEYUP:
-                if event.key in Input.keys_down:
-                    Input.keys_down.remove(event.key)
+                elif event.type == pygame.KEYUP:
+                    pass
 
             if music_manager:
                 music_manager.handle_music_end(event)
