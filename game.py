@@ -190,20 +190,20 @@ def initialize_game(player_name, load_save_data=None):
         spawn_x, spawn_y = player_spawn
 
     player = Player(
-        "karakter/Kang_azhar.png",
-        "karakter/Kang_azhar.json",
+        "karakter/mahasiswa.png",
+        "karakter/mahasiswa.json",
         spawn_x, spawn_y,
         player_name
     )
 
     # Load directional sprites
     try:
-        player.set_directional_sprite("left", "karakter/Kang_azhar_kiri.png", "karakter/Kang_azhar_kiri.json")
-        player.set_directional_sprite("right", "karakter/Kang_azhar_kanan.png", "karakter/Kang_azhar_kanan.json")
-        player.set_directional_sprite("up", "karakter/Kang_azhar_atas.png", "karakter/Kang_azhar_atas.json")
-        player.set_directional_sprite("down", "karakter/Kang_azhar_bawah.png", "karakter/Kang_azhar_bawah.json")
-        player.set_idle_directional_sprite("left", "karakter/Kang_azhar_idle_kiri.png", "karakter/Kang_azhar_idle_kiri.json")
-        player.set_idle_directional_sprite("right", "karakter/Kang_azhar_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
+        player.set_directional_sprite("left", "karakter/mahasiswa_kiri.png", "karakter/mahasiswa_kiri.json")
+        player.set_directional_sprite("right", "karakter/mahasiswa_kanan.png", "karakter/mahasiswa_kanan.json")
+        player.set_directional_sprite("up", "karakter/mahasiswa_atas.png", "karakter/mahasiswa_atas.json")
+        player.set_directional_sprite("down", "karakter/mahasiswa_bawah.png", "karakter/mahasiswa_bawah.json")
+        player.set_idle_directional_sprite("left", "karakter/mahasiswa_idle_kiri.png", "karakter/mahasiswa_idle_kiri.json")
+        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
     except Exception as e:
         print(f"[WARNING] Some sprites not loaded: {e}")
 
