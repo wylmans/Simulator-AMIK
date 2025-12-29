@@ -211,6 +211,9 @@ class MainMenu:
                                    400, "Music Volume", initial_val=30)
         self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 40,
                                    400, "Sound Effects", initial_val=60)
+        # Camera zoom slider (percent)
+        self.zoom_slider = Slider(screen_width // 2 - 200, screen_height // 2 + 40,
+                      400, "Camera Zoom (%)", min_val=50, max_val=200, initial_val=100)
 
         # Resolution selector
         self.resolution_left = Button(screen_width // 2 - 200, screen_height // 2 + 50,
@@ -282,6 +285,10 @@ class MainMenu:
         self.music_slider.y = screen_height // 2 - 120
         self.sound_slider.x = screen_width // 2 - 200
         self.sound_slider.y = screen_height // 2 - 40
+        self.zoom_slider.x = screen_width // 2 - 200
+        self.zoom_slider.y = screen_height // 2 + 40
+        self.zoom_slider.x = screen_width // 2 - 200
+        self.zoom_slider.y = screen_height // 2 + 40
 
         # Resolution buttons
         self.resolution_left.rect = pygame.Rect(screen_width // 2 - 200, screen_height // 2 + 50, 60, 40)
@@ -337,6 +344,11 @@ class MainMenu:
         elif self.state == "settings":
             self.music_slider.handle_event(event)
             self.sound_slider.handle_event(event)
+            # zoom_slider exists for both menus
+            try:
+                self.zoom_slider.handle_event(event)
+            except Exception:
+                pass
             self.fullscreen_toggle.update(mouse_pos)
             self.resolution_left.update(mouse_pos)
             self.resolution_right.update(mouse_pos)
@@ -344,7 +356,7 @@ class MainMenu:
             self.back_button.update(mouse_pos)
 
             # Mark as changed if sliders moved
-            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging):
+            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging or self.zoom_slider.dragging):
                 self.settings_changed = True
 
             if self.fullscreen_toggle.is_clicked(event):
@@ -446,6 +458,7 @@ class MainMenu:
         # Sliders
         self.music_slider.draw(screen)
         self.sound_slider.draw(screen)
+        self.zoom_slider.draw(screen)
 
         # Resolution selector
         res_label = self.subtitle_font.render("Resolution:", True, (255, 255, 255))
@@ -508,6 +521,9 @@ class PauseMenu:
                                    400, "Music Volume", initial_val=30)
         self.sound_slider = Slider(screen_width // 2 - 200, screen_height // 2 - 40,
                                    400, "Sound Effects", initial_val=60)
+        # Camera zoom slider (percent)
+        self.zoom_slider = Slider(screen_width // 2 - 200, screen_height // 2 + 40,
+                      400, "Camera Zoom (%)", min_val=50, max_val=200, initial_val=100)
 
         # Resolution selector
         self.resolution_left = Button(screen_width // 2 - 200, screen_height // 2 + 50,
@@ -631,6 +647,7 @@ class PauseMenu:
         elif self.state == "settings":
             self.music_slider.handle_event(event)
             self.sound_slider.handle_event(event)
+            self.zoom_slider.handle_event(event)
             self.fullscreen_toggle.update(mouse_pos)
             self.resolution_left.update(mouse_pos)
             self.resolution_right.update(mouse_pos)
@@ -638,7 +655,7 @@ class PauseMenu:
             self.back_button.update(mouse_pos)
 
             # Mark as changed
-            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging):
+            if event.type == pygame.MOUSEMOTION and (self.music_slider.dragging or self.sound_slider.dragging or self.zoom_slider.dragging):
                 self.settings_changed = True
 
             if self.fullscreen_toggle.is_clicked(event):
@@ -688,6 +705,7 @@ class PauseMenu:
         overlay.fill((0, 0, 0))
         screen.blit(overlay, (0, 0))
 
+        # Draw current pause menu state
         if self.state == "pause":
             self._draw_pause_menu(screen)
         elif self.state == "settings":
@@ -730,6 +748,8 @@ class PauseMenu:
         # Sliders
         self.music_slider.draw(screen)
         self.sound_slider.draw(screen)
+        # Camera zoom (pause menu settings)
+        self.zoom_slider.draw(screen)
 
         # Resolution selector
         res_label = self.subtitle_font.render("Resolution:", True, (255, 255, 255))

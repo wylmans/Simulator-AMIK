@@ -219,8 +219,14 @@ class Player:
         active_sprite.update(dt)
 
         # Update camera
-        camera.x = self.x - camera.width / 2 + 16  # Center on sprite (32/2 = 16)
-        camera.y = self.y - camera.height / 2 + 32  # Center vertically
+        # Center camera on player in world coordinates, taking zoom into account
+        try:
+            z = camera.zoom if hasattr(camera, 'zoom') else 1.0
+            camera.x = self.x - (camera.width / z) / 2 + 16  # center horizontally
+            camera.y = self.y - (camera.height / z) / 2 + 32  # center vertically (sprite pivot)
+        except Exception:
+            camera.x = self.x - camera.width / 2 + 16
+            camera.y = self.y - camera.height / 2 + 32
 
     def _get_active_sprite(self):
         """Get the sprite to use based on current direction and movement state"""
@@ -317,9 +323,10 @@ class Player:
         # Render name text
         name_surface = self.name_font.render(self.name, True, self.name_color)
 
-        # Calculate position (centered above sprite)
-        name_x = self.x - camera.x + 16 - name_surface.get_width() // 2
-        name_y = self.y - camera.y - 10  # 10px above sprite
+        # Calculate position (centered above sprite), in screen space respecting zoom
+        z = getattr(camera, 'zoom', 1.0)
+        name_x = int(round((self.x - camera.x) * z + 16 - name_surface.get_width() // 2))
+        name_y = int(round((self.y - camera.y) * z - 10))  # 10px above sprite
 
         # Draw background (semi-transparent)
         bg_padding = 4
@@ -346,8 +353,9 @@ class Player:
         self.collision_box.draw_debug(screen, self.x, self.y, camera)
 
         # Draw center point
-        center_x = int(self.x - camera.x + 16)
-        center_y = int(self.y - camera.y + 32)
+        z = getattr(camera, 'zoom', 1.0)
+        center_x = int(round((self.x - camera.x) * z + 16))
+        center_y = int(round((self.y - camera.y) * z + 32))
         pygame.draw.circle(screen, (255, 0, 255), (center_x, center_y), 3)
 
         # Draw direction indicator

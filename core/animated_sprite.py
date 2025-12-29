@@ -57,6 +57,9 @@ class AnimatedSprite:
         frames_data = data['frames']
 
         # Kelompokkan frames berdasarkan animation tag
+        # Prepare frame surfaces cache
+        self.frame_surfaces = {}
+
         if 'meta' in data and 'frameTags' in data['meta']:
             # Jika ada animation tags
             for tag in data['meta']['frameTags']:
@@ -101,6 +104,16 @@ class AnimatedSprite:
                             })
 
                 self.animations[anim_name] = frames
+
+        # Pre-extract surfaces for all frames to avoid per-frame Surface creation
+        for anim_name, frames in self.animations.items():
+            surf_list = []
+            for frame_data in frames:
+                rect = frame_data['rect']
+                frame_surface = pygame.Surface((rect['w'], rect['h']), pygame.SRCALPHA)
+                frame_surface.blit(self.spritesheet, (0, 0), (rect['x'], rect['y'], rect['w'], rect['h']))
+                surf_list.append(frame_surface)
+            self.frame_surfaces[anim_name] = surf_list
         else:
             # Jika tidak ada tags, semua frame jadi "idle"
             frames = []
@@ -131,6 +144,8 @@ class AnimatedSprite:
         }
 
         self.using_fallback = True
+        # Pre-extract fallback frame
+        self.frame_surfaces = {'idle': [self.spritesheet.copy()]}
         print(f"[FALLBACK] Using fallback sprite (colored box)")
 
     def play_animation(self, animation_name):
@@ -168,15 +183,17 @@ class AnimatedSprite:
         if not self.animations or self.current_animation not in self.animations:
             return self.spritesheet
 
+        # Return pre-extracted surface
+        anim_surfs = self.frame_surfaces.get(self.current_animation)
+        if anim_surfs:
+            idx = self.current_frame % len(anim_surfs)
+            return anim_surfs[idx]
+        # Fallback
         anim = self.animations[self.current_animation]
         frame_data = anim[self.current_frame]
         rect = frame_data['rect']
-
-        # Extract frame dari spritesheet
         frame_surface = pygame.Surface((rect['w'], rect['h']), pygame.SRCALPHA)
-        frame_surface.blit(self.spritesheet, (0, 0),
-                          (rect['x'], rect['y'], rect['w'], rect['h']))
-
+        frame_surface.blit(self.spritesheet, (0, 0), (rect['x'], rect['y'], rect['w'], rect['h']))
         return frame_surface
 
     def draw(self, screen, offset_x=0, offset_y=0):
@@ -188,8 +205,11 @@ class AnimatedSprite:
             offset_x, offset_y: Offset tambahan (optional)
         """
         image = self.get_current_image()
-        screen.blit(image, (self.x - camera.x + offset_x,
-                           self.y - camera.y + offset_y))
+        # Position should respect camera zoom for consistent placement
+        zoom = getattr(camera, 'zoom', 1.0)
+        sx = int(round((self.x - camera.x) * zoom + offset_x))
+        sy = int(round((self.y - camera.y) * zoom + offset_y))
+        screen.blit(image, (sx, sy))
 
     def get_rect(self):
         """Get bounding rect untuk collision"""
@@ -226,10 +246,17 @@ class SimpleAnimatedSprite:
         self.frame_timer = 0
 
         # Try load sprite
+        self.frame_surfaces = []
         if os.path.exists(sprite_path):
             try:
                 self.spritesheet = pygame.image.load(sprite_path).convert_alpha()
                 self.using_fallback = False
+                # Pre-extract frames
+                for i in range(self.num_frames):
+                    frame_x = i * self.frame_width
+                    frame_surface = pygame.Surface((self.frame_width, self.frame_height), pygame.SRCALPHA)
+                    frame_surface.blit(self.spritesheet, (0, 0), (frame_x, 0, self.frame_width, self.frame_height))
+                    self.frame_surfaces.append(frame_surface)
                 print(f"✅ Loaded simple sprite: {os.path.basename(sprite_path)}")
             except:
                 self._create_fallback(fallback_color)
@@ -258,19 +285,22 @@ class SimpleAnimatedSprite:
         """Get current frame"""
         if self.using_fallback or self.num_frames <= 1:
             return self.spritesheet
-
-        # Extract frame dari strip
+        if self.frame_surfaces:
+            idx = self.current_frame % len(self.frame_surfaces)
+            return self.frame_surfaces[idx]
+        # Fallback: extract on the fly
         frame_x = self.current_frame * self.frame_width
-        frame_surface = pygame.Surface((self.frame_width, self.frame_height),
-                                       pygame.SRCALPHA)
-        frame_surface.blit(self.spritesheet, (0, 0),
-                          (frame_x, 0, self.frame_width, self.frame_height))
+        frame_surface = pygame.Surface((self.frame_width, self.frame_height), pygame.SRCALPHA)
+        frame_surface.blit(self.spritesheet, (0, 0), (frame_x, 0, self.frame_width, self.frame_height))
         return frame_surface
 
     def draw(self, screen):
         """Render sprite"""
         image = self.get_current_image()
-        screen.blit(image, (self.x - camera.x, self.y - camera.y))
+        zoom = getattr(camera, 'zoom', 1.0)
+        sx = int(round((self.x - camera.x) * zoom))
+        sy = int(round((self.y - camera.y) * zoom))
+        screen.blit(image, (sx, sy))
 
     def get_rect(self):
         """Get collision rect"""

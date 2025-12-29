@@ -91,6 +91,19 @@ main_menu.music_slider.value = settings.get("music_volume", 0.3) * 100
 main_menu.sound_slider.value = settings.get("sound_volume", 0.6) * 100
 main_menu.is_fullscreen = is_fullscreen
 main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+# Camera zoom from settings (stored as float, 1.0 = 100%)
+initial_zoom = settings.get("camera_zoom", 1.0)
+try:
+    from core.camera import camera as _cam
+    _cam.zoom = initial_zoom
+except Exception:
+    pass
+
+# Set zoom slider initial value
+try:
+    main_menu.zoom_slider.value = initial_zoom * 100
+except Exception:
+    pass
 
 # Add available resolutions to menu if it has resolution support
 if hasattr(main_menu, 'available_resolutions'):
@@ -110,6 +123,10 @@ pause_menu.music_slider.value = main_menu.music_slider.value
 pause_menu.sound_slider.value = main_menu.sound_slider.value
 pause_menu.is_fullscreen = main_menu.is_fullscreen
 pause_menu.fullscreen_toggle.text = main_menu.fullscreen_toggle.text
+try:
+    pause_menu.zoom_slider.value = main_menu.zoom_slider.value
+except Exception:
+    pass
 
 # Game state management
 current_screen = "main_menu"  # "main_menu", "game", "ending"
@@ -190,20 +207,20 @@ def initialize_game(player_name, load_save_data=None):
         spawn_x, spawn_y = player_spawn
 
     player = Player(
-        "karakter/Kang_azhar.png",
-        "karakter/Kang_azhar.json",
+        "karakter/mahasiswa.png",
+        "karakter/mahasiswa.json",
         spawn_x, spawn_y,
         player_name
     )
 
     # Load directional sprites
     try:
-        player.set_directional_sprite("left", "karakter/Kang_azhar_kiri.png", "karakter/Kang_azhar_kiri.json")
-        player.set_directional_sprite("right", "karakter/Kang_azhar_kanan.png", "karakter/Kang_azhar_kanan.json")
-        player.set_directional_sprite("up", "karakter/Kang_azhar_atas.png", "karakter/Kang_azhar_atas.json")
-        player.set_directional_sprite("down", "karakter/Kang_azhar_bawah.png", "karakter/Kang_azhar_bawah.json")
-        player.set_idle_directional_sprite("left", "karakter/Kang_azhar_idle_kiri.png", "karakter/Kang_azhar_idle_kiri.json")
-        player.set_idle_directional_sprite("right", "karakter/Kang_azhar_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
+        player.set_directional_sprite("left", "karakter/mahasiswa_kiri.png", "karakter/mahasiswa_kiri.json")
+        player.set_directional_sprite("right", "karakter/mahasiswa_kanan.png", "karakter/mahasiswa_kanan.json")
+        player.set_directional_sprite("up", "karakter/mahasiswa_atas.png", "karakter/mahasiswa_atas.json")
+        player.set_directional_sprite("down", "karakter/mahasiswa_bawah.png", "karakter/mahasiswa_bawah.json")
+        player.set_idle_directional_sprite("left", "karakter/mahasiswa_idle_kiri.png", "karakter/mahasiswa_idle_kiri.json")
+        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
     except Exception as e:
         print(f"[WARNING] Some sprites not loaded: {e}")
 
@@ -263,9 +280,14 @@ def apply_settings(new_width, new_height, new_fullscreen):
     # Save old values
     old_music_volume = settings.get("music_volume", 0.3)
     old_sound_volume = settings.get("sound_volume", 0.6)
+    old_zoom = settings.get("camera_zoom", 1.0)
     if main_menu:
         old_music_volume = main_menu.music_slider.value / 100
         old_sound_volume = main_menu.sound_slider.value / 100
+        try:
+            old_zoom = main_menu.zoom_slider.value / 100
+        except Exception:
+            old_zoom = settings.get("camera_zoom", 1.0)
 
     # Update globals
     SCREEN_WIDTH = new_width
@@ -276,6 +298,8 @@ def apply_settings(new_width, new_height, new_fullscreen):
     settings.set("resolution_width", SCREEN_WIDTH)
     settings.set("resolution_height", SCREEN_HEIGHT)
     settings.set("fullscreen", is_fullscreen)
+    # Save camera zoom
+    settings.set("camera_zoom", old_zoom)
 
     # Recreate screen with new settings
     flags = 0
@@ -297,6 +321,10 @@ def apply_settings(new_width, new_height, new_fullscreen):
     # Update camera
     camera.width = SCREEN_WIDTH
     camera.height = SCREEN_HEIGHT
+    try:
+        camera.zoom = old_zoom
+    except Exception:
+        pass
 
     # Recreate menus with new resolution - this ensures they're centered correctly
     main_menu = MainMenu(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -304,6 +332,10 @@ def apply_settings(new_width, new_height, new_fullscreen):
     main_menu.sound_slider.value = old_sound_volume * 100
     main_menu.is_fullscreen = is_fullscreen
     main_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+    try:
+        main_menu.zoom_slider.value = old_zoom * 100
+    except Exception:
+        pass
 
     # Update available resolutions in menu (if supported)
     if hasattr(main_menu, 'available_resolutions'):
@@ -324,6 +356,10 @@ def apply_settings(new_width, new_height, new_fullscreen):
     pause_menu.sound_slider.value = old_sound_volume * 100
     pause_menu.is_fullscreen = is_fullscreen
     pause_menu.fullscreen_toggle.text = f"Fullscreen: {'ON' if is_fullscreen else 'OFF'}"
+    try:
+        pause_menu.zoom_slider.value = old_zoom * 100
+    except Exception:
+        pass
 
     print("[OK] Settings applied!")
     print(f"[OK] Screen recreated: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
@@ -774,7 +810,7 @@ while running:
             screen.blit(cancel_surf, cancel_rect)
 
     elif current_screen == "game":
-        screen.fill((30, 150, 50))
+        screen.fill((0, 0, 0))  # Black background
 
         if game_state == "ending_screen":
             ending_screen.draw(screen, quest_manager.completed_quests)

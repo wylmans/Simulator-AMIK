@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="7" nextobjectid="286">
+ <tileset firstgid="1" source="TEMBOK COKLAT.tsx"/>
+ <tileset firstgid="37" source="tembok parkiran.tsx"/>
+ <tileset firstgid="46" source="abu sedang corak.tsx"/>
+ <tileset firstgid="110" source="abu sedeng polos.tsx"/>
+ <tileset firstgid="174" source="abu muda polos.tsx"/>
+ <tileset firstgid="238" source="rumput ijo muda.tsx"/>
+ <tileset firstgid="302" source="abu anget.tsx"/>
+ <tileset firstgid="366" source="lantai abu sedeng.tsx"/>
+ <tileset firstgid="430" source="coklat polos.tsx"/>
+ <tileset firstgid="494" source="rumput ijo sedeng.tsx"/>
+ <tileset firstgid="558" source="rumput ijo tua.tsx"/>
+ <tileset firstgid="622" source="PakAldoo.tsx"/>
+ <tileset firstgid="624" source="Kursidepan.tsx"/>
+ <tileset firstgid="626" source="Kursilorong.tsx"/>
+ <tileset firstgid="628" source="Mejadepan.tsx"/>
+ <tileset firstgid="630" source="Mejapintumasuk.tsx"/>
+ <tileset firstgid="632" source="Metal_01_Grey_2.tsx"/>
+ <tileset firstgid="696" source="mejakursiLabBNI.tsx"/>
+ <tileset firstgid="697" source="mejakursidosen.tsx"/>
+ <tileset firstgid="698" source="kursisiswa.tsx"/>
+ <tileset firstgid="699" source="revisikursiaula.tsx"/>
+ <tileset firstgid="700" source="WhiteboardLabBNI.tsx"/>
+ <tileset firstgid="701" source="ScreenProyektor.tsx"/>
+ <tileset firstgid="702" source="WhiteboardLab.tsx"/>
+ <tileset firstgid="703" source="WhiteboardKelas.tsx"/>
+ <tileset firstgid="704" source="ScreenKelas.tsx"/>
+ <tileset firstgid="705" source="lokerrrperpus.tsx"/>
+ <tileset firstgid="706" source="revisi meja perpus.tsx"/>
+ <tileset firstgid="707" source="revisi rak buku.tsx"/>
+ <tileset firstgid="708" source="tong sampah perpus.tsx"/>
+ <tileset firstgid="709" source="rak karpet.tsx"/>
+ <tileset firstgid="710" source="rak meja pinggir.tsx"/>
+ <tileset firstgid="713" source="mejaisiabsen.tsx"/>
+ <tileset firstgid="715" source="karpetperpus.tsx"/>
+ <tileset firstgid="763" source="KursiAula.tsx"/>
+ <tileset firstgid="764" source="mejaTUdepan.tsx"/>
+ <tileset firstgid="767" source="mesinmakanan.tsx"/>
+ <tileset firstgid="769" source="pajanganlorong.tsx"/>
+ <tileset firstgid="770" source="karpet aula.tsx"/>
+ <tileset firstgid="931" source="acaula.tsx"/>
+ <tileset firstgid="933" source="acaulabelakang.tsx"/>
+ <tileset firstgid="935" source="toilet.tsx"/>
+ <layer id="2" name="lantai" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   <chunk x="-16" y="-16" width="16" height="16">
+   eJzd0rUOA0EMRdH9ojAzbpiZmZP/b3ObkSxrs0raPOnoFaNxYdmy/iseeOGDHwEEEUL4i/8RRBFDHAkkkUJazDetk0EWOeRRQBEllMV80zo2KqiihjoaaKIl5pvWaaODLnroY4AhRmK+aZ0xJphihjkWWGIl5pvWWWODLXbY44AjTmK+aZ0zLrjihjseeOIl5pv+5b8t3k3ruN2P3O2n/27347RbHbf7cdqtjtv9OO3mDVTdLdw=
+  </chunk>
+   <chunk x="0" y="-16" width="16" height="16">
+   eJzl0bcOwjAUheE8Uaihh04oQ4AMoffe3n/lZ0CKrm5kdiJ9y7Hs+B5b1n9/NhJIIoW0yLT1DLJwkEMeBRRREplpfxU11NFAU2Ta+WVU4MJDFz30MRCZdn4LbXTgY4gRxghE5hlmCDHBFDPMReZHZtDOWWODLXbYiyyMzKB1ccYFV9wMd9W6+O6742HoW+t6gSVWhn87MV0fcMTph7fWuv7c+YmX4a3tmK7fkGEymg==
+  </chunk>
+   <chunk x="16" y="-16" width="16" height="16">
+   eJztzEcKAlEQRdFekdk256xtTm3O2f2PvQ4KitqCFhz4cB/fcf73yxdX7wCCCCGMCKKIqWY30r//uEggiRTSyCCrmt1IzyGPAooooYwKqqrZjfQa6migiRba6MBTzW6kd9FDHwMMMcIYE9XsRvoUM8zhY4ElVlirZjfSN9hihz0OOOKEs2p2I/2CK26444EnXnirZjcfGxglYg==
+  </chunk>
+   <chunk x="32" y="-16" width="16" height="16">
+   eJztyycSgDAABdGciWIohmIgmAQMxVAM5f6WPcO3sDNPrjF/Xy5AiAix8CdIkSEX/gIlKtTC36CFRSf8Dh49BuEfMWHGIvwrNuw4hP/EhRuP8L+mRwnx
+  </chunk>
+   <chunk x="-16" y="0" width="16" height="16">
+   eJyl0kcOwkAQRNE5kckmiiyyMElkkRak+x+A7yWmNJoRI71lqd3tMub7BUghjQyyyCGPOhpoooW2+X0hiiihjAqqqKGHPgYYYiTyakYHXUwRYYY5FiKvZowxwRobbLHDXuTVjCVWOOGMC664ibyaccARdzzwxAtvkbfdvyD288kHYj+ffCj288nH/zZ5Q598vHvyhj55l/7Y8i79sfXfpT+2+f/2R33bBz1+MwQ=
+  </chunk>
+   <chunk x="0" y="0" width="16" height="16">
+   eJyN01lPwlAQhuHzi1wQC6IsWkBcCiiLC1CUpaLA/7/1NemESXOm8eK5aiYz35lp6JxrooU2btHBHe7xgEccIcEXNvjGj/oeoYse+njCMwYYIkAJZVyggkv1fYQxXvCKN7xjgilqqKOBa9wgVN9niDFPZz3GCU5RyMm2xAprlc9Xf4YizjPZttj9o+Yv6xWqmWwyh/U+UhOqPX1ikc4uc1jvIzV6T7K7rZojb/dR2sOXUebI2/0orfVllDms3UvPwMgoPWJjPulZMzLK/SRGvfRsGxn1/eTdXdfIKPezN95Heo7d4b4/3OEG9I343kd6xs7///4CyipJew==
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJydk7EORUAUBU/8EqpHhcpToXpPhQr/3yjc4sqtRDKTnHKyye7sJmm3HWIUttLWQL92t4P+190R+oO7E/T/7q7QX9yl93+/HT0/tWW2HPofRQOEStEAoVU0QOgVDRB+igYIs6IBwqbn/3sm7/4FHykQ3Q==
+  </chunk>
+   <chunk x="-16" y="16" width="16" height="16">
+   eJyl0seOwkAQRVG+iDDknHPOOQ1Dhv/fzl3QUlMqgRElnZ2f/brcLtfzuOGBFz78wI8AUkiLZ+S8ypdQ/iLfQhshhBH5MD/C2DpH5sP8CmvrHBUlb3eLIoY4Ejjg+DiH+Y4cu1v2TZ+gkre7Vd/0SSp5s+MOukqfHPIooKjkzY4nmCp9aqijgaaSNzveYKv06aGPAYZKXu5L9plhjgWWDvKyzy92+MPeQd788xPOuOCKG+4O8vL+yffJcXL/7C7/tqEy1w==
+  </chunk>
+   <chunk x="0" y="16" width="16" height="16">
+   eJx10sduAkEQhOF9InKyyWAwmMyBnAyIsLz/3T+SR2qNag6f9jLbU9W76SiKMsgihzx66OMHBxxxwx0PPBHjhbR4f4oZ5ua997OLb2/+Bz5RRgVVrLDGBlvssMcYE29+Ey208YUOTkggiZTJuMDSm+9yDDDE6L9jAUWUTEa3i/f8X5y9+XYHNdTRMBnVDu18uwOVX/W38+0OVH7V334LuwOVX/WfBrKqb636rwJZVVeV/xTIqs6q/I9AVnfWdlP540BWd9Z2U/fEgazuv7fd1D2vQK8Lrt6d6p4/XF9Miw==
+  </chunk>
+   <chunk x="16" y="16" width="16" height="16">
+   eJzLYWBgyAViVwZM8IcJgvEBbyD2AWJfHPr/EtAfDMQhQBxKpv3RQBwDxLE49BMCyUCcAsSpZOrPBuIcBkgYkgPw+Z8YgM//xAB8/icGUOr/oe5+fOmfGDDQ8Q8AW+QZbA==
+  </chunk>
+   <chunk x="-16" y="32" width="16" height="16">
+   eJzt0jduQlEUBNC/IoNJBoMwwTLR4EROpiHtfwGclu8nhAsKJEY65UxxdaPoNGVeqFClRp1XNmzZsecQ/c0bDZq0aNOhe2H/gQRJHkmRJnPv30Q/xxN5CjxTpHRh/5r/9x7Yj6dHnw8++eKbHwaB/XiGjBgzYcqMOYvAfjzn7p8N7P+3v2TFL2uOVpU3yA==
+  </chunk>
+   <chunk x="0" y="32" width="16" height="16">
+   eJyd0ccKwkAUheE8kR07dmIlVmIlVmKJ77/2X8zARcZJcPGRTe5c7jmR4zgh7njgiRcivOFhihkCHHHCGRfxXwppZJBFDnn4WGMTs6eIEsqooIra104XfQwwxCjBfrlT3jLHIsH+upiTt2yxE/MNNNFCGx100RNztvxMt40xEXNJe9K3LbGKmdNf0217HFS2v97Q86bbrripbIM/+yuobMMfN+qcbf256g3TjTpnW3+eesN0o87Z1p+v3jBlqHO29RdY+tE52/oLLf18ABNlU2g=
+  </chunk>
+   <chunk x="16" y="32" width="16" height="16">
+   eJxLZmBgSAHiVAbyQDYQ5wBxLpn6vYHYB4h9ydQfDMQhQBxKpv5oII4B4lgy9SczDGz45ULttiVTP8xuVzL1j8YfZfEHc7spmfphbic3/gH5LBFa
+  </chunk>
+   <chunk x="-16" y="48" width="16" height="16">
+   eJzF0ccKwzAQRVF9UXovTu/gNEiFVEj9/33uQgtnosHGmzw4mwcjpJEx30kgiRTSyCCLHPK44Y4HnuY3YfMFFFFCOca8hwaaaDnm5fkVVFFDHX0MMMTIMS/Pb6ODLnrwMcUM8xj3X2GNDbYR54PdAUeccI74/mAX9n+u92s78Rzzcr9jpZvYXkbud6F0S9vLyP3ulG5vexm534vSXW0vI/f7Urq37f+dD5iQLzk=
+  </chunk>
+   <chunk x="0" y="48" width="16" height="16">
+   eJyV0tcKwkAQheE8kQ17r7F3jT32ru9/6y9ECMusxsB3EUJm9hz2ZhjGHTbW2GCLHfY44IgTzrjgipvzXxKpL98feGKOBZZYIYwIiiihgy566Hs4TxoZNNCEhQmmmHk4TxkVDDD8ss9EFTXUXftaaLty6fapuT77RhgLuYLwwY+AkEvtUc2VQBQxxD30mHXkkEdBef/Voyl0pOtMmtUROtJ1Js21hI50nUlzbaEjXWfS3JOQS9eZNPefR5r7z+O+V+97FsILwoFQTQ==
+  </chunk>
+   <chunk x="16" y="48" width="16" height="16">
+   eJzLYWBgyAViVwbygDcQ+wCxL5n6g4E4BIhDydQfDcQxQBxLpv5kIE4B4lQy9WcDcQ4DJAzJAUPd/ZTqH00/lIWfMRCbALEpmfoB5RgRSw==
+  </chunk>
+   <chunk x="64" y="48" width="16" height="16">
+   eJzt0TcOwlAQRdG/IoLJOWeTcwbbZNh/y61HI/2Wgiud6nUzxvz7pUIII4IoHMQQR0LZZUmkkEYGWeSQR0HZZUWUUEYFVdRQR0PZZU200EYHXfTgoq/ssgGGGGGMCaaYYa7ssgWWWGGNDbbYYa/ssgOOOOEMDz4CXJRddsUNdzzwxAtvfIz9f7b72f5nu5/83xenGSKl
+  </chunk>
+   <chunk x="80" y="48" width="16" height="16">
+   eJzt0DkOwkAMheE5ETuENUAShi2EnQK6cP878E9nRZ4hHQ2WvuZZlmwb869fVgddNNBEC22R99APzI8xwQARhhiJfIpZYD5BihhzLLAUeYZVYH6HPSzW2GAr8hyHwPwFV/P9fq3vsideNe7X+i4r8a5xv9aPlT1992v/scqeJ5zFX264o8Cx0i+UPX3/e3h++AEg4yGL
+  </chunk>
+   <chunk x="96" y="48" width="16" height="16">
+   eJzt0TcOwlAURFGviJyDyTnnZJNh/0vgWnoVsgZKCkY61bxm/necf341EUQRQxwJJJFC2nqVDLLIIY8CiiihbL2KiwqqqKGOBppoWa/SRgdd9NDHAEOMrFf7xphgihnmWGCJlfVq3xobbLHDHgd48K1X+4444YwLrrjhjof1at+n/3t+caP2uW+3YTdqX/D+L1SAIfA=
+  </chunk>
+   <chunk x="112" y="48" width="16" height="16">
+   eJzt0LlOAlAUBFC+CARREdkFBGRRloBAoiwJ6//XnOaVhNfZcJOTKeZWk0jc7z8vxQNpMjyS5YlkRP9CjlfyvFGgyHNEX6ZClRrv1GlQiug/aNGmwyddejQj+gFffDNkxJgJ/Yh+yowf5ixYRmwX8pc/VqzZsI3YLuSOPQeOnDhHbBfy2s+t7UJe+7m1XcgLoVErfw==
+  </chunk>
+   <chunk x="128" y="48" width="16" height="16">
+   eJzt0UsOglAMhWFW5AtFQcW3CKICEhQ16v5X4T9sbrhJZ0xs8iXNObPWcf7T5nTRQx8DuBiio+zGmMBHgClm8JTdAkussMYGW4TKLsIBMRIckWKv7C7IkKPAFSXOyu6GO2o88MQLlbIzbzuyZHJ/44Nvw23nlkzu8qfmbXeWTO7yp+ZtT5ZM7vKnP+TmKcU=
+  </chunk>
+   <chunk x="144" y="48" width="16" height="16">
+   eJzt0DUOQzEURNGsKMzMzMyM+99AbjGWLOsXv0sTS6fw6D3J40Dgf355IogihiBCCCt372YujoT2M8gihyRSSCt372Yuj4L2K6iihiJKKCt372aujob2O+iihyZaaCv38/4JpphhiBHGyv28f4MtdlhihbVyP++/4IobjjjhrNztY3r2MdC+3eeJF974ePQxPedYaN/u4/VHdh/Tc4+D9u0+Xn9k9zE973ho/wtyoSiJ
+  </chunk>
+   <chunk x="-16" y="64" width="16" height="16">
+   eJztxdsygmEYgNH/ikI7QlJCqZQ9Kcqmjer+T63jb95DJ814ZtY8Wfa35dhhlz3yFChSCp5WZp8DKhxyxDHV4Gkn1DilToMzmpwHT7vgkhZtrujQpRc87Zo+A2645Y57HoKnPfLEMy8MeWXEOHjaG+9MmPLBJ198B0+bMWfBkh9WrNkE/2+7+wVQdB1x
+  </chunk>
+   <chunk x="0" y="64" width="16" height="16">
+   eJztydtSgWEAQNH/iciZIklIjlEOkbMoef/b1iN8050Ze2Zd7SgKL0acGxIkSZEm889/R5ESWXLkKXAb8Ks8UeOeMg9UeAz4Ldp0qNPgmSYvAX/IG+906dHnlUHAnzHnkxFjJkz5CPhbduxZsGTFmk3AP/HLmS8OHPnmJ+Bfu+z+ADs/J7E=
+  </chunk>
+   <chunk x="16" y="64" width="16" height="16">
+   eJzty0tTgQEYhuHvF4U+0YmcUkIohyKFTlT+/7Zr2fIdu2Y8M9fqnidNkiTPUbLb0j//AzJkyXEY6GecU6JAkWNOOA30Og0uKXNBhSq1QG/ToUuTK65pcRPo9wwZcUuPPgPuAn3GE3PGTHjgkWmgv/LGO8+8sGDJKtC/+WHLB5+s2fAV6Pv97/0CGaAnXQ==
+  </chunk>
+   <chunk x="32" y="64" width="16" height="16">
+   eJzty0szgnEchuH3E4VOhKSEUilnUpRDB9X337qWv81/ZdWMZ+baPDN3lv1tBYqUyLHDLnvkE19sjjimSpl9DqhwmPhic0aTc06ocUqdRuKLTYcuPS64pEWbq8QXmzvueeCaPgNuuE18sXllxJhHnnjmhWHii80nX3zzxjsTpnwkvtisWLNhxpwFS34SX2z+t937BaRrJsE=
+  </chunk>
+   <chunk x="48" y="64" width="16" height="16">
+   eJztyUszgnEchuH3E4VOhKSEUilnUpRDB9X337rWv/nvrJrxzFyLZ+4s+9ty7LDLHnkKFCklevxl9jmgwiFHHFNN9PhPqHFKnQZnNDlP9PgvuKRFmys6dOklevzX9Blwwy133POQ6PE/8sQzLwx5ZcQ40eN/450JUz745IvvRI9/xpwFS35YsWaT6PH/b7v3C0fcJkE=
+  </chunk>
+   <chunk x="64" y="64" width="16" height="16">
+   eJzt0MdOQlEYhVGeCEGkKIoKSLchKFgQLHTff+oaMLjenMCYxD9Zoy9ncHYi8fceeWLAkGdeeOWNGnUaNDkkwxFZRrwzZsIHn3yR5IAU6c3bE4qccsaUGXMWLFmxJkeeAsebt2UqVLmixDkXXMZ6qLVo0+E68L9oD7UuD/Toc8Mtd9zHeqjF9922f6hF9/3esX+oRff92bF/qP3fft8vvbstMw==
+  </chunk>
+   <chunk x="80" y="64" width="16" height="16">
+   eJzt0FUKAzEARdGsqO7uMp26u3u7/9/egQRCSRZQaOB83eGFiSOEaMFFGwkkkUIaGWSxQQzxr2/CiMAHPwIIIqS1qOw55FFAESXtDtO2fr/Xa6ijgSYclFGxbKtWlb2DLnroY6D9u2lbfxevTzDFDHMsMMTIsq3aWHbvDbfYYY8DllhZtlVby37BFTfc8cARJ8u2amfZFX3niZdlW7W37Cb/89vnAzXKLHM=
+  </chunk>
+   <chunk x="96" y="64" width="16" height="16">
+   eJztzzcOAjEQQNE9ETkvOeecc1jiwv1bvqUpXOClRsLSa2z5a8a2LCuNDHzwI4AgQggjgqi867oooYwKYogjgSRSsD26U7TQRgdZ5JBHAUXpm7pbjDDGBFXUUEcDTembuhessMZG9umhjwGG0jd11dwnODjLPjPMscBS+qaumtvFEy/ZZ4c9DjhK39RVc9/xkF2UK27avevRdbR/33zqqrn/57fPG6/uLLk=
+  </chunk>
+   <chunk x="112" y="64" width="16" height="16">
+   eJzt0LcOwkAQhOF7IqACKpMx2SSbaLLJvH/LX7gYoUNXI3HSpy1mtdJNYIwZYoQxJpgiwgxzLLDECmvEMnUngyxy2GCLHfY44IgTEpm6k0cBRZxxwRU33PHAEy+ZuuOhhDIqqKKGOhqS6+0+grSDJny00EYHXfTSPVseSgcDufXZZ/glj6UDV+e2PJG/uDq35dqlq3Nb/n+//d75XzHT
+  </chunk>
+   <chunk x="128" y="64" width="16" height="16">
+   eJzt0FkKwlAMheG7OrUOrXXWOlun2u7/tf+DgcOlWYBg4IOQPIScPIQwwxwLLJF3zLQfIMEQW+xQYI+DM9N+KjcuuOKGEndnpv1GbrxR4YMajTPT/iw3Rhijh370m+0m3/0DT7zkhuWSIot+08y8veWywjr6TTPz9pbLEafoN83M21suXb9pZt7+X79dLUnUM94=
+  </chunk>
+   <chunk x="144" y="64" width="16" height="16">
+   eJzt0NcKAjEQheE8kb333tbede1rL+9/6y+yEELCXgsOfDcTZpgTSwjRRgdFlFBGBVVccMUNdzzwxEt8a4QxJmiiBUva6UcAQYQQRgRR+GBjhTUGGCo740ggiRTSyCCLGBwcccICS2VnHgVDtpySZ4+DsrOOhiFbDWePP+qhb8jWle6cYoa5lEPXs5UZ984NtthJOXQ9R5lx79Tl8Mr2ef/Xb9cbUjkwJw==
+  </chunk>
+   <chunk x="160" y="64" width="16" height="16">
+   eJztydtSgWEAQNH/iciZIklIjlEOkbMoef/b1iN8M12ZsWfW1Y6i/xXnhgRJUqTJEAv4OfIUuOWOIiWyAb/MAxUeqfJEjfuA3+CZJi+0aNOhHvB79HllwJA33ukG/DETpnwwY84no4C/ZMWaDVt27FkE/ANHvvnhxC9nvgL+tcvuD6PrJsE=
+  </chunk>
+   <chunk x="176" y="64" width="16" height="16">
+   eJztyrUOAgEQRdH9ItxhcbfF3V3/v+VOMvU0VCS85FTvOs538yOAIEIII4Ko8hmNfHEkkEQKaWTgqpjRyJdDHgUUUUIZFZU1GvlqqKOBJlpoo6OqRiOfhx76GGCIEcaqazTyTTHDHAssscJaTYxGvi122OOAI044q43RyHfFDXc88MQLb3UxGvn+++19AKdrJsE=
+  </chunk>
+   <chunk x="192" y="64" width="16" height="16">
+   eJztydtSgWEAQNH/iciZIklIjlEOkbMoef/b1iN8M12ZsWfW1Y6i/xXnhgRJUqTJEAv4OfIUuOWOIiWyAb/MAxUeqfJEjfuA3+CZJi+0aNOhHvB79HllwJA33ukG/DETpnwwY84no4C/ZMWaDVt27FkE/ANHvvnhxC9nvgL+tcvuD6PrJsE=
+  </chunk>
+   <chunk x="208" y="64" width="16" height="16">
+   eJztyrcSggAURFG+CBUjKuaMijliTiD6/623fNVrrJxxZ0611zC+WwxxJGAhiRRM5UuLJoscbORRQBEZ5XNEU0YFVdRQRwMl5WuKpo0OuujBRR8t5RuIxsMIY0wwxQxD5ZuLZokV1thgCx8L5duJ5oAjTjjjgiv2yncTzQMBQjwR4YW78r1F899v7wOLKya5
+  </chunk>
+   <chunk x="224" y="64" width="16" height="16">
+   eJztyrcSggAURFG+CBNiBDNmzJgxY/7/1lu+5lVWzrgzp9prGN8thjgSSCIFC2mY4jeVNoMscsijgCIc2OK3lbaEMiqoooY6GnDF7yptEy200UEXPfThid9T2gGGGGGMCaaYwRe/r7RzLLDECmtssEUg/kBpd9jjgCNOOOOCUPyh0l5xwx0PPPHCG5H4I6X977f3Acr8JnE=
+  </chunk>
+   <chunk x="240" y="64" width="16" height="16">
+   eJxjYKAMmACxKQX6bYDYlgL9LkDsSoF+HyD2pUB/CBCHUqA/BohjKdCfAsSpFOjPAeJcCvSPgqENAMmjBQk=
+  </chunk>
+  </data>
+ </layer>
+ <objectgroup id="4" name="Spawnner">
+  <object id="1" name="player" x="494" y="557">
+   <point/>
+  </object>
+ </objectgroup>
+ <layer id="3" name="lantai dua" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   <chunk x="-16" y="-16" width="16" height="16">
+   eJzd0UUOAkEURdH+G8ZdG3d3b9z3xhK4DEhBQjGAAQmVnNHNq8k3jP96JkpiGGVUkEUOeRRQlOf+an/TpnVQRQ11NNBES1TX7ce0CbrooY8BhhiJ6rr9irbGFDNYmGOBpaiu259oZ2ywxQ57HHAU1XV7D80LG+xwwAkX3KK6bh+hReGDHwEEEUJYVNft07QMYojDRAJJpER13f7X94f1xf2tu0/vf3n45939r1w/W1Y=
+  </chunk>
+   <chunk x="0" y="-16" width="16" height="16">
+   eJzV0bdOxEAYhVHPC5MzS85pyTktOYcKqIBqoQIeiTMd8iBZbpCwdJr76ZeLybL//Y2HLJtgkimmmWGWuVDcq8yzwCJLLLPC6i990D9vueOeNds6G2yyxTY77Ia0x/sHHnliz7ZPjQMOOeKYk5D2eP/MC6+c2s4454JLrrjmJqQ93td5450GWyNNNNNCK220h7TH+w8++aLD1kkX3fTQS4W+kPZ4/1O/bSDuDDHMCKOMheL+1++f72XfP9/Lvn++l33/fP8GQmR5bg==
+  </chunk>
+   <chunk x="16" y="-16" width="16" height="16">
+   eJzV0cdKBEEYhdHqt3alY845jznnLGbMmDE/kAdELGszDbOy4Sz6/y696RD+99OQhdBIE8200Eob7VnpvuUb2+ywzgab4e99N2rp5pAjjtljn4PkfhK1dHPBJVeccsZ5cr+OWrq554FHbrjlLrk/RS3dVGS/nr2/8Mob73zwGb5bvP3ZFMpU6VtVFKimhlrqqM9K93L/fweddNFND7300Z+jDzDIEMMUGWGUsRx9nAkmmWKaGWaZy9HnWWCRJZZZYZW1HP0LAM+DNQ==
+  </chunk>
+   <chunk x="32" y="-16" width="16" height="16">
+   eJzV0jtTwlAQhuGzVbxgEakwP1QqjMpFAZUKrIAKtVVoABvBRqH0//Bmkh03CYy0ZuaZk3P5NjtJnPvfV12ca+AGt2iihTbu5O/9V2q8YYwJPNYOcIgjHKOAE0nv6f2UzAxzvKMksQu3nw8ssMSnS2fPJRbi0oxXuEYVX5z7xgprk89mbaZm5mXjx+1+tp7PzV2az9opivJbw9bK5itRv7qX9H+GIKkRjb7s7sd+3zD5J2wNO/cl39M9HtAxeU+2j7au1uqih0fTv815kq+jtaJ8HwMMJf/+dLRreunzR3jCM14yZ/3MPEh60X80ym8AM1lMPg==
+  </chunk>
+   <chunk x="48" y="-16" width="16" height="16">
+   eJxjYBjaoI2RgaEdiDuAuBOIuxhJ088JVM8FxNxAzAPEvCTqr4diSaC+L0D6K2naGVoZEWb8AeK/JOpvYUSYwQKkWUl0P7J+cvyPrJ8c/yPrJ8f/+YwQTK7/QXrLKfA/WC9UvwiQFiU1/UDTL0i/DJCWJVF/O5L/yQl/AOD9HUg=
+  </chunk>
+   <chunk x="-16" y="0" width="16" height="16">
+   eJyl0bmKQjEYhuGks7S0tPTuXAe3kTnjgjtuI+ro4I77vZ3S0jfEIIMQIQYekiLfX/yfEP+Pd3eFr9+LqBQihjgSSCKFDymejskLqWeofJp3BlnkkMcnCpZ8QOoZKv+lbnyjiBLKqFjyQalnqHyVu4Y6GmiihbYlH5J6hsp3uLvooY8BfjC05MNSz1D5EfcYE/xiihn+LHlfPPY/598CS6ywxgbbF3mz/x3/9jjgiBPOuFjyKmv279q/2b9r/2b/rv2b/bv2H36z/8gb/Zus59i/yXov+r8B9lptFg==
+  </chunk>
+   <chunk x="0" y="0" width="16" height="16">
+   eJyd0Tl3QVEYRuHPH76GSAwZXGIWQ4LEGBJTEHTSSUdHJ110/A37VJpkOesUT7XXW72WQ8QJF9zw4AJeXMI606/ggx8BBHGNG9xq9DuEYCOMCO4RRUyjx5FAEimkkcEDsho9hzwKeMQTiiihrNGf8YIKqqihjgaaGv0VLbTxhnd00EVPo/cxwAeGGGGMT0z+6bacnPv3r652U8zE7H+1n+NLzP5X+wW+xex/tV9iJWb/q/0aGzH7X+23+BGz/9X+Fzsx/3+PA46ahpEK
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJyV0bsOAUEUBuCZUulFlaISlVKpxBO4rDtxWRL3YFHQ0fEIOr/4J85uZm0UX7Jzdv85M2cTWqmM+ihDBap8lutaSC3J/BNa0IYOn+W6a8k6kGZea//7IY1gDK5lvx5kmY9p//sZzWER0rsOOebj2t9vSzvYh/TuQ17MT/ZbwgrWsLHcZQJTKCBfhJL29/PgAEc4ib2D98gI6sc9U/rL1Briu7D/K79tsvbew9TMPLqc0b95Mw+XM4rKO8ybtZn1kjP6N29m7fF/B/PKkpfrM1zIdv5gPnj/K9wo6uy2/B0eFJUfWOov8RGu6A==
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJydk8EOgjAQRLcnzy0nyn/S/0I9ISfh6D+5jTvJsFo0kkygJW9ndimTiJxVF9VV1QeRrBrC65nXnQpX3S9hzy7yzgxufbJ1NH5W5mbsphrpfTLP5LzBVsEb98qP5Ml1OvLPxsMbd/Co4Xvx/a+We6X8vkZ0OXrS5Obv+U/z4DlUZm7khwqx+AbR6lb+fpAfPGbA/Wfjv+UvLgPPdfmD5wyb49MBj/55ng/HY9+z5cf+sZ/C/py2+vd8JDY1eM7Q8u/ojEP8X+NMPgHwE1cV
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJyV0isTgkAUhuFlNClJKIpNm/43I0Edo5FINNrwTiQSiUSif0BNGvx2PDuecJDVmWcOwZe9aOQoNYOVUuoOD/XfJ0YbUv+CGySwgz0c4AgnOMMF5vj+Apaw0S31bcynRZ8wWzRr6l3MltPcp4zee0S9j9m16DNG9zH1Q0zPos+Z0NwBnseYgUVfMAPncwe6n2KOLPqSCWhN3WsTi74iCfUeMe+Q+kSQ0v7NHno/7i8V6Ps3a/ed77ukPhPk7PxNfS4o2PnN2evOXwhKdv4O/ffcmvVLgf4NzJ2Z6df0leAKb42Zj00=
+  </chunk>
+   <chunk x="64" y="0" width="16" height="16">
+   eJyl0zsKgDAQhGHvf5jxHTvttNNOO0sbPYQjWKXYXRjhg0BIMz8WhfZBUFISDDQKJpoFC62CjXbBQadD6QNnf+8+Ofsj0MjaH4FG1v4INLL2R6CR18brdxmQnb//qaKaGmqpoz5z0/O/eQG0BLij
+  </chunk>
+   <chunk x="80" y="0" width="16" height="16">
+   eJyl0tcKwkAUhOHNS9t9pbUHG8FGiIVgQ2x46XP4C4qyrOCQhe/qnLnZOcZke3U00EQLbXRQCYypIoc8CiiihHLwmXfZ7aGPAYawghHGmGCKGUJBgjkWWGKFSLDGBlvssEcsOOKEMy64IhXUPB0cBL787Q/2lfXl71/sj533nfhmSv9u3or9u/lQ7N/NR2L/bj7O2H8qdP/8qwcHjrFW
+  </chunk>
+   <chunk x="96" y="0" width="16" height="16">
+   eJyl0z0OgzAMBWBzaUppuRL9hS1ssNEt3RgZe4c+pFqykIkbgvRN+CmyXkKU9uUZ0QEKOEIJJzhDldn/a0rTJup2Ws6+wGDguSvc4A4PeEIDL4WVYQ7eEfOcYf3ODBuV2fW8lmF+o9PQLl6YlD6t/CTMgV638rPwieza/TJy13/6Dt15LWe9EbnvFzZoqeo=
+  </chunk>
+   <chunk x="112" y="0" width="16" height="16">
+   eJyl0bsOgkAQheHhpRFEXwlULh122EGHHaUl78BJdCM52clMAsnXQGbZzC9y7EkTkRNkkMMZCrjANbG/l/JVwQ3u8JD/e0v3w+d0Tvt/1tBAC0+nNqKHl1MfMcDkNESM8FbwrseIWWmy308wE2uO+y3E2zv4EKs391vpfKs39+M7aZ21vfCdtM7aPN/J2z3Mb/zgrW0=
+  </chunk>
+   <chunk x="128" y="0" width="16" height="16">
+   eJylkUsKwCAMRNNL93co+++u7uqyZ+q4CITgDyI8UHQGJ0NkW31HNIARTGAGjmzcRryRYORLEHMtYAUb2MFRuTvBVaH29ingCm9be7J06I0dhsYO+U+pGaf6y+WUej7n5q6zSL30Zr3uhn04i9Szr9S/Cu3DeidmFPc/iEurIw==
+  </chunk>
+   <chunk x="144" y="0" width="16" height="16">
+   eJyl0lkOwjAMRdHsfzFQoGVOy9iBYU/ciFSgyjYBIp2f1I6a5zj33xr9YIwME8y/MOydojRI9TPkKKKUGomPrDpvOEdSnZbV8N/uSr5SXtpZUs5Sdlp/aubafh1Zd7W+9Vloc/uUobbvE3oL4679HBZYYoU1Nti+zdqaScizwg57HHDEyb3ejzWTkGuDFh0uuOLmnm8neAD6U6n8
+  </chunk>
+   <chunk x="160" y="0" width="16" height="16">
+   eJyl0VkKwjAUheG4aRWHLTm3DmAdwFoEBwQHfFDxQV2Gf8HApSQp0cL3cntP03CU+u/poIseAlQKSlVRQx1FlFBGg/dNtND+ZrMz047+fog+BhhiZJi58hEmmGKGuWEm865vpXddIcYSiedd0vweG2yx+yF/wREny25e/oErbp55OX/i5ZmXnQU555jIzlz50EJ2NnbkI0GeLztbWHrLkufrzs5Yi7xpV5P/oju74yDypl0tFnRnb3wA576rDA==
+  </chunk>
+   <chunk x="176" y="0" width="16" height="16">
+   eJyl0bcRg1AQANHffzcYBYAIcAFGAUYBAgJcgEA9aFvgbmdeBWuMLgcuHkIBngiFEqTIhEpUeAm16PAWGjBiElqxYReyYCs+evAVHyPEio85CsXHGo3iY4+P4uOMRfHxwBcnLvxu+gOfesHM
+  </chunk>
+   <chunk x="192" y="0" width="16" height="16">
+   eJyl0utOAjEQhuHhphEFbwkPnBQVlDOIq4DgARAE/ck9+DZp07XJtiQ0eX41+810dkQOO6UEuZTIKdI4QgbHOEE2Ze/v5L88znCOC1yigGJCnbYj9L1b78lR1hn5PbJUvamjpjPKe2YtHR2dUQtkGb+OSGd0AllGfJY7zHRGFMgyQjNKyjJUDxVc4RpV3OBW/59ZjMmJ11Q91HGPBzTQREvsPvioHrrooY8BHjEUuw8+qp9nvGCEMSZ4FbsPvjmpd73hHR/4xBwLsfvgm9MXVljjGxts8SN2HyLPnP4Ae8qxUA==
+  </chunk>
+   <chunk x="208" y="0" width="16" height="16">
+   eJyl0tlSwkAQheHhpUFZXgkBScCFyCJhFVwQAWUVEBHfgZ+qSVVXCOQiqfpukp6ZzulRKtgTDikVwQUuEUUMcSRC/t8NFUwhoKqHJK6QQhoZXCOrz5S1zrsnwW+9u9bNRA553OAWd7jXPcu9TQ8WHlBECWVU8Kh7ln1ZHmzUUEcDTbTQ1j072Sd1re365w66eMYLXvGGHt5F9uaJfPr4wABDjPCJL4zFOdaJ/CaYYoY5FvjGEiuRre2R3WH9Gj/Y4Bdb/GGHf5FtR/RsiH7OzV5m2xczLajju+23lyFmWlXHd9vvHh3sAahCrnU=
+  </chunk>
+   <chunk x="224" y="0" width="16" height="16">
+   eJyl0ulqAjEUhuHMTVur7S1ZV9xRawd3XKq4tbRqBbfeg2+oA4chKQEHnj9xvg/PmSh13xPxlHpAFI+IIY4nPHt/vyd47wVJpJBGBlnkHNnyVUdBTxEllFGB70j2vKKJNwwcyZ4ueugbdjGzkD0yI7O6+9NC9sj8f99lL8geub88Coa96v/yK8geub8a6miEzvWcZ1wMPXJ/LbTRCZ3rOY84GXomeMcUQ4wwDp3rOQ+WDnlv51hgiRXW+LjNacsHWb2jL3xjgy12+LnNacsHd9EXXab3bPngLuodXQFwzrxM
+  </chunk>
+   <chunk x="240" y="0" width="16" height="16">
+   eJxjYKAMbAXihgHUv5dC/Ucp1H+WQv2j4UeZ/qsU6h/p4QcANisSzA==
+  </chunk>
+   <chunk x="-16" y="16" width="16" height="16">
+   eJzt0dkOwVAURuHdJzaHolFT1BStIeYo2rSmd/MI1o0gRPatxEm+u3+dmy3y+uwH/y5hiCSRQhoZZJEz5O196vPsCjBRRAllWMq+ws5GFTXU0UBT2bfYOWijgy566Cv7ATsXHoYYYYyJsp+ym2GOBZZYYa3sN+x8bLHDHgFCZR+xi3HAESeccVH2//v/3v2vT398u/8NAw6EYQ==
+  </chunk>
+   <chunk x="0" y="16" width="16" height="16">
+   eJyd0TlTQjEYheHkDwMKsgiCoiDKorKoLLILKmBpSWl5y1tS8jt8M5PM3OIrnBRPcXImxTcnppWKI4ETnCKJFM4QE/pLpdS3lSZnkEUO58ijgAst9+b/j1Ukl8wbrlDGNW5Q0XJv/u+tKvkWNdzhHnU00NRyb/7/Wi3yAx7xhDY66KKn5d7dH+CZ/IJX9DHAECO8abl394cYkyeYYoY5FljiXcu9u/+AFXmND3ziCxtssdNy7+4/Knnf/+wfWL77h5bv/gfLd/+j5bu/47N/tPfZP9r77B/t/wA5KJOO
+  </chunk>
+   <chunk x="16" y="16" width="16" height="16">
+   eJyV0j1TwkAQxvGNH9qh5FMolSUliJgIvoCCqAhG3gaxEa3Uzg9g4Z9hM+ycOwaL39zkcnt3+yRVETlEDYVIpGqej/C9I3LMGKNn1tVlPX+CBpo6X5Hfe2RrY6e+jUtc/aPezt3iDn2tT4I7neIM57hw6h8xwhg3aAV36qCLa+0/3PMJCzwjlfz7h3su8Yq3LWpj7fMeAwzxjg98yt+9r7LJZPvPgv7zzq84bP952ScO239e9i2H7X/1/ez/YHN60PehopEGeUwwNdnt6pjKxh7P+yhFfj6WzXauDqLN+V4+ls32RZW1/ss5I8yq7dzlB2jbuGw=
+  </chunk>
+   <chunk x="32" y="16" width="16" height="16">
+   eJyFks9OAkEMhzsn5ObiaeGET+hJ30ogsicg/iUSxEhUAkF5BVROHv0104bSjJkmX9qZ3W/ayW5FRFegDyrQDkSnoAANcGE4ARpliFTOV4/fbRrX7qvbzPiF691wMxQJX89tGbcl6H4pZ3MewRmAIcVa+9veRaK39hmjvgcPFOvSufYu/v7MM5wnMKNYl25uO7PWtbCfYYH8Bt4p1v/FNbgBt+DOzHxpnp2Hw2djyq/ZfwQT8afuPrk1+y9gLv6ru09uzf4SrMRfI3+AT7Ch/Jr9DuiCnpzBcZYgFd7n+Bb0O9XCHgLB5JT/K1hPOQJ1k3sJn+T8LdKXzPIDduBY/kXNf+X0cZs=
+  </chunk>
+   <chunk x="48" y="16" width="16" height="16">
+   eJyV08lOAkEQxvFquahcVDyBJ/CkPp/xqUTUoAJx30DcZVVxzbg+hP9O98RO44BU8st0Zvqrmk5mkkokhaS9TmFRRLJYQg7LYipwhHtSNpdGBtM98qvS/WyC/QnMYBZzEfmViHz43mGfyT75BfUrZ98/8Y/z95vvnj/P/TWsYwMFFFGyeVeYd8+/yf0tbGMHu9jDvpjergPprkMc4RhlVHCCqpjerlNvxrwyPc9xgUtc4Ro3trer5s3Qed2zgSZaaOMWdzjz3HszdF73fMAjnvCMF7yi7vFn6Lzu+YZ3fOATX/hGx/NXBT3ygWeIeQKlzDqmIppG1Cj7hzGizDo+YF5/92MYd/6BQeoHdGuAaQ==
+  </chunk>
+   <chunk x="64" y="16" width="16" height="16">
+   eJyVk8EOgkAMRMtni/+EsMre8KY3vOnRo/6GJU6TSVPjluQl09k+wmEZRWRSinJUTsocsBDcR94ScCG4977fNVaCe+/b7q4T6ZV9953vxDYP2CnIWSrgnOEMOGe4As4Zbvh2y1k294D8SGLuiPmZgN0J3asR7xY6e/8457sVdfb8c+dgHpzf8g52K/m1wef/zu7dB8mHudg=
+  </chunk>
+   <chunk x="80" y="16" width="16" height="16">
+   eJyN0zESwiAQBVA4tnon1Ch00JFOOilTGr2Fm3F3ZucbSIo3FPCB3QFvjPFsIJVMOzhyJlHxPPfqkNyFXElWIq+ZyZt8VtYvd7yRO593tMYc7G882f95odd43tft2D82BLaVzw2JbeUfDSPrZRfPhsJ62Qh90v2qrNczp/qE/ZJ3tHZuVtkE5A7ynnrnJtUnEVR+btSqswUknpe8gxxmKxihngA5zOK/K1BPghxm8f9VqOcLqK2/fQ==
+  </chunk>
+   <chunk x="96" y="16" width="16" height="16">
+   eJx9kjsOwkAMRL03pgxwJwQUlCkp6UJHuvDnDnilWBpNZl28ZtdPO5l4b2YH5+jsZk5ET5wB5WXzlQugvGy+cgXYWxezjbMter4yQuZevKPm0cHMyhsJ1WtkVt6dUL1GZuU9nKfzct6NXiNz5n2cb+M/RObM+zlDo9fInLm3GdVrZG65E6B6jXdbPpL1o/Ylg3cDz1Zlec/wbuBZV5b3DH/DHz1n0tM=
+  </chunk>
+   <chunk x="112" y="16" width="16" height="16">
+   eJyF07kSwjAMBFDx2cA/hXAMZcqUKV2Bua9A/oEtrBlFXkPxuuyOEimtiHRGhKpgATUsYQXrlAnuuS1R6mCZhih1aGY6EZnBHFrJNWSWyvTbZzuidbNoD8sEopPxLNrDMpEIMp5Fe1jmTkQZz6I9LPOAJ7ygh7fp8D2/Mh8Y4JbYWfT7/8sNib9F3QHLWfvE36PugGV2KcPuxN/LAY5wgjNc4Gpm1Hv196g78O9fkWwt+T3qDux7l/7RjeT3qLv8ApXAyr4=
+  </chunk>
+   <chunk x="128" y="16" width="16" height="16">
+   eJylzzkOg0AQRNHm2Jg7sZglg8yTMZnJcOgV7uBCaiSE2hqXCF6A+F2CSkRq6HcuqlW1asCpFEqo9N11I7Tj9f682xjVvztxJHKCJLK3fu2sd6kc0xyw3HeEpc8gh0KfXUDo2/0G+48d0Vkc0Vk80VkGorPciM5yJzrLg+ie8II3fGCCGb5L5cM3
+  </chunk>
+   <chunk x="144" y="16" width="16" height="16">
+   eJyV0skOgjAUQNH62eo/iaBh6U524jwLzjj/g9fwmhDSal2cpA299JHgKaWa8BGghUjE6GOAIUYYY4Kp8Ax9LGaYY4ElVlhjg0SU27Z0Hym22GGPA4444SzqFaUaKqdnSUWGC6644Y4q52uVvHuxD0utL52pfeCp8i6Rven7f7V69ofh7sCh13TvwvbO0JGt7ziy9ZEjWx87svUzB8V/RpX61JHt/uwPpr77RXHu4vrzrCfe1RjNtA==
+  </chunk>
+   <chunk x="160" y="16" width="16" height="16">
+   eJyd0r0OgzAMBGDz2C1L+kJ069iRrYxsdGv6Q3iHXkSimiq2TJA+MZxv4ZiIqIMzXJO+YBA8WF+7HQUL62u3d0Fgfe320BAdoQVPP7nfsVtf8IQXvOEDc+pGl8Ryv/wJ7LtrSpv0qS9llv2Ckln2C0pm3U/KuNImeT8ps24Yd6h9eN9V2PTxb56afe8brVxl/wtLLLrP
+  </chunk>
+   <chunk x="176" y="16" width="16" height="16">
+   eJzF0j0OgCAMBtBybHXRSzk6MjIysom/3MESMamENhoHSV5I4CshaQ0AWMIJPJrQjBa0Fmq8IK/dmJpSbkcBjUR4mK8UQI0adZ5dbOHNEe6ZXE+4B5lBEP+uEy6jBfHeJFzGCDTpO5exAkP6zmWkebKk59LMcRzp89u529Pd19V+1OFMtuq//QD087s6
+  </chunk>
+   <chunk x="192" y="16" width="16" height="16">
+   eJzF0skOgkAMgOHy2OoFX8oj3lwTXOMu7ri/g//EMUHswIGDk3yZA52mLY1F5IwLrrjhjgeemFgNNNFCGx10lTgjUoTooY8BhhghQD0VGytM3ilmmGOBZaIuE1PyRMqoeL/9mLwbbLHDHodEXXHOHFzfXXWtsEYtQcvhquuIk7xPkCGvbrEzctH+ydjOJbTvwwyu3j+7IPK9G2mu3rUd0rh613ZIU/T4BVXZVd/73/0Ccee32w==
+  </chunk>
+   <chunk x="208" y="16" width="16" height="16">
+   eJzF0EkKwkAQheHk5nohly6dZ5M4zybOcb6Dv9AFTaERcWHgo2vx8ropz3Ec36gqOeRRQBEllFGxMkOMDF+poY4GmmihDc/KLBEaIyVAB1300MdA3bnHwQgtGYwxwRQzzLFQd95wNw6WLCKssMYGW+zUnVfVIZ67i3HECWdcXuQj887A7Ktm/pW5/qEnVh3SI7O9v1c9geqQHpmT9hdYGemQHpmT9jdWmdjqkTlpf9GbTPyFX7/Uj9Iup/u/8wFJLbv8
+  </chunk>
+   <chunk x="224" y="16" width="16" height="16">
+   eJyF0UcOwjAQBdDk5nAlygaIRAu99xZ66L4D35IjDaOxsfTkjafoO/A8L4C84A0fUNAXzCE0AoEyb2wi0isURH/EpJe0X/yHIr2k/TKQhZzJQzF10kvarwBFKJk8WtCGDnShR3pJ+1WhZuboPEYwhglMYcb+iKNzdB4rWMMGtrCDATO0zNF5HOEEZ7jAFRbM0jJH5/GAp/d79szBMkfnUYYKy+XG3MmcF8tHyp+fpE8DmqbGlUvKgta4ckn7eO+z2+yS1LhycdUnNa5cviQSyRQ=
+  </chunk>
+   <chunk x="240" y="16" width="16" height="16">
+   eJy7ysDA0MBAPrhLof6nFOp/S6H+oxTqP0uh/qsU6h8N/9Hwp0Q/ANyjFbE=
+  </chunk>
+   <chunk x="-16" y="32" width="16" height="16">
+   eJyl0c9LAkEYxvF3OkWnxdMeO/rfWWpopvTDRE1FTaPUou2HWKb/m0ePfYfZZZRgFqaFDzOHeV6W9xHZ/65iW2zMPcopkROcIo8CijhT8udL8qLMDJ0vcS/jHBVcoIqaI3+ozAydv9QnrnGDOm7RcOQDZWbofJOzhTbu0EEXPUc+VGaGzvc5BxjiHiOM8eDIb3b298i7J0wwxQzPeHHkt2L398q7CG94xwc+MU/Zf7K/BecXvrHED1ZYp+z/P/0Htn/x6T+0/y8+/R/b/sWn/6ztX3z6P1CGvvv0r7NHcd6nf53NxHlX/79LsmXk
+  </chunk>
+   <chunk x="0" y="32" width="16" height="16">
+   eJzt0UdWAlEAAMHhwiOgKEEJKkGJomRUkpjgjtQN+Gsei1r1suNEFF2QJEWaS67IEB/p19yQJUeeArfcBfQiJcpUuOeBR6oBvUadBk8806RFO6B36NLjhT6vvDEI6ENGjJkwZcac94D+wScLlqxYs+EroG/55odf/vhnxz6gH/t7/n/a/w+bHY6B
+  </chunk>
+   <chunk x="16" y="32" width="16" height="16">
+   eJxtkiFzwkAQhe8csrKykl+HrOygkEgkElnApGBCMQFMgkrB0Kq0dZWV7M28nXvzQHwzl9199zbzbhBDGIYQ/o1XMDcWxtKoiJ1RyMwz9H93eklfE6lXyswL+Wsv6VuiwB48M4I+xNte0l/ov0raw2fG0Pdi7ikFebein0D/EHOvEEryvqD2ZqyMKfSPMe9aChV5d6htjHdjBv1TzHtVQk3eHWW5NwbQ92PeqxZa8u5Qa4wj5e/5bSSzFr7u/Y3ah3Gi/D2/Hc2zriN9qn0aX5S/59fIPOt+jF/5Hkt+vtcZ6Htaynki+fle/HY86zVw7Zry9/z0zXHWW+D3bCl/z0/fHGd9AH5POl8Bzom08g==
+  </chunk>
+   <chunk x="32" y="32" width="16" height="16">
+   eJx9kjtPA0EMhNcUSaAIgQIOCggp4OAX8q/CdVBBKrgKqICSMg2vglcBGWvH2oDsWPok66w5z9puUkpjcAKalKMnmXfkH+ATfIHvuZpF4+gHkvlB/qsfkAtYklLTOA/0lWQ6oMt+y2BFSm2RfiiZPlhlvzWwLqW2SF9LZgNsst8W2JZSM/1Z8H7tsQN2me+BkeN/Erxfe+yDA+aH4Mjx3wbv1515/f/7vw3en4L+FWsal+DB0Sfu7AnpM3gBr+CN3ux+rsGjo+9xZ9791ayp9zswDeZfBfdn81fvV9Qop9ylzX8Y3J/NX73fUKNccJc2/zq4P5u/er+nZkIv7fz8U7k/b44WLVEvx/J3Fqbz5mj/mgE14Gfj
+  </chunk>
+   <chunk x="48" y="32" width="16" height="16">
+   eJylkQkKwkAMRcdTezzXgltxLa69g/UEvkACUpOxxcAjA8n/k8yk9B0jGMMEpjCDORROb9Q3HKS0JK9gDRsoHZ+cfk8+wBFOUPXUX8k3uMMD6kDv7Sv6Qnu9PX69lehL7fX26DJ/pb25f8jpa905N/8iqIve3iw3/y6of+q9f7C4BHWbP/K3OCttH9NH/haRt+i3He6PvEXvzdW+/994wRMaPfeNN1g5lfw=
+  </chunk>
+   <chunk x="64" y="32" width="16" height="16">
+   eJyN0u1OwjAUxvHDHfMR5J6GKE5BRUWcCgioyIuvCMp18F/WZifNOtbklybd82RZd0SS1UGAOg7RwBGO0cQJ7pQ4H0m6ogL9JyXOj1R/VKD/psT5merPPP3AI85/q77v3dWSyAFqCCVlz/f1Ox5bI6tfLqX9KIPOZvUrqp93r0GB77fnvud5/X3/s5nTD8w9n+IMLbRxjgtcmt0uNxuae77CNW7QxS16ksxwT/XdrJ3vezzgEX0MMJRkhoeq72btfI8xwTNe8IqpJDM8VX03a+d7jgWWeMcHPvFldrvcrJ3vH6zwizU2+MO/2Xc7JqT3
+  </chunk>
+   <chunk x="80" y="32" width="16" height="16">
+   eJx10kdSw0AQhWHpxl4S7iSiTTbRJtpEmShVEUzmDvxTvC5PNePFt5Fet6Z71M2yrCt9GaDGq7zhHR8oZCB9V5eqLSItqWXg6upEXSvSFutfu7r4vL6mHc1quen8f90kz6byv3dxTbwjE+/mE1/41rlTNWHORj6aeQ7zWMAimhG/V9vRRD6aeQazY/r4vdqOGtHMll3BKtawjg3l413YjsL3bd6mstvYwS720Ench9/Rj2pD9hBHOMYJeupdjJnR7raj7DkucIkrlOodMktYdjPa/9BT9hZ3uMcDKvUOmU1suRntbktlH/GEZ7xgqN4hs48DN6PdbaVsajelMqc4czPa3Q6VTZ2/UuYaNy5j/8MvlavLrw==
+  </chunk>
+   <chunk x="96" y="32" width="16" height="16">
+   eJyV0ssOgjAUBND2j12qH4WuWHbJkp3GJz5BfPAPThOajOVeGhcnJHQmTXvbGGMe0MITXvCGD3SwIkdBk+hztiYZLBLdOtKR0Ne6kjUJ/TL6L6kiobuM1id2mK36O2IZ4fWpHWal+80JZ/z+qRl6jnDO77/Bdws72MNBmHkBM2Tn9vccJzjDBa5wg7swx5KEfuodaXPMRzgFz0bLuP6cEp6NlimiczI+q5YZe5fc/+fd8nsM/S8xKNWW
+  </chunk>
+   <chunk x="112" y="32" width="16" height="16">
+   eJyN0jsOwkAMBNDl2MCdAoRPRzroSBc66Aj/O2Si2JJlWSOv9KRdaWYbuyqlrGANG6hhCzvYG3enF6x3NHrnCS/SHzsnw3be8IEv6Y+di6gI7eqJMgdDj76jjNcQmcyZyGRaYjmbsMxVzJFbSF7vPhPxu2NlMn53rEwm2psf/JMZNoso35Vp7zKziPo3+YPNQkX9h/yRmcUAWTfISw==
+  </chunk>
+   <chunk x="128" y="32" width="16" height="16">
+   eJyt0j0OgCAMBeBybPVOjo6MbLLJJpv4fwdrpNEBDBZJvgFS3vLqAMB5I5rQjBa0og3tXhsQmz11CejP4NHf/qHO1GSiI5lUJp3JvKhE+L0Qt1JccxZ43A9iuymZHdNuKH//2inlaGbHlGOYHVOOTeg4hHIOkC7JSQ==
+  </chunk>
+   <chunk x="144" y="32" width="16" height="16">
+   eJyl0vtuAUEUx/H12Hinou5lt2itFutW1P2fUrS8g+/ESCcnupMwySeZnOQ3kzlzAsdxghuM7rTUHoQEkkjhEWlkkDUyykbLCXkUUMQTSijDNTLKUfOcv6X2z6igihpe8Iq6kVF+8AtfaOAN72iihbbu2Q57I3tAR+iihz4G+MBQ9+xafix8YoIpZphjoXt2Lb8SopGzGOL4orbWPTPrl/y3sP3nnmNIXf6za8hZzpXzI3mWvJwfybe8zbPoWO6X8yONLXk5P9IqJK/+8wR/Fs60
+  </chunk>
+   <chunk x="160" y="32" width="16" height="16">
+   eJyl0ckOgjAYReG/r60bfSEcw8IB5xFnZenSnbyDh1RTYmiNlOQLG04J3EREEtQySqSu/rvfRSvbP0Qr26eile2fnn3WDj37hWe/9+x99k/z+zu4+s/+Rdevc/P7u/oGmmihjQ66Yva3XUHB2T30MRCzX2ARIsIIY0wwxQxzMfuFFlm7xAprbLBFjB0q/MOq0s9F73d+f+sBR5xwxgVX3PACb6CO3Q==
+  </chunk>
+   <chunk x="176" y="32" width="16" height="16">
+   eJztzjsOgCAQBFC8uVyIRqXx06g0Ko1K6VkckykIYeMFIHmZLXbI6kqpGnTJkmmqf3996RnK/hv1jcBSBw20cGT6VjDRCD0MnNO+inZjjlaYYeGc67sMT9/NG+zC/V4Q6IYTLs5pPwgeegGhDY7u
+  </chunk>
+   <chunk x="192" y="32" width="16" height="16">
+   eJxrZGRgaADixlF6RNINDJThdUTg9Xj0byOA8Zm5AYj3EcC4zITpP0YAYzMTWf85Ahibmcj6rxHA2MwE6YeBewQwNjOR7QcAUQWaGQ==
+  </chunk>
+   <chunk x="208" y="32" width="16" height="16">
+   eJxrZGRgaADixlF6RNINDNgxsfqxAVL0bwSq3QTEm4F4CxBvJdEd2PTvplD/YSQzyNF/GmoGufovQ80gRz8I3IaaQYx+AMsThn8=
+  </chunk>
+   <chunk x="224" y="32" width="16" height="16">
+   eJxrZGRgaADiRmSagYHhGRA/B+IXaOyXQPwKiF8D8RsGNH1I+onFWPWP0qP0KE0XGgBEH4V1
+  </chunk>
+   <chunk x="240" y="32" width="16" height="16">
+   eJx7y8DA0MBAPmigUH8j46j+Uf2j+gdKPwDOfxCK
+  </chunk>
+   <chunk x="-16" y="48" width="16" height="16">
+   eJy10elOAjEYheF+t8BPLhJlEVEBRUAWRfZNFgUXFOT2QEAT3qbOD3RSEpEmT6aZM6fN5FNqc11884hSXjH7A56H8COAIEI4EvVrOX2nqx2zj+AEpzhDFDFL3xHnm3N9FhK4RBIppLf0C+RXyCCLHPK4xo2Y3Navk9+iiBLKqKCKmpjc1u+RN9BEC23coYOumNzWfybv4x4PGGCIRzyJyW39KfkLRnjFG8aY4F1Mbuvr+frkb/PX9HzDstv8t7H1Z5jjAwssXd7t4/5d1n/c7/bfK3zi60e+Bq7pZl0=
+  </chunk>
+   <chunk x="0" y="48" width="16" height="16">
+   eJy10cduwkAYRWHzwqaFDsEQeu+d0EmA8HqhS5wFSDBC8u8Flr6Nj0aj0dVtmmaHA0644MYHPNBNuhc++BFAECGEERH0T0RhIIY4vpBAUtBTSCODLHLIo4CioJdQRgVV1FBHA01Bb6GNDrrooY8BhoL+jRHGmGCKGeZYCPoSP/jFCmts8IetoJvt++79Dc0adf8j/0444x877HHQntvldl7d3+r96v6S73721f5W71f3f3yn5P3q/ldn745u
+  </chunk>
+   <chunk x="16" y="48" width="16" height="16">
+   eJyV0jtPAkEUhuGdP4xUQqVUaCVUSKVUQoXaCDYqjboNaoPScGm4/AGVS+F7wpnsZDLuhk2eZHZ2vpPNnJMzUVSKdh4cz6qPN7zjQ8VK1ofkCyiaJGNzYoBPfGGobB1ZH5E7ln8wScbmxAhjTDBVto6sy+ROcGqSjM2JGeZYYKlsnTbOyFVQNUnG5lx+DXGHGrlz1M3unNS8xg1uM8g9X5C7RMOEs/cp5J6vyDXR0h502Os6Z3op5J5zZA6Q1/wje0/OmTjFIND/F7x6M/KfUaD//qwNU8wC/fdnbZrB778/a8sMfv/9Ocl63P6Xov25/Zf3b/WDX6ywxgbbwLc/Hbu6Eg==
+  </chunk>
+   <chunk x="32" y="48" width="16" height="16">
+   eJyl0jlTgkEMh/G8Fh4UXoWKBSqF1ye09BOJVGglVGilVEilVEoDHd7Hs2MyxjVUMPMbJuz+w85mOyLSwS2OCpEa36eoY4wnfOILwnqBGTxTvqCn7nEif/OWm2X/HOaxgFLx26svPx6DvOUWsYRlrGDV9fL787zl1rCODZSx6Xo12HeGc5dP95DylqtgC9vYQdX1umBfEy39T2+IEXbZt4d9HODQ9WqzfokrPYNJZ7D7t7seB72u+e1GZ9hyUj6fW16nXl2dfU/P4OVzi+o7nX1fz+Dlc4vqB539wL0lk88tqu39RPK5RfVAJsvvOqqn/RxP6RVveMeH/H8zfj1a+wat4nlI
+  </chunk>
+   <chunk x="48" y="48" width="16" height="16">
+   eJzFk7sOglAQBXdtUBvQRqABbXx8pZ+sFCJg4ZilwdisWzDJ5OZyc05xEnoRueEdG/GzUJEnZ4f9H/k1eUFV6/KyJbPElY5dTkoyGW7UurwcyORYqHV5uZCpca/W5eVI5oRntS4vSXC/NLjfLrhfNfN+Ua5BB3xgK9P/8PP99ePt+/4GoWQiew==
+  </chunk>
+   <chunk x="64" y="48" width="16" height="16">
+   eJyt0ksvQ0EYxvF5d5aWlpY+HW1V0aIUrTulWnWtut++ErU5RUmsqrSL/qVzkncaEcUkvzw5854nZ5I5xrTWLe5Qwr199lDGAx7xhAqe8WLTX+3vej/oe+b/1uQv6X4Vb6jhHR+of7PfaOu//vH7NZtHYswxTrCPAxRwiKK4c9030sor8ho3OMUZznGBS3Hnut9l+4NkGEPoxwACCCIk7lz3u20/Ro5hHBEMYwSjiIo71/0e258mZzCLCcQ/9zGFhLhz3e+1/UVyCctIIoU5zGNB3Lnu99n+BpnBJlawijWksS7u/Kvz75C72EMWOWwhj21x5/pf8M/fyf3rf9E/fyf33wQGZoO9
+  </chunk>
+   <chunk x="80" y="48" width="16" height="16">
+   eJyN0kVPRDEUQOHeP4y7u7u7+2ArbIEtsAW2wBa4w2xxEk7TkkDSvOlLvs09vZm86Qsrpc5xgUtc4Ro31inOHGdurTvc4wGPeMIzwlakM3+fHIffZxJTmEaqKJWGdHHvuMxgFnOYx4KdfeMFr3jDOz7wiS/b9f4ilrCMFazame/vr2EdG9jElp118Q7d6EEv+tCPAQyK6Xp/GzvYxR727WyIPowRjGIMIYxjQkzX+wc4xBGOcWJnUfRoxCAWcYhHAhLFdL3v+g70LImejBT5fy8ZyBTT9b7rO9CzLHq2PoNc5CEfBSgU04P+1yJ6MUpQijKUowKVErlXoRo1qEUd6tGARo/ehGa0oBVtaEcHOj26z/0HdZ/7D+o/ilymgA==
+  </chunk>
+   <chunk x="96" y="48" width="16" height="16">
+   eJyN0dlTjmEYB+D3+4clLSoVSiutCqloX6STlmmfQibCEBmED+3raagOusy8B18Hed9n5jp45ve755l57mQQBMlzbP7HFtsRndTeDrvssZ+S5SaCII8rDLkPM8JoEO+MMc4Ek0wxzQzXYphljic85RnzPA/zQ37zh78cccxJmC3wgpcs8orXvIn5/lvescR7PrDMxzB/4F8e0kY7HXTSRTefdD7zhRW+8o3v4XyPTi999POIAR4zyA+dn/xilTXW2QjnL+ikcZF0LpFBJlmJ8/d7EM5n61wmJ3F21/kUJKL/p1Dn6r8e1ymimBuUUEoZ5VRQyU1uURUjr6aGWuqo5zYNNMbI73CXezRxn2ZaaI2RR+03Ko/ab1R+Cu2mpoQ=
+  </chunk>
+   <chunk x="112" y="48" width="16" height="16">
+   eJzF0bdOgzEUgFHnhekdAgkdQhq9t4QeXomNEspKR+IgMf0CYekfsHSmz753cDOEcMsd9zx8u+TiB1cJNzR/mZG8++U68SbtyaX0xDMvvPLGOx88RvS0+7czIeywyx771KhzkPm7H3LEMSecckaD84jeQitttNNBJ110R/QeeumjnwEGGSIb0YcZIUeeUcYYZyKiTzLFNDPMUmCOYkQvUaZClXkWWGQpoi+zwiprrLPBJlsR/b///xMjB5iM
+  </chunk>
+   <chunk x="128" y="48" width="16" height="16">
+   eJzF0bdSAzEUQFH5hzFgclyyiQZMzjnzOy4pTW7JBadYZrYwgzwuKE6hd0dPhaohhAo3daqkHtNztU4/e0Jmdssd9zyku594JsnI3kka9Mob73zwUmP2ydcvrdH3d3Ih7LLHPgcccsRx7u9+wilnnHPBJVdcR/Qm8jTTQisF2miP6B100kU3PfTSR39EH2CQhCGGGWGUsYg+zgRFJplimhlmI/ocJeZZYJEySyxH9BVWWWOdDTbZYjui//f/fwPyCKM1
+  </chunk>
+   <chunk x="144" y="48" width="16" height="16">
+   eJzN0blOQlEUheGzX1jACRUQZ0AFmUFBFBkUlNehtAQUaVVUEv6dUFCYTaEFxZd1clfWOcXtOue6ht5MHwO84BVDvOF5AWs7mrvfYu33/ugb7/jAJ8b4mvv2W6ebH0z+4f2KOHeDW1RxhxrqaIjd675J3uMBLbTxiCd0xO51v0J64IUPq1jDOjbE7nW/SfqxhW3sIIAgQmL3ut8lw3rGPg5wiCMci93r/oSMIIoYTnGGc8TF7nWfIC+QRAppZJBFTuxe93mygCIucYUSyrgWu1+G/z8FbKilZg==
+  </chunk>
+   <chunk x="160" y="48" width="16" height="16">
+   eJyd0jtPwlAYxvHTzdGR0dGPySdyLOhQkKEqQwUlxRsFbxWUJkyAiAl/0/ekh8aQc2jyS4eep30vzZRSA4TCRw11nOIMMfq4wz0e8IgnvOEdkQjQQBPnaCHBECM84wWvkp0ik2/EUsMFLnGFNlJ8YIwJPvEl2apIxF8N1+igixvcomecMWuZST4Vu3rVZ8xalpI/sVR+v/LyvG+pXP+B5ANL5fp1/6EDcz+6/8iBuR/df+zAnJ/uP3Fgzu/Q296/DXN+Fcnvex15xT+8j2Pyc+4Lle/iGyv8YI1fVTz/79wGbm+63Q==
+  </chunk>
+   <chunk x="176" y="48" width="16" height="16">
+   eJyV0ulOQjEQhuFy53hDiKIIAioisriwySYgKsoqf1EEEt+GmjSTw2mY5Em+Sc6k7eT0lFIddNFDUAsodRDY5pcdQjjEJwb4MFnOD61vwzjCMSI4wRwzfJks5/1mT/HuOD+KM8QQxzkSSCKFqeP8C1ziCmlcI4MbZPHs2J99f/mW0J73l2+J7nl/+RbdF3GHezx4zN8ih7zIBdNXUcMT6h7zjyihLHLF9K796WqihYaV26Z37U9XH69q+9/+5zfTu/an/98RxiJPTC/L63y/Cnqx5l1WWGPjM7/AN36wxK819wcHGa15
+  </chunk>
+   <chunk x="192" y="48" width="16" height="16">
+   eJyl0MeKAkEUheF+dJ/IKROGUQyjmDEOMybGnN0aN/6LKrg0Xe2ABR9F33t6UUc5jhNCGBFEEcMaQXxAWTJK33KWRsYjm0QKnyKj9C1n8pi5PF8ooqT/L7lmDTRRcM2rqKEuMkrfctbHt0e2gy56IhN50Y/MDjDECGNM9PviSFj6kdkZ5lhgiZV+XxY55D3eLLM77HHAESf9vjIqln5k1r0zXbTQtvTjtzNd/ODX0o/fznTxh6mlH7+d6WKDraWf/+zePYE3nXHBFTeP7zsePvMnEOO6QQ==
+  </chunk>
+   <chunk x="208" y="48" width="16" height="16">
+   eJylkLsOglAQRJc/v34SPiq1Uiu0Aiu0QgtfrW8ThjgbKdTswk1ONiFzZrPEItIFPdCX9xuSADoRZvR7xl/8CWniJ9ydNPRT7k6NfuUMan7O3bnRHyEzrvkFdxdGf4rMjDdrl+62+HNkFrxZu4LDz5BZ8mbtsng6V8iuebN2efwNslverF0e/4jsif9buzz+Dtk9OMiny+O3faElT3AGF3AFN3AHjz/fK+dFvwRe4JSn
+  </chunk>
+   <chunk x="224" y="48" width="16" height="16">
+   eJxrZGRgaADixlF6lB6lSaYbGPDIM1CunyhMQP83IP4OxD+A+CcQ/wLi30D8B4gBQeaErw==
+  </chunk>
+   <chunk x="240" y="48" width="16" height="16">
+   eJxrZGRgaGAgHzSO6h/VP6qfbNDAQJn+vxTqBwBHsBCa
+  </chunk>
+   <chunk x="-16" y="64" width="16" height="16">
+   eJyV0clOAlEUhOF7OmHpqyiCvpagIIhjqygoDjiDMyIiDq8G4rAk8SdAwiH3hvRJvk1VVy+6jdHnBzR6cayIMatYQwppLCGDZdG9bb9NnsUO1rEBH5vYEt3b9gXyAxxiFznksYd90b1tf0Z+jgsc4RhFnOBUdG/b35Df4g6XuEIJZVyL7m37KvkzarjHAx5RwZPo3rZ/J//AJ15QxysaeBPd2/YJ8iQWMYcY4pjHguh+9PyAhs/2f4P+/+5NesZMIYxpRBDFDGY93bv2f7y7hS+08Y0f/Eqva/Z7177T/XZmPNc+5PX61Biu/UR/H3M8M7h/XOddtw==
+  </chunk>
+   <chunk x="0" y="64" width="16" height="16">
+   eJyl0kdOA0EQQNEeHwgw4VoGE0w0DDmYDCbnHMzVSMZ73h6kaWtKeqsv1aYqDSGkbRhMQhhimBEqjDLGOBNMMkU1ok8zQ8osc8yzwGJEX2KZFVZZo8Y6GxF9ky222WGXPfapR/QDDjnimBNOOeM8ol9wyRXX3HDLHfcR/YFHnnjmhVcavEX0Ev0MUE7+3jert/M7/8l7/2IhhG566KWPDjrpKmT3Tzu++KbJDy3e+UiyeynkU8kp7/wCstt/2w==
+  </chunk>
+   <chunk x="16" y="64" width="16" height="16">
+   eJyl0sVSQzEYgNHcPhBS4LVu0RZ3iru7O7wazp7Drsj0BpqZs8k3SRZ/0iSEAq0Mh78rOleimx566aOfgSS7DzL0+TYjjDLGOBMRvcwkU0wzwyxzzEf0BRZZYpkVVlljPaJvsMkW2+ywyx77Ef2AQ4445oRTzjiP6BdccsU1N9xyx31ETyvm30Y7HXTSFdH/82cq1Tr/xlwIeZpopoU66mnIZfcndzzzwitvvPPAY5Ld0/BVIfzcq6b4TemXvWpqXR+jFH/b
+  </chunk>
+   <chunk x="32" y="64" width="16" height="16">
+   eJyl0sdOgkEUgNH5eSAL4mthQ7D728AK9t57fTb73uPOjWGSmeRs7pfczZ08hJAnqGYh1BhhlDHGmWAya9+nmCZnhlnmmGchotdpsMgSy6ywylpEb9JinQ022WKbnYi+yx77HHDIEcecRPRTzjjngkuuuOYmot9yxz0PPPLEMy8RvUwf/QwwyBAVhiN6yt/5lXr/7kIIRXoo0UsHnXQV2vc3O9754JMvvnnN/m9/5+WQppoo9f0AZ/qAEQ==
+  </chunk>
+   <chunk x="48" y="64" width="16" height="16">
+   eJyl0sdOAzEUQFFPPojObyXUhM4QUui99975NTp7DoL9WBlLR29xJUuWXxpCSHMoJyFUGGGUMcaZYDLJ7lNMkzJDlVlq1CN6gyZzzLPAIkssR/QVVlljnQ022WI7ou+wyx77HHDIEccR/YRTzjjngkuuuI7oN9xyxz0PPPLEc0QvUqKPfgYYZIjhiJ5nd37l/f/OQghddNNDL22001HI7p/u+OKbF155452PJLsXvaEU/mYrylT+Zyvynh9i5oAL
+  </chunk>
+   <chunk x="64" y="64" width="16" height="16">
+   eJyl0sdSAlEQQNE3fJDZ38KMWcecFRXFLIgZ/TUx7j1b2cyzpqvO6lb1pjsNIaRtRpIQRhmjyACDDDGc/O0lxplgkimmmWE2os8xT8oCiyyxzEpEX2WNdTbYZIttdiL6LnuU2eeAQyocRfRjqpxwyhnnXHAZ0a+4pkadGxrcchfR73ngkSeeafLCa0TPum9Wb/+d/8p7/+5CCD300kc/HXTSVcjuX3Z888MbLd754DPJ7sWQTymnvPMLQ1V/fA==
+  </chunk>
+   <chunk x="80" y="64" width="16" height="16">
+   eJyl0UdSQkEUhtGGBSmmbT2MYBYxJzBjzlnZmgF17tlBd/lu1Rl9VXfyZ4UQygwyxDAjjDJGFukVqowzwSRTTDOT0GeZo8Y8dRZYZCmhL7PCKmuss8EmWwm9QZNtdthlj30OEvohLY445oRTzjhP6BdccsU1N9xyx31Cf+CRJ5554ZU32gk9tm+s10I+effvKYbQSx/9DNBFN6VivH/78cMv73zwyRedQrxn4f/KVHKohvz3Bxo5fzM=
+  </chunk>
+   <chunk x="96" y="64" width="16" height="16">
+   eJyl0UdOAzEYgFEnB6JzraGHoYfQCb333svZ6HseIixAQmNNLL2F9cmWrT8phNBBJ11000MvfSQZvUQ/KQMMMsQwIxF9lDHKjFNhgkmmIvo0M8wyxzxVFliM6Esss8Iqa6yzwWZE32KbHXbZY58DDiP6EceccMoZ51xwGdGvuOaGW+6454HHiJ4136xeDvmk4fv/eef/db5KczGEFlppo50GGmkq/t/T2hve3PXOB08888Jr4Xf7u/85n9SpVKe8q1rzCRm0gAA=
+  </chunk>
+   <chunk x="112" y="64" width="16" height="16">
+   eJyV0UVuQzEUQFEnCyp3W0kx+WXGlJlSZlhbed4TdZbBt2PpDKyrJ0t+pUIIZfroZ4BBhhimFOkVqmSMMMoY40wk9EmmmGaGWeaYZyGhL7LEMiusUmON9YS+wSZbbLPDLnvsJ/QDDjnimBNOOaOe0M+54JIrrrnhlruEfs8DjzzxzAuvvCX02H5jvZ4jC/YWUcvRmI/tPwv5OoshdNFND7200U5HMT7/4Y1Pvvjmh1/eC/+tFFpTbrpXWlRtuuf9X0Ps/AGGIYLY
+  </chunk>
+   <chunk x="128" y="64" width="16" height="16">
+   eJyl0cdOglEQgNELD6TYXuu3oNgVC/ZeEXvvryYquPesjcl/kzvJ2cyXzGayQgj9DDDIEGWGGSHL6RVGGWOcCSaZYjqizzBLlTnmWWCRWkRfYpkVVlljnQ02I/oW2+ywyx77HHAY0Y84ps4JDU454zyiX3DJFdfccMsd9xH9gUeeeOaFV954j+h5/83r1ZAm9f9dxRC66aGXPjropFTM719ufNOizQ+fhf/3HzT/9CykqSRKnV8e4X83
+  </chunk>
+   <chunk x="144" y="64" width="16" height="16">
+   eJyl0kVuBDEQQFH3HCica/WEZibMzMzMeLVw9nmRsm5baktPtfhSbcp5FkKVLrrpoZc+auQFfTyEUDcb9DPAIEMMM5LF+yhjf7uYYJIppplJ6LPMMc8CiyyxzEpCX2WNdTbYZIttdhL6Lnvsc8AhRxxzktBPOeOcCy654pqbhH7LHfc88MgTz7wk9KL7xu5f+/8DZZS9f2slhDba6aCTJpppqcT7lx3f/PDKG+988JnFex7iqgWtnqBR0Mq+X0ASfz0=
+  </chunk>
+   <chunk x="160" y="64" width="16" height="16">
+   eJyl0kdOA0EQQNEeH4hg4FomGEw0DCbnHE3O8WpgwOx5nGBa6pLe6ku1qcpDCHmCWhbCKGOMM8EkU9Sz4j7NDDmzNJhjnoWIvsgSy6ywyhrrbET0TbbYZodd9tjnIKIfcsQxJ5zS5IzziH7BJVdcc8Mtd9xH9AceeeKZF1554z2iV+hngEGGqDLMSERP+Z1/qffvLoVQpode+uigk65Scf+xo80vH3zS4ovvrLhXQppaotT5A2GugAk=
+  </chunk>
+   <chunk x="176" y="64" width="16" height="16">
+   eJyl0tlOwkAUgOEzPBAi4GsBshQVRBYXQAGVTQHZwf3ZRJZ7/gsTAh3IEJt8adK/58xFmxSR5CYlklKa5xoW70VxgtO/mRj3uNL3M7Xq50jgQq3OTCODS1wZ9GvcIIsc8rjFHQoGvYgS7vGAR5RRQdWg11DHE57RQBMtvBj0Njroooc+BhhiZNDHeMUb3vGBT3zh26D74EcAxwgihDAiBt3kH9nlv9//0CHihgdeHMGJA7gc690ndjN2zLHADyb4xVTZmyV2up370O3cRje/z6WbXwLf9oDR
+  </chunk>
+   <chunk x="192" y="64" width="16" height="16">
+   eJzN0jcOwkAQQNH1hU02GUwOJpucc+aO/JVAomMXNxSv+hpNMWMLIWwPLEOIKGKII4EkUkgb33sGWdjIIY8Ciigp9DIqqKKGOhw00FToLbTRQRc9uOhjoNCHGGGMCaaYYY6FQl9ihTU22GKHPQ4K/YgTzrjgihvueCh0Ez74EUAQIYQRUejyB9wX54f/kfd9z0q69zc/9kumJssj3X3/5glyyoMP
+  </chunk>
+   <chunk x="208" y="64" width="16" height="16">
+   eJyl0kUOwzAQQFHnwkkxKTdlZmbm9o79lbKtM1IWb/VnLEu2q5RyA7ANpRwkkEQKaWSQNfx7Dnm4KKCIEsqoCHoVNdTRQBMttNER9C566GOAIUYYYyLoU8wwxwJLrLDGRtC32GGPA4444YyLoF9xwx0PPPHCGx9BN2EhhDAiiCKGuKAH+Ts/Qd/fVP9ZHt2MreF4+7oZ3dlmwH3J/f32HZ+ZL35Qgoo=
+  </chunk>
+   <chunk x="224" y="64" width="16" height="16">
+   eJyl0scOwkAMRdHJDyfUhE7ovffeO/wjF8EiCyI5yuJs5tmyJY+tlLI1pQIIIocwIrCVjEVtDHEkkETq129q7nkaGWS17w6f2XkUUERJkJdRQRU11NFAEy1B3kYHXfTQxwBDjAT5GBNMMcMcCyyxEuRrbLDFDnsccMRJkJ9xwRU33PHAEy9BrsNw3D/kuH9UkEv/iBu/99eVjOHybgpZHmq98Lu/l/5/898cWILP
+  </chunk>
+   <chunk x="240" y="64" width="16" height="16">
+   eJxrYGBgaGAgH5QxMjCUM5Kvvw6ot54C/W1Ave0U6O8D6u2nQP80oN7pFOifB9Q7nwL9y4B6l1OgPw+oN58C/Q0MlKUfSuM/H4iNmMjXXz7A+gfa/QB1Eg7/
+  </chunk>
+   <chunk x="-16" y="80" width="16" height="16">
+   eJxjYMAEekwMDF8ZGRjygOx8LPKEAEj/Xwr1szJRpp+XQv2iFOqXheonhHHpVwXiMgbCGJd+XSB+D4yDD0D8EYg/AfFnIP7CCInbd4wQeVz69YHYAIgNgdgIiI2B2ASITZlQ5UfB0AYAjnYbHw==
+  </chunk>
+   <chunk x="0" y="80" width="16" height="16">
+   eJztybsRgCAUBdELBeEP2zKkbAWF3O2A4EXMsDMnWmlm6TJKRtlJBS8+VDTceFz/b17acSDiRMCC1ff/bOx+GCYgoQ==
+  </chunk>
+   <chunk x="16" y="80" width="16" height="16">
+   eJztyTkOgCAARNGBA7l7Le301gguvb8kNJBYmfCTV0xGqn1piazJLrFF9mSX8EYKOHHhxgOHw+T/3koDRkyY0aBFZ/N/7d+9HU4gow==
+  </chunk>
+   <chunk x="32" y="80" width="16" height="16">
+   eJztyTsOgCAURNGBBYkf2Jaly1YE7bmNpbF4lQk3OZlipJ6l1Wgzyk46UVBx4cbh3r9nd0xemrEgImFAwOi//96/azESIK0=
+  </chunk>
+   <chunk x="48" y="80" width="16" height="16">
+   eJztybkNwCAUBNGFgowv2sKZ3bVPyJkOCH5kiZFeNFLP0oZkcGA3uJx048GLDxkFp2v/yUszFqyIGBAw+vbv/bsKHMYgow==
+  </chunk>
+   <chunk x="64" y="80" width="16" height="16">
+   eJxjYBgFlIA8CnEZhfg9IwPDByD+CMSfgPgzEH8B4q+M+OXeQeUNmRgYjIDYGIhNgNgUiPWAWB+IDZgIy4+CoQ0AGfogog==
+  </chunk>
+   <chunk x="80" y="80" width="16" height="16">
+   eJztybkNwCAUBNGFgowv2sKZ3bVPyJkOCH5kiZFeNFLPUjLYsBscuJ304MWHjIITl2v/yUszFqyIGBAw+vbv/bsKHO4gow==
+  </chunk>
+   <chunk x="96" y="80" width="16" height="16">
+   eJztyzkOgCAARNGBAwkuXMuSS3hXd3p+YU8ClcafvGoyUl3Lo7av/OdGsdFupAMnLtxIWLGZ8t5bacCICQEdHLwt73/vLgPfOSYP
+  </chunk>
+   <chunk x="112" y="80" width="16" height="16">
+   eJzty7kNgDAAQ1EnA3GzFnQwRHblpuc3NJFIlBKBpVdYlp0kFxBL6PuFf5eo9/qQaPT6YqQVG3YcODFhNs/7vZVWqlCjQYsMOQob3/+8Oxf5WDZd
+  </chunk>
+   <chunk x="128" y="80" width="16" height="16">
+   eJxjYBgFlIA8CnEZhfgjIwPDJyD+DMRfgPgrEH9gxC7+Dojfo8kbMjEwGAGxMRCbALEpEOsBsT4QGzARlh8FQxsAACV2IKc=
+  </chunk>
+   <chunk x="144" y="80" width="16" height="16">
+   eJztybsRgCAUBdELBeEP2zKkbAWF3O2A4EXMsDMnWmlm6TJKRp+TKhpuPMgoeF3/b17acSDiRMCC1ff/bOx+GIYgoQ==
+  </chunk>
+   <chunk x="160" y="80" width="16" height="16">
+   eJztybsRgCAUBdELBeEP2zKkbAWF3O2A4EXMsDMnWmlm6TJKRp+TKhpuPMgoeF3/b17acSDiRMCC1ff/bOx+GIYgoQ==
+  </chunk>
+   <chunk x="176" y="80" width="16" height="16">
+   eJxjYCAe5GHBpIDhqJ9SXEYCxqb/MyMDwxcg/grE74H4AxB/BOJPjJhy2PQbMjEwGAGxMRCbALEpEOsBsT4QGzChymNz0ygY2gAARukp9w==
+  </chunk>
+   <chunk x="192" y="80" width="16" height="16">
+   eJzLY2BgyBvFIxaXUYhHwdAGAF89PmE=
+  </chunk>
+   <chunk x="208" y="80" width="16" height="16">
+   eJzLY2BgyMOB8/HIEYNH9Q9+/WV4cDkBeRAeBUMbAAB5QT5q
+  </chunk>
+   <chunk x="224" y="80" width="16" height="16">
+   eJzLY2BgyCMC5wNxGRZMjF6YfmLVDkf7KXVDPg43kKK/HIs4Nj9hw+U4xEfB0AYAYtc/DA==
+  </chunk>
+   <chunk x="240" y="80" width="16" height="16">
+   eJwrZ2BgMGJiIBvkU6i/fNT+IW3/KBjaAACmnQXk
+  </chunk>
+  </data>
+ </layer>
+ <layer id="1" name="tembok" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   <chunk x="-16" y="-16" width="16" height="16">
+   eJxjYBheQASImUnAo2AUoAOOEaQfALtYAFY=
+  </chunk>
+   <chunk x="0" y="-16" width="16" height="16">
+   eJxjYBjagJkMzITEJgdwUObkIa+fD4j5oXgUDG0AADM/AHw=
+  </chunk>
+   <chunk x="16" y="-16" width="16" height="16">
+   eJxjYBjagBkLZsEhjk0NNsBFhL341Awl/aJQWgSI+QlgZLUCULFRMHgAEwPhdI+OASFxAZI=
+  </chunk>
+   <chunk x="32" y="-16" width="16" height="16">
+   eJxjYBjagBkJs6DxicHIgItCtwxF/aJQWgSIBSi0fzCAMkb8fGL146IpdQeIJtUsdHOQ9aOnf1IBAJTnBjQ=
+  </chunk>
+   <chunk x="48" y="-16" width="16" height="16">
+   eJxjYBjagBkNs1BoHteo/lH9I0g/APL4AIk=
+  </chunk>
+   <chunk x="-16" y="0" width="16" height="16">
+   eJxjYMAEHFjESAGj+kf1j+ofGvoBCg8AgQ==
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJxjYEAADgbKwKj+gdXPBMTMWDALEItC1YigqUO3fycQFzMh8AEg5iLSnTDxQ0hinAyY+nEBkP4CoH2ngHQJkC5lIk//JQYE3oVFPz73FwL132JA4E4s/scXfg+B+BGUD6L7sOjH5/6XQPwKyofRpOhHB7ew6Ed2PwCdJBUA
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJxjYEAALgbCoIwRgrEBYvTjA4T047ObHvYTcgM97Ed3AzMSZqGD/bT2fz0Uk+MGmP3EmAEDuMIPlxmk+J9YN4DAcmbi9RMb/8TYDwD4vQ07
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJylkkkKAkEQBIvWi37abyko7rhfVFBH/YshTuFM2+uYEIdOOkmqKJG6uvKf3vlWIm1P3tbI/Hodz1/1Bo6Mamji+TFMYAozmMMClon9K1jDBrawgz0cEvN9U+eEd674EsnbusMDnpG/vn6doWm/Szn9RTlDTv8FrnCTb153kLt/vQF92/leSdUL3YArH+o/yucGQv1N5n8BDPFClQ==
+  </chunk>
+   <chunk x="64" y="0" width="16" height="16">
+   eJztzbsOgkAUhOHNakF4/4dxG5GLERQLoJCb7+K/MRFzsiIG6CT5Ck5mdpSa92lsvtiO5LwJG/5Izt73+nPX6KFvHLlf9wMcECJaqL/TA3uLxc135NRbX75p+wmOK+6H//1X/4QUGc64IMfVsS+z8t2S/2rCfqGeWXu/oUaDFh163B37MvsAAZpkHw==
+  </chunk>
+   <chunk x="80" y="0" width="16" height="16">
+   eJztzssKgzAQheEQXUjf/2G0G+sNEZXW1uJCfZf+XYjDoFTMtoGPweEkR2Pcjif4sGq3RebkuSA40LmVi+26j+z+XZ3LmDkK9W6MGxKkZj/ncv+bCe1q2ctdor5l7ur4//9+9/6a2aA90V8e6K9+9I/MCbPqv+OBDk+80OMtcgM+xtVrjg==
+  </chunk>
+   <chunk x="96" y="0" width="16" height="16">
+   eJytkcsKgzAQRYfoQvr/P1M30dai9YHu+v6X3uIMlWBGiQYOGUJuTpIh2jYihRiYhT3aOIAk8F7W/PNH1BZzBnJwAmdQkH/94vh9+3zZbmU+NSM0qQXJu+t2cp7P/1H8JVMF+nsaGWb8xH5S/DfmHuiX7EN5/5Jf8lv9vz+8gho0oOXez/mFPf0yP8ELvLn3rl96Vjr+L5Jte2Q=
+  </chunk>
+   <chunk x="112" y="0" width="16" height="16">
+   eJzFkksKgCAURcUaRPvfTE3sS/8F9NtLN0gSe2biIOGAPr0eURnzawFBCLhhTodqMYg++mttLPidT7h7nvILkIEcFKAE1ZW15W3ZlD+Reb2u7iVrHfo9GMAIJoPfdA4Xv5qVtRn9BaxgAzvhf7sDX7/upu7/b7/JPTn6qXez+RvQMvqfnOsP6h91QA==
+  </chunk>
+   <chunk x="128" y="0" width="16" height="16">
+   eJy1kEsOgzAMRCPDour9LwMboB+VX5ZsWnKXTqRWjCxIIlosvY2t8XNizG+VETkQ1YvBdQannXdUsuQL2beD/RWoQQMu4Apu4P7nfCkL3zz3PLxLz/w+G/CH7rCJfs7qmd/hNvwxt0v0c1bPXMC/5Z4+mTnRz1k9m1f8sXc/wetA/wO0oAM9GMBIf87+NyluckU=
+  </chunk>
+   <chunk x="144" y="0" width="16" height="16">
+   eJzd0dsKgkAUheFh8iJ6/5fJGzuiXYiWRid9F/8NE25QdlbQRcKHw3bWrAGd++6ZIYIP63dE4YwF5h90Sy7xfX7ph3tWIzOncro/kf1YY4Mtdtgb/Vb+1XmSi9X9Za2lzDIcRr49c7nRX6DEESdUqHGe2H9hdsXN6G+Nfp2/44EmZP61X/t1v/zvNLyLif0d2bx0lA==
+  </chunk>
+   <chunk x="160" y="0" width="16" height="16">
+   eJylkd0KgkAQRpetC/H9X6a9KbUwLakuwn70XTyG0CSas7pwGHH55oyjMcuOhZUna5ELZjhDkWvrhmY7agQxJLCHw0B2a7/59vlTjT4/5F+ad/YX2a9/58T8bmT+FI6QQQ4nOEOh9F94d4XbTH8JD3jCC95QQd3tZMov8xp/2pvhn/+u8Mtv0PhLzx1o/r+P33Q7kGj9DVCrcss=
+  </chunk>
+   <chunk x="176" y="0" width="16" height="16">
+   eJyl0olOwkAQgOFNff9XKQpeFagVpQpIOUzqBRUkUVB5B3/CTrppVrtJJ/nSbScz025XqWpxUJEtfNRwiCPU0cAxTgp5W5zi0lPqnGuAiHWTawttnT9T+7wtwl29Xgde7ob7rpGP/njXGLe4Qw99DHCPoc5L3YWXk/qk8NxG6m3zUzziCc94wStmmOv8f/Mzh/myh77FBz6xxgZf+MYPtjove1jsKVy/P3Qg/+oKHVwbZ8DsGatc2XzpmzgYYYwJpngwzojZM1W5svnSN3PwhgWWeMfKOCO/nf2eUQ==
+  </chunk>
+   <chunk x="192" y="0" width="16" height="16">
+   eJy90t0KgkAQhuFh7UC8/wuxTChLLFMoU7CzfvReeg8kBFEbBReek2Vnv9lhReYta8AKZuTMGht42MJv3e3AHsnfI8ABR4TNfmT+qz8jxgUJUmW+O/AGTX1gupbI30kzw4n5J+mf4RLv//Uv3T+g6X9q/hU3ZLgjR6HIL/GYkf/EC298UKFW5H8BNClBvg==
+  </chunk>
+   <chunk x="208" y="0" width="16" height="16">
+   eJxjYKAMMFOI0cFibIIkgCVk6N/NNEoPJD0KBg4AAMHWJO4=
+  </chunk>
+   <chunk x="224" y="0" width="16" height="16">
+   eJyl0kVqREEYhdGmO+7u0nF3d3d396Ulu8jmcgbJJNSgoAsOD36+O3uJRGYvlaH/7zNwTLqlyCKbHHLJC7RfgVu+WwGFFFFMCaW/7Xcy/P17ZbpyKqikimpqIve1ujrqaaCRJpoj9y26VtK00U4HnZH7Ll03PfTSRz8DkftB3RDDjDDKGOOR+wndJFNMM8Msc6EfIPDmdQssssQyK6xG7td062ywyRbb7ETud3V77HPAIUccR+5PdKeccc4Fl1xF7q91N9xyxz0PPEbun3TPvPDKG+988AOaTSND
+  </chunk>
+   <chunk x="240" y="0" width="16" height="16">
+   eJxjYKAMsEAxuYALikf1j+of1U9//QAs3gEh
+  </chunk>
+   <chunk x="-16" y="16" width="16" height="16">
+   eJxjYMAEHFjESAGj+kf1j+ofGvoBCg8AgQ==
+  </chunk>
+   <chunk x="16" y="16" width="16" height="16">
+   eJydkrsOwjAMRa2woA6wwM7//wFjEQxNYeCxwAYbfAMFrpVaKo4TaK90pCjyqeXGRHHO4AKu4AYKoyYX8e7g6fr77D3AATSGP+qQCs+wBK9E/3GLvpPwDCVY0TCfZ6iAT/iFca/9PYV/MNSXd9R1EzBtyfnyjv9G+/KOffy36yFY/XNL8SOOvndLmHdqZpTeP+6/cYEa5y3YqRrZiTVqShf7laOFB3U4R77sxBGcjP4S9r3h6+98ALU0Mcw=
+  </chunk>
+   <chunk x="32" y="16" width="16" height="16">
+   eJzlkjEOgCAQBE+wMDQ+FStbnuM7tLfT/2gCxmUFwdpJJthM7oKI3BiJcfJkbLzMpOt6RoMttbked+hAnF8zO9fXzpbQGPh+a1Ok+hK4Q08OH/07/P4cmLovS87Ku0r8/66T34ul+fvpFs5Uz3C/qHKPO3B/AEJqIms=
+  </chunk>
+   <chunk x="48" y="16" width="16" height="16">
+   eJxjYICAeijNBaV3MKHiS0Cxy0jinEhqsekHgetAfAOIbwLxLSC+DcR3gPguA3H68QF8+vmAmB8HFoWqE4HyybUfHQyU/gIorkfCo4B4kI8FA5M3AzORGJt5HEDcwkgcHmj9AKG2JjM=
+  </chunk>
+   <chunk x="64" y="16" width="16" height="16">
+   eJzjYGBg2MGEwDCALMYF5HPgUMfBQBjA9GMDlOrnR8MCUCwKlReB8nGpG+xACooHSv9wAozMDAxFTAhcDMRAITBmYkCwcWEWLGItjBBMbDpGBwOtHwAe3w2L
+  </chunk>
+   <chunk x="80" y="16" width="16" height="16">
+   eJzbwcTAsAOKuRgYGDgYEHwQvonGR1a3C8hGBjBxQgCXOnL0i0JpESAWAGJ+NCwAxbjUjYLhCRiZGRiKgOmzGAljA8xQzILEJoRZsJjDRYLb0NVyDqB+ACkmDIM=
+  </chunk>
+   <chunk x="96" y="16" width="16" height="16">
+   eJzbxcTAsAuIQWAXEyrmAopxYBG/DhS7AcQ3GfADmH5kcJ2BMv3ogB+KBaBYFCouAuXzo2EBJMxPwOxRMHwBIzOmGCgbMBOBWZDYyIBQWoUBLnIcTCP9ACJnDrk=
+  </chunk>
+   <chunk x="112" y="16" width="16" height="16">
+   eJzbxcTAsAsNczEwMHAwYIpfAopdBuIrSHK3gOzbQHwHiO8yQABMPwhcB+IbQHyTAVPtbQbsAFk/IcAPxaJQvggQCyCJw7AAEkYWHwXDFzAyE1bDjAOz4JFDVoMLcBHhPnxq6KUfAAdBFmU=
+  </chunk>
+   <chunk x="128" y="16" width="16" height="16">
+   eJzbxcTAsAuKuRgYGDgYEHwYvgwUuwLEV7HI3QGK3WWAAJj+60B8A4hvAvEtIL7NgKoOF4DpJwWIQmkRIBYAYn40LICEkcVFMUwaBUMRMDJTpoeZRMyCxicVcJGhh5b6AdhIE7Q=
+  </chunk>
+   <chunk x="144" y="16" width="16" height="16">
+   eJzbxcTAwMXAwMABxLuYUPF1oNgNIL6JRW4XVB8IwPSDwHUGVH23gPg2EN8B4rsMqACbflIASJ8IEAsAMT8aFkDCyOKiUL0wfaNgZANmIrAoknoRNDlcYBOF7iJVP7K7WIAYmD1R0joLmjoYHwBJmBQR
+  </chunk>
+   <chunk x="160" y="16" width="16" height="16">
+   eJzjYGBg2MWEis8Dxa4D8Q0sciDMBRTngMqBaAaoenQM0n8TiG8B8W0gvgPEdxkQ+hmQaFIAsn5+NCyAhJHFRaHqRdDkRsHIBswU4sEAOBnIy0cgAABtFBSo
+  </chunk>
+   <chunk x="176" y="16" width="16" height="16">
+   eJzbxcTAsAuKnzEg8C4m/PgeUM19BvIByI7nFOiHAX4oFkDC/GhYFKpWBIvcKBjZgJlCPNQBAAsYD3A=
+  </chunk>
+   <chunk x="192" y="16" width="16" height="16">
+   eJx7wMDA8BCIdzFhYi6gOAcDfvACiF8C8Ssgfg3Eb4D4LVSOGP34ADH6BZCwKFRMBIj5oWKU2M8wCPSPdEDr8GemEA91AACobgvz
+  </chunk>
+   <chunk x="208" y="16" width="16" height="16">
+   eJxjYKAc7GYapUdp8mkQWMrMQBFYRqZ+ZgrxUAcAg8U2qg==
+  </chunk>
+   <chunk x="224" y="16" width="16" height="16">
+   eJytztdOQkEUheEJcwP38IYUpUpVepUqoIB0aYm+hC/Hb+SCQziHHWAnX2aSWSt7lLo8bq2UB1748IBH+PX/+6/NeJ5OgFwQIYQRwROiwn6MXBwJJJHCM16E/TS5DLLIIY8CisJ+iVwZFVRRwyvqwn6DXBMttNHBG7rCfo9cH+/4wABDjIT9T3JjTDDFDHMshP0luS+ssMYGW+ws+n9XbcJ1yDiPdnxr4077+a+Yzs+VfbM/SvoOi7db+5K5R38Pa/0wKQ==
+  </chunk>
+   <chunk x="240" y="16" width="16" height="16">
+   eJzjYmBg4GIgH3CN6h/R+lkG2P5R/ZTpBwCfHgE7
+  </chunk>
+   <chunk x="-16" y="32" width="16" height="16">
+   eJxjYMAEHFjESAGj+kf1j+ofGvoBCg8AgQ==
+  </chunk>
+   <chunk x="16" y="32" width="16" height="16">
+   eJyd0ltPwjAYxvGmV3z/r0QENlDcARRUQA7KGZWjXPFvwjLS9G0Wmvwu1rzPnjabUvkqIUCIOmpaqUflXhFia8/ON5Q/X9b+fPWO/gedM+eXziDl6yZjevGEJp61O28vk4+YjZEgRQttIe+6/wt7r+igize8C3nX+T+Y7aGPAT4xtPKB5/wjZseY4AvfmFr5yNM/Y3aOBZZYYe3Ix8L9N+z94Bd/2GIn5BNH/57ZA4444R9nIe+6/+27U7SuivYX+f99/Vk+EIQF+rOOis6/c/Z8++3N/AW6zG4E
+  </chunk>
+   <chunk x="32" y="32" width="16" height="16">
+   eJzNj7ENgDAMBE1CxbJQ0TIOe8AIgX1IZF6yLGIj0vDSKdXl/YmIjsyZGTILcfDqjOIt7IGp+XPHPPklqaG/ZAu+L2/QPvK1/w/7vfut/a392E8V39uP7prv9WO/5Vv7W/tl4APd/aY/3vRGP5iUj6yR/0L0DTIX53hB8w==
+  </chunk>
+   <chunk x="48" y="32" width="16" height="16">
+   eJzLZ2BgyEfDBUTiFkYGrKAAuzCGmlH9o/pHun5i8xqx+Q8mTiwGAEeeJm4=
+  </chunk>
+   <chunk x="64" y="32" width="16" height="16">
+   eJxrYWRgaAFiDgbCgAuLWMsw0c8EZDNDMQsQ80MxDPBjwbjsx2YPLkCK+4nRz0kF/SD3I4cHPoxLP7H+GdU/sPoBOw0Stg==
+  </chunk>
+   <chunk x="80" y="32" width="16" height="16">
+   eJxjYGBg4ARiLgbiAbraoa6fHwvGJydAgl2DHTATwKJAzA3EIkhiLBTaSUpcjeqnrX4AV5gBtw==
+  </chunk>
+   <chunk x="96" y="32" width="16" height="16">
+   eJxjYEAADgbCgBOIuXDIMQExM5EYGyDGfnyAUv18BDA/FjycACnxJ4pF/0DH36h+0gEAwlkBdA==
+  </chunk>
+   <chunk x="112" y="32" width="16" height="16">
+   eJxjYMAOuHCIE6tmqOjnh2IYEIDyBZDk+LGog6kZDkAEiFmAmAmImfFgUTxmgMKSgwI3jOofGP0AI2AByg==
+  </chunk>
+   <chunk x="128" y="32" width="16" height="16">
+   eJxjYCANcJGofrDr5ycC41M71IEIELMAMRMQMyNhUTQ1zFgwC1QeFKYcZNjNhUSP6h8Y/QBRmAIe
+  </chunk>
+   <chunk x="144" y="32" width="16" height="16">
+   eJxjYMAEXEDMgUUMH38w6l/OzLAAm3qQOIzPjyTOD8UCQMyHxMeFhwNgAmJmJCyKJCcCFWOBqhNFEmeBstHjCRvAF5+j+umjHz09C0DlAOHtBY8=
+  </chunk>
+   <chunk x="160" y="32" width="16" height="16">
+   eJxjYGBg4ARiDgbywaj+Uf3U0H8Sik8B8WkgPgPEZ0nQfxGKLwHxZSC+AsRXidTPTACLQtWKoIkj208uGEj9AO4qCwM=
+  </chunk>
+   <chunk x="176" y="32" width="16" height="16">
+   eJxjYBgFo4B2gAmImbFgmDghwEGiOKn6kd3EQqSZuMzlooF+XO7nA2J+CvTDAAB9uACf
+  </chunk>
+   <chunk x="192" y="32" width="16" height="16">
+   eJxjYBgFo4B8wEwhHumAn0xMLQAApgwBAw==
+  </chunk>
+   <chunk x="208" y="32" width="16" height="16">
+   eJxjYBgFo4B8wALEzEiYhUT9XAT4w12/AIX6KQUAhRgAfA==
+  </chunk>
+   <chunk x="224" y="32" width="16" height="16">
+   eJxjYMAO+ICYnwg8CkbBKBi6AAA/mgCW
+  </chunk>
+   <chunk x="240" y="32" width="16" height="16">
+   eJwTYGBg4GKgDIzqH9U/qn9o6gcAlY8AsQ==
+  </chunk>
+   <chunk x="-16" y="48" width="16" height="16">
+   eJxjYMAEHFjESAGj+kf1j2T9fEDMTyQeaAAAYTsBDQ==
+  </chunk>
+   <chunk x="0" y="48" width="16" height="16">
+   eJxjYBgFo2AUkAv4ScACA+RGfAAAfBwAtg==
+  </chunk>
+   <chunk x="16" y="48" width="16" height="16">
+   eJxjYEAADih9iIkh4SKQPs6E4F9F4yOrR9cPAyeY8PPR1YOkmUnE+MwjFQx1/QMNBtr/A62fD4j5ScQDDQBOSQmB
+  </chunk>
+   <chunk x="32" y="48" width="16" height="16">
+   eJy7wsDAcJUBE3BhESMEQHqYgJgZiFnQ5MoYIRgdMKNhDiDmJNN+BgL6cbkBGfBBaQEy7YcBQvYTcge6PmroJwWQG/4jTT8/hXigAQBL1Ajn
+  </chunk>
+   <chunk x="48" y="48" width="16" height="16">
+   eJxjYEAFBUDcwkg8RgfU1F9HB/vLGKmjH0aT639K9Q/G+BsJ+vkZKMMDDQCknFLC
+  </chunk>
+   <chunk x="64" y="48" width="16" height="16">
+   eJxrYWRgaAFiDgYI4ARiLgYEnxBooZJ+PiCbnwwM008uGNU/qp8S/bB0OFQBAJCFDrg=
+  </chunk>
+   <chunk x="80" y="48" width="16" height="16">
+   eJxjYCAdcJGhB5d+fjKwABCLUuiGUTAKRgEDAwBffQD9
+  </chunk>
+   <chunk x="96" y="48" width="16" height="16">
+   eJxjYEAADgbKACX6RYCYnww8CkbBKCAfAAAV4QDo
+  </chunk>
+   <chunk x="112" y="48" width="16" height="16">
+   eJxjYIAALiDmYCAfkKufn0I8CkbBKCAfAAC6LQEV
+  </chunk>
+   <chunk x="128" y="48" width="16" height="16">
+   eJxjYGBg4AJiDgbSARcSTa5+fgrxKBgFo4B8AAADnAEp
+  </chunk>
+   <chunk x="144" y="48" width="16" height="16">
+   eJzjYKAMcFCon59CPApGwSggHwAAbg0BAQ==
+  </chunk>
+   <chunk x="160" y="48" width="16" height="16">
+   eJxjYGBg4ARiDgbyASX6+aGYEvsZRvWP6h9g/XwMiLRMCh5oAAAz/gFq
+  </chunk>
+   <chunk x="176" y="48" width="16" height="16">
+   eJxjYEAALgZMwIFFDBegp34mIGamQD828VH9mAAWzrgwufZjA9j0kwJooZ+Q+/mRsAAWeT40Neh4oAEAJp0Byw==
+  </chunk>
+   <chunk x="192" y="48" width="16" height="16">
+   eJxjYBhYwIyGRaHiIkDMgkUMXT0+wEWh20aCfvTwJBWPdMBPIR5oAAD4sgHE
+  </chunk>
+   <chunk x="208" y="48" width="16" height="16">
+   eJxjYBhYwILG5yJRP7r6Uf2kAWY0jB4fpAJS7R/q+vnRsAAWMXx4oAEAMOYBnA==
+  </chunk>
+   <chunk x="224" y="48" width="16" height="16">
+   eJxjYBgFo2AUkAtE8ciJADE/ATzQAABlAACi
+  </chunk>
+   <chunk x="240" y="48" width="16" height="16">
+   eJxjYGBg4GKgDIzqH9U/UvXzA7EAhfYPJAAAXgcAog==
+  </chunk>
+   <chunk x="-16" y="64" width="16" height="16">
+   eJxjYBgFo2DwAE0SMTb9lNpPijvw6afUfmrpx+d+AMTIBe4=
+  </chunk>
+   <chunk x="0" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="16" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="32" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="48" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="64" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="80" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="96" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaZmFI7B9J+agJK3Q8AqtMG5A==
+  </chunk>
+   <chunk x="112" y="64" width="16" height="16">
+   eJxjYBgFo2DwAk0CmBj9A2k/PUA3HjlC7gcAKBEEjQ==
+  </chunk>
+   <chunk x="128" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="144" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="160" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFeKjbTymg1P0AKboHsQ==
+  </chunk>
+   <chunk x="176" y="64" width="16" height="16">
+   eJxjYBgFo4C+YC4jAmsykIa70TApQBOHGCl4sAFK3Q8AnXcJ9A==
+  </chunk>
+   <chunk x="192" y="64" width="16" height="16">
+   eJxjYBgFo4B8MJcRFZMKupFoGNYkAWMDIHE/JgYGfyAOAOJAIA4C4mAgDgHiUCRxXPopsX8oAQAJFQuV
+  </chunk>
+   <chunk x="208" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFOIiJgSEYiEOAOBSIA5kwxQJwiIPEKLV/qAMA1BkKbg==
+  </chunk>
+   <chunk x="224" y="64" width="16" height="16">
+   eJxjYBgFo2DggCaFOIiJgSEYiEOAOBSIA4A4kIl4cUrtp9TvA60fAPNJCug=
+  </chunk>
+   <chunk x="240" y="64" width="16" height="16">
+   eJxjYKAcdI/qH9H6KQGaUEwuMGGiTL8NhfpdKNTvQ6H+EAr1AwBz0AbW
+  </chunk>
+   <chunk x="-16" y="80" width="16" height="16">
+   eJztjksKgDAQxabH8f730n5Aq4IYFy60DEyruDIQXjdhKnKlu+357p3IgB4DRkxOCrR+PHrWY8CIqczVfqOf2IwzLrhW9E//r2npa3izt6j1rVjvavd/vmUH9oUetA==
+  </chunk>
+   <chunk x="0" y="80" width="16" height="16">
+   eJztzzkOgDAMBVFzHO5/L7I5AQJIjAS9ixRu8qVXTRFHF5GKDQERCRkFanWhISAiIaPI16rRbzTsOHCi4/rbY3Q1brf+tcoY73nf7/3+3Nhe+KpErg==
+  </chunk>
+   <chunk x="16" y="80" width="16" height="16">
+   eJztzzsOgEAIRVFcjvvf13wZ/yZzOy3MGDMFjS85DYQAOogUOHgERCRk6EuvCH14BEQk5EZd5Zo7MWHGghUb9kb9uM093fbll1H6WMf6fuv9f/pSAZmaRJE=
+  </chunk>
+   <chunk x="32" y="80" width="16" height="16">
+   eJztzjkOgDAMAEHzHP7/L0MOrkCRbdI5CCmFGyxN4y1snUQWrAiISMjQl7a1LnQERCSo2PtstAMnLhTc2Dv7x2hf/+21WcZ4j/f/3vf/GZsKdp5EiQ==
+  </chunk>
+   <chunk x="48" y="80" width="16" height="16">
+   eJztzj0OwCAIQGF6nN7/XqJW+9+kb3GoCZMDS0m+hTeATiIRCRkB2u0WFKNloaMgQBGR5Nuq0U9cuLFiw46ja4/Rrb/az9XobTfLGO/x/t/7/j9j8wKTmkSR
+  </chunk>
+   <chunk x="64" y="80" width="16" height="16">
+   eJztzjkOgDAMRFFzHO5/L7I4YQkg8SVS0KBIpHDDSK/xFB4dRBIyJjh4BERo7d86FTo4eAREue8JudHvmLFgxYZS7wfORv/c82X/KH2sY73f+v+fvlzLBkSg
+  </chunk>
+   <chunk x="80" y="80" width="16" height="16">
+   eJztzjkOgDAMRFFzHO5/r5DF7BT8JlVw5cINIz1F9hSxTiIJCzIKKhoUq9H3XRJeZBQZ54oGNboNOw6cH/OFG4/RqfP+WXyiE31/9P9/fHkBMbpEdQ==
+  </chunk>
+   <chunk x="96" y="80" width="16" height="16">
+   eJztz8sKgCAQhWF7HN//vbx3s4j+VsngJgtq0YEPBp3B0XVKeQREJBhYuMpdD63ORCQYWDhRe4SibxDzC9bjHCMmUc/IRd8m5ms7XtlfN/pKWvd/6h9vv//nXnZhzzmV
+  </chunk>
+   <chunk x="112" y="80" width="16" height="16">
+   eJztzkkKgDAQRNGKp/AKntW7agZx3PjFnWBaEMnGgkdvupKWpFb3adA5qYdHQETC4M4dq19X9JkeARHpeDfTu/Yn5owFKzaMD/vW/VY/p3Ss+76+v/T/f95lBzd9IQk=
+  </chunk>
+   <chunk x="128" y="80" width="16" height="16">
+   eJztzjkOgCAUhOHHBdzjfgHvfy8U1LhU/o0dISYUNE7yNW9CGK1EZiwwsFixQXu6/e2FHgYWCbcUGXIUKFEpd3fw5sSFGzW3Bi069BgwKnfn2/hl/yRhYif2/tj//wnLA7S7L50=
+  </chunk>
+   <chunk x="144" y="80" width="16" height="16">
+   eJztzrkRgEAMQ1HTAOdyQwHbf1+YqwB+CZ5x4ATNvEiBpIXIAcWJCzcevIauQ0KPEhVqNGgN/YoNOwaMmDBjMfTq/J/FJzrR/6P3//jyAduEKLc=
+  </chunk>
+   <chunk x="160" y="80" width="16" height="16">
+   eJztzjkOgDAMRFFzAXaxX4D734uw9vwileUGpXCDpVc4YykTMpEdB05cuPFgQ1C5fmuQo0CJytjreNca2YwOPQaMxj7Fu8XIdL+v/VdJ4z3e/b3//ydtXmUcKJU=
+  </chunk>
+   <chunk x="176" y="80" width="16" height="16">
+   eJztz0sKgCAUhWFtAb0pe2zA/e+rh9W8H5wISZAOatCBjwseLlyNFGLDjgkzFqwwTndAi2tK3lNkzsxRSNtVqKES/35P16B1pkInbTdgvNk3kffrh76W0PtD/uPbj/Xn3ZxmNB6e
+  </chunk>
+   <chunk x="192" y="80" width="16" height="16">
+   eJxjYMAONKGYWHF0Nd1QrEmEOLX143MnMe4fSkCTAdNPmmRiZP16TAwM+kBsAMSGQGwExMZAbALEpkwIeXLtGm7xMFQBAOP3Dlg=
+  </chunk>
+   <chunk x="208" y="80" width="16" height="16">
+   eJxjYMAEmlBMrDi6mm4o1iRCnNr68bmTGPcPNaBJITZgYmAwBGIjIDYGYhMgNgXicCCOAOJIII4C4mggjgHiWCC2B2IHIHZkotz+UTCwAABB2hCO
+  </chunk>
+   <chunk x="224" y="80" width="16" height="16">
+   eJxjYEAFmlCMDrCJY+N3Q7EmkeLU1E+p+0kFg0E/pdiJiYHBGYjtgdgBiB2ZIGLofJgadHFK7R8FAwsAJPcRVQ==
+  </chunk>
+   <chunk x="240" y="80" width="16" height="16">
+   eJyLYWJg0GQgH6RQqD+HQv0uFOr3oVB/CIX6Y4Z4+GsyUKZ/FAwsAAC+2AUS
+  </chunk>
+  </data>
+ </layer>
+ <objectgroup id="6" name="Collision" opacity="0.5" tintcolor="#ff0000">
+  <object id="7" x="609.667" y="-31.8485" width="10" height="541.848"/>
+  <object id="8" x="619.909" y="-31.7273" width="531.273" height="31.9091"/>
+  <object id="9" x="1138.94" y="0.242424" width="12.3939" height="767.424"/>
+  <object id="10" x="928" y="768">
+   <polygon points="0,0 0,-32 224,-32 224,0 0,0"/>
+  </object>
+  <object id="11" x="832" y="768">
+   <polygon points="0,0 -12.9375,-0.0625 -13,-512 -212.375,-512 -212.25,-543.875 17.875,-544.125 17.75,-511.875 0,-511.875"/>
+  </object>
+  <object id="12" x="928" y="256">
+   <polygon points="0,0 -18.5455,-0.181818 -18,-31.6364 210.909,-32.1818 210.727,0 13.0909,0.181818 13.0909,31.4545 0,31.2727"/>
+  </object>
+  <object id="13" x="928" y="352">
+   <polygon points="0,0 12.875,0 13.125,31.875 224,32 224,64 0,64"/>
+  </object>
+  <object id="14" x="928" y="512">
+   <polygon points="0,0 224,0 224,-32 0,-32"/>
+  </object>
+  <object id="15" x="928" y="576">
+   <polygon points="0,0 224,0 224,156 0,156"/>
+  </object>
+  <object id="16" x="608" y="640">
+   <polygon points="0,0 0,1120 12.875,1119.88 13.125,992.125 544,992 544,1056 576,1056 576,1024 557,1024.25 556.5,959.25 626.75,959.25 626.75,1023.5 608,1024 608,1056 627.25,1056 627,1088 640,1088 640,832 544,832 544,256 301.818,255.818 302,287.636 531.091,288 530.909,864.182 627.091,864 627.273,927.636 531.091,927.636 531.091,959.636 396.909,959.818 397.273,864.182 384,864 384,960 288,960 288,864 268.667,864 268.667,960 160,960 160,864 140.333,864 140.667,960 12.6667,959.667 13,288.333 209.667,288.333 210,256 64,256 64,192 32,192 32,256 13,255.667 13,0.666667"/>
+  </object>
+  <object id="17" x="384" y="1952">
+   <polygon points="0,0 -723.273,-0.0909091 -722.875,-2079.88 -736,-2080 -736,32 0,32"/>
+  </object>
+  <object id="18" x="-370" y="-415.5">
+   <polygon points="0,0 -0.125,31.75 786,31.5 786,191.5 1522,191.5 1522,31.5 2034,31.5 2034,703.5 2066,703.5 2066,-0.5"/>
+  </object>
+  <object id="19" x="1663.5" y="320">
+   <polygon points="0,0 18.6818,0 19.5909,-32 32.4956,-32.0365 32.5,0 32.7256,288.75 274.232,289.25 273.81,319.487 32.75,320 32.5,416 0.5,416"/>
+  </object>
+  <object id="20" x="608" y="1824">
+   <polygon points="0,0 0,160 1504,160 1504,128 640,128 640,-32 626.625,-32.125 626.875,127.875 12.9091,127.818 12.9091,-0.181818"/>
+  </object>
+  <object id="21" x="1696" y="64">
+   <polygon points="0,0 0,-32 6048,-32 6048,0"/>
+  </object>
+  <object id="22" x="2258.13" y="639.875">
+   <polygon points="0,0 0,-31.75 -197.125,-32.2083 -197.458,-575.875 -223.458,-575.875 -223.125,-31.875 -260.125,-32.2083 -260.125,-0.208333"/>
+  </object>
+  <object id="23" x="2317.67" y="608.333">
+   <polygon points="0,0 37.3333,-0.333333 36.6667,-544.667 63.3333,-544 63.6667,-1 259.667,-0.666667 260.333,32 0,32"/>
+  </object>
+  <object id="24" x="2674.91" y="64.2727">
+   <polygon points="0,0 0,543.545 -37.0909,543.818 -37.0909,575.545 223.273,575.545 223.273,543.727 25.4545,543.727 26,-0.272727"/>
+  </object>
+  <object id="25" x="2994.88" y="64.125">
+   <polygon points="0,0 -0.125,543.625 -37.125,544 -37,575.75 223.125,575.875 223,543.75 26.125,543.75 26.125,0"/>
+  </object>
+  <object id="26" x="3314.88" y="64.125">
+   <polygon points="0,0 0.1875,543.875 -36.875,543.875 -36.9375,575.813 351.125,575.875 351.125,543.875 26.125,543.875 26.125,0.125"/>
+  </object>
+  <object id="29" x="4211" y="64.25">
+   <polygon points="0,0 0,543.75 -37.125,543.75 -37.125,575.625 350.938,575.688 351,543.813 25.9375,543.75 25.9375,-0.25"/>
+  </object>
+  <object id="30" x="4658.81" y="64.0625">
+   <polygon points="0,0 0.1875,543.313 -36.6875,543.938 -36.8125,575.813 351.063,575.813 351.188,543.938 26.1875,543.688 26.3125,0.0625"/>
+  </object>
+  <object id="31" x="5107" y="64">
+   <polygon points="0,0 0.0909091,543.909 -37,544.091 -37,576 351.25,576 351.25,544.125 26.125,543.875 26.125,0.25"/>
+  </object>
+  <object id="32" x="5554.91" y="64.2727">
+   <polygon points="0,0 0,543.545 -37,543.636 -37.0909,575.636 383.341,575.727 383.341,543.727 25.9091,543.545 26.1818,-0.181818"/>
+  </object>
+  <object id="33" x="5998.18" y="608.182">
+   <polygon points="0,0 -0.181818,32 260,31.8182 260,-0.181818"/>
+  </object>
+  <object id="34" x="6317.82" y="608.182">
+   <polygon points="0,0 0,31.8182 82.1818,31.8182 82.1818,95.8182 95.6364,95.8182 95.4545,-544.364 68.9091,-544 69.2727,-0.545455"/>
+  </object>
+  <object id="35" x="5006" y="928">
+   <polygon points="0,0 -0.363636,-32.1818 1394,-32 1394,-96 1406.67,-96 1407.33,-32 2354,-32 2354,-128 2595.5,-127.5 2596.5,-96.25 2366.5,-96 2367,32.25 2354,32 2354,0"/>
+  </object>
+  <object id="36" x="1696" y="1024">
+   <polygon points="0,0 0,-128 704,-128 704,-160 736,-160 736,-151.667 863,-151.667 864,-128 1056,-128 1056,-160 1088,-160 1088,-150.667 1215.67,-151 1216,-128 1312,-128 1312,160 1120,160 1120,128 1299,126 1298.75,-96 960,-96.25 960,127.75 1056,128 1056,160 896,160 896,128 947,127.75 946.75,-96 736.25,-95.75 736,128 832,128 832,160 672,160 672,128 723,127.75 723,-95.5 428.75,-95.75 429,127.75 608,128 608,160 544,160 544,192 530.75,192 530.75,160.5 429,160 429,575.5 531.25,576 530.667,256.667 1137,255.667 1137.67,287.333 556.667,288 557,575.667 1298.75,575.75 1299.5,288.25 1198,288.25 1198.25,256 1312,256 1312,576 1329.75,576.25 1329.75,607.75 416,608 415.75,-95.75 12.5,-95.75 12.75,0.75"/>
+  </object>
+  <object id="37" x="3168" y="960">
+   <polygon points="0,0 0,-64 352,-64 352,-96 369.5,-95.5 370,-63.5 640,-64 640,-96 657.818,-96 658,-63.8182 928,-64 928,-96 945,-95.5 946,-64 1344,-64 1344,-96 1362.13,-96 1362,-64.125 1746.18,-64 1746,-32.5455 1344,-32 1344,192 1472,192 1472,224 1280,224 1280,192 1331,192.5 1331.5,-32 928,-32 928,192 1216,192 1216,224 864,224 864,192 915,192 915,-32.5 640,-32 640,192 800,192 800,224 544,224 544,192 627,192.5 627.5,-32 352,-32 352,128 12.5,128 12.5,192.5 480,192 480,224 0,224 0,64 12.5,63.5 12.5,96.5 338,96 339,-32.5 12.5,-32.5 13.5,0"/>
+  </object>
+  <object id="38" x="5088" y="1184">
+   <polygon points="0,0 0,-192 -82.3333,-191.667 -82,-160.333 -13.3333,-160 -13,-63.6667 -64,-64 -64,-32 -128,-32 -128,-192 -178.333,-192.333 -178,-160.667 -141.333,-160 -141.333,-32.3333 -224,-32 -224,-64 -275.333,-65.6667 -274.667,-160.333 -238.333,-160.667 -238,-192.333 -402.667,-191.667 -402.333,-160.333 -301.333,-159.667 -301.333,-32.3333 -384,-32 -384,0"/>
+  </object>
+  <object id="39" x="5184" y="992">
+   <polygon points="0,0 0,608 -563,607.75 -562.75,320.25 -429.75,320 -429.5,288.25 -786,288.25 -786.25,319.25 -588.5,320 -588.75,608.75 -1011,608 -1011,320 -877.667,320 -877.667,288 -1074,288 -1074.33,319.667 -1037.33,319.667 -1037,607.667 -1491,607.667 -1491,320.333 -1229.67,320.667 -1229.67,287.667 -1554,287.667 -1554.33,320 -1517,320 -1517.33,607.667 -2003.09,608.182 -2002.73,320.182 -1646,320.333 -1646,288 -2016,288 -2016,608 -2034.33,607.667 -2033.67,640 0,640 0,992 576,992 576,416 333.75,415.75 334,448 562.5,447.75 562.5,960 12.9091,959.818 13.0909,448.364 273.818,448 274,415.818 13.0909,415.636 13.2727,0"/>
+  </object>
+  <object id="40" x="5888" y="1920">
+   <polygon points="0,0 0,64 1297.67,64 1297.67,31.6667 928,32 928,-320 914,-320 914.333,-128 800,-128 800,-320 621.667,-320 621.667,-287.667 786,-287.667 786.667,-127 512,-128 512,-288 561.667,-288.333 562.333,-319.667 461,-320 462,-288 499,-287.667 498.333,-127.667 204.667,-128.667 205,-288.333 401.667,-288 401.667,-320 192,-320 192,-128 13.5,-128.5 13,-449.5 0,-448 0,-64 13,-64.5 13,-96 914.75,-96 915.25,32.25 12.6667,31.6667 13.3333,0.333333"/>
+  </object>
+  <object id="41" x="7391.5" y="1952.75">
+   <polygon points="0,0 0.5,31.25 352.5,31.25 352.5,-1888.75 307,-1888.25 307,-1153.25 269.75,-1153.25 270,-1121.25 307,-1120.75 307.25,-929 -31.5,-928.75 -31.5,-896.75 320.5,-896.75 320.5,-0.75"/>
+  </object>
+  <object id="42" x="2112.67" y="1629.33" width="31.3333" height="354"/>
+  <object id="43" x="640" y="320" width="32" height="96"/>
+  <object id="44" x="672" y="265.667" width="96" height="22.3333"/>
+  <object id="45" x="768" y="256" width="32" height="32"/>
+  <object id="46" x="704" y="320" width="64" height="32"/>
+  <object id="47" x="768" y="544" width="32" height="96"/>
+  <object id="48" x="640" y="928" width="64" height="64"/>
+  <object id="49" x="736" y="960" width="32" height="96"/>
+  <object id="50" x="736" y="1088" width="32" height="64"/>
+  <object id="51" x="640" y="1120" width="96" height="32"/>
+  <object id="52" x="672" y="1536" width="32" height="32"/>
+  <object id="53" x="800" y="1536" width="32" height="32"/>
+  <object id="54" x="928" y="1536" width="32" height="32"/>
+  <object id="56" x="1184" y="1504" width="32" height="32"/>
+  <object id="57" x="1024" y="1376" width="32" height="32"/>
+  <object id="58" x="992" y="1312" width="96" height="32"/>
+  <object id="59" x="1024" y="1248" width="32" height="32"/>
+  <object id="61" x="992" y="1184" width="96.3333" height="34.3333"/>
+  <object id="62" x="1024" y="1120" width="32" height="32"/>
+  <object id="63" x="992" y="1056" width="96" height="32"/>
+  <object id="64" x="1024" y="992" width="31" height="27.3333"/>
+  <object id="65" x="960" y="928" width="128" height="34"/>
+  <object id="66" x="1728" y="96" width="32" height="32"/>
+  <object id="67" x="1824" y="64" width="32" height="32"/>
+  <object id="68" x="1952" y="96" width="32" height="32"/>
+  <object id="69" x="1728" y="192" width="128" height="32"/>
+  <object id="70" x="1920" y="192" width="64" height="32"/>
+  <object id="71" x="1728" y="256" width="128" height="32"/>
+  <object id="72" x="1920" y="256" width="64" height="32"/>
+  <object id="73" x="1728" y="320" width="128" height="32"/>
+  <object id="74" x="1920" y="320" width="64" height="32"/>
+  <object id="75" x="1728" y="384" width="128" height="32"/>
+  <object id="76" x="1920" y="384" width="64" height="32"/>
+  <object id="77" x="1728" y="448" width="128" height="32"/>
+  <object id="78" x="1920" y="448" width="64" height="32"/>
+  <object id="79" x="1728" y="512" width="128" height="32"/>
+  <object id="80" x="1920" y="512" width="64" height="32"/>
+  <object id="81" x="2080" y="96" width="32" height="32"/>
+  <object id="82" x="2304" y="96" width="32" height="32"/>
+  <object id="83" x="2080" y="192" width="96" height="32"/>
+  <object id="84" x="2240" y="192" width="96" height="32"/>
+  <object id="85" x="2080" y="256" width="96" height="32"/>
+  <object id="86" x="2240" y="256" width="96" height="32"/>
+  <object id="87" x="2080" y="320" width="96" height="32"/>
+  <object id="88" x="2240" y="320" width="96" height="32"/>
+  <object id="89" x="2080" y="384" width="96" height="32"/>
+  <object id="90" x="2240" y="384" width="96" height="32"/>
+  <object id="91" x="2080" y="448" width="96" height="32"/>
+  <object id="92" x="2240" y="448" width="96" height="32"/>
+  <object id="93" x="2080" y="512" width="96" height="32"/>
+  <object id="94" x="2240" y="512" width="96" height="32"/>
+  <object id="95" x="2400" y="96" width="32" height="32"/>
+  <object id="96" x="2624" y="96" width="32" height="32"/>
+  <object id="97" x="2400" y="192" width="96" height="32"/>
+  <object id="98" x="2560" y="192" width="96" height="32"/>
+  <object id="99" x="2400" y="256" width="96" height="32"/>
+  <object id="100" x="2560" y="256" width="96" height="32"/>
+  <object id="101" x="2400" y="320" width="96" height="32"/>
+  <object id="102" x="2560" y="320" width="96" height="32"/>
+  <object id="103" x="2400" y="384" width="96" height="32"/>
+  <object id="104" x="2560" y="384" width="96" height="32"/>
+  <object id="105" x="2400" y="448" width="96" height="32"/>
+  <object id="106" x="2560" y="448" width="96" height="32"/>
+  <object id="107" x="2400" y="512" width="96" height="32"/>
+  <object id="108" x="2560" y="512" width="96" height="32"/>
+  <object id="109" x="2720" y="96" width="32" height="32"/>
+  <object id="110" x="2944" y="96" width="32" height="32"/>
+  <object id="111" x="2720" y="192" width="96" height="32"/>
+  <object id="112" x="2848" y="192" width="128" height="32"/>
+  <object id="113" x="2720" y="256" width="96" height="32"/>
+  <object id="114" x="2848" y="256" width="128" height="32"/>
+  <object id="115" x="2720" y="320" width="96" height="32"/>
+  <object id="116" x="2848" y="320" width="128" height="32"/>
+  <object id="117" x="2720" y="384" width="96" height="32"/>
+  <object id="118" x="2848" y="384" width="128" height="32"/>
+  <object id="119" x="2720" y="448" width="96" height="32"/>
+  <object id="121" x="2848" y="448" width="128" height="32"/>
+  <object id="122" x="2720" y="512" width="96" height="32"/>
+  <object id="123" x="2848" y="512" width="128" height="32"/>
+  <object id="124" x="3040" y="96" width="32" height="32"/>
+  <object id="125" x="3264" y="96" width="32" height="32"/>
+  <object id="126" x="3040" y="192" width="96" height="32"/>
+  <object id="127" x="3168" y="192" width="128" height="32"/>
+  <object id="128" x="3040" y="256" width="96" height="32"/>
+  <object id="129" x="3168" y="256" width="128" height="32"/>
+  <object id="130" x="3040" y="320" width="96" height="32"/>
+  <object id="131" x="3168" y="320" width="128" height="32"/>
+  <object id="132" x="3040" y="384" width="96" height="32"/>
+  <object id="133" x="3168" y="384" width="128" height="32"/>
+  <object id="134" x="3040" y="448" width="96" height="32"/>
+  <object id="135" x="3168" y="448" width="128" height="32"/>
+  <object id="136" x="3040" y="512" width="96" height="32"/>
+  <object id="137" x="3168" y="512" width="128" height="32"/>
+  <object id="138" x="3360" y="96" width="32" height="32"/>
+  <object id="139" x="3712" y="96" width="32" height="32"/>
+  <object id="140" x="3360" y="192" width="128" height="32"/>
+  <object id="141" x="3584" y="192" width="160" height="32"/>
+  <object id="142" x="3360" y="256" width="128" height="32"/>
+  <object id="143" x="3584" y="256" width="160" height="32"/>
+  <object id="144" x="3360" y="320" width="128" height="32"/>
+  <object id="145" x="3584" y="320" width="160" height="32"/>
+  <object id="146" x="3584" y="384" width="160" height="32"/>
+  <object id="147" x="3360" y="384" width="131.333" height="32.6667"/>
+  <object id="150" x="3360" y="448" width="128" height="32"/>
+  <object id="151" x="3584" y="448" width="160" height="32"/>
+  <object id="152" x="3360" y="512" width="128" height="32"/>
+  <object id="153" x="3584" y="512" width="160" height="32"/>
+  <object id="154" x="3808" y="96" width="32" height="32"/>
+  <object id="155" x="4160" y="96" width="32" height="32"/>
+  <object id="156" x="3808" y="192" width="128" height="32"/>
+  <object id="157" x="4032" y="192" width="160" height="32"/>
+  <object id="158" x="3808" y="256" width="128" height="32"/>
+  <object id="159" x="4032" y="256" width="160" height="32"/>
+  <object id="160" x="3808" y="320" width="128" height="32"/>
+  <object id="161" x="4032" y="320" width="160" height="32"/>
+  <object id="162" x="3808" y="384" width="128" height="32"/>
+  <object id="163" x="4032" y="384" width="160" height="32"/>
+  <object id="164" x="3808" y="448" width="128" height="32"/>
+  <object id="165" x="4032" y="448" width="160" height="32"/>
+  <object id="166" x="3808" y="512" width="128" height="32"/>
+  <object id="167" x="4032" y="512" width="160" height="32"/>
+  <object id="168" x="4256" y="96" width="32" height="32"/>
+  <object id="169" x="4608" y="96" width="32" height="32"/>
+  <object id="170" x="4256" y="192" width="119.333" height="32.6667"/>
+  <object id="171" x="4480" y="192" width="160" height="32"/>
+  <object id="172" x="4256" y="256" width="128" height="32"/>
+  <object id="173" x="4480" y="256" width="160" height="32"/>
+  <object id="174" x="4256" y="320" width="128" height="32"/>
+  <object id="176" x="4480" y="320" width="160" height="32"/>
+  <object id="177" x="4256" y="384" width="128" height="32"/>
+  <object id="178" x="4480" y="384" width="160" height="32"/>
+  <object id="179" x="4256" y="448" width="128" height="32"/>
+  <object id="180" x="4480" y="448" width="160" height="32"/>
+  <object id="181" x="4256" y="512" width="128" height="32"/>
+  <object id="182" x="4480" y="512" width="160" height="32"/>
+  <object id="183" x="4704" y="96" width="32" height="32"/>
+  <object id="184" x="4864" y="96" width="32" height="32"/>
+  <object id="185" x="5056" y="96" width="32" height="32"/>
+  <object id="186" x="4704" y="192" width="128" height="32"/>
+  <object id="187" x="4928" y="192" width="160" height="32"/>
+  <object id="188" x="4704" y="256" width="128" height="32"/>
+  <object id="191" x="4928" y="256" width="160" height="32"/>
+  <object id="192" x="4704" y="320" width="128" height="32"/>
+  <object id="193" x="4928" y="320" width="160" height="32"/>
+  <object id="194" x="4704" y="384" width="128" height="32"/>
+  <object id="195" x="4928" y="384" width="160" height="32"/>
+  <object id="196" x="4704" y="448" width="128" height="32"/>
+  <object id="197" x="4928" y="448" width="160" height="32"/>
+  <object id="198" x="4704" y="512" width="128" height="32"/>
+  <object id="199" x="4928" y="512" width="160" height="32"/>
+  <object id="200" x="5152" y="96" width="32" height="32"/>
+  <object id="201" x="5504" y="96" width="32" height="32"/>
+  <object id="202" x="5152" y="192" width="128" height="32"/>
+  <object id="203" x="5376" y="192" width="160" height="32"/>
+  <object id="204" x="5152" y="256" width="128" height="32"/>
+  <object id="206" x="5376" y="256" width="160" height="32"/>
+  <object id="207" x="5152" y="320" width="128" height="32"/>
+  <object id="209" x="5376" y="320" width="160" height="32"/>
+  <object id="210" x="5152" y="384" width="128" height="32"/>
+  <object id="211" x="5376" y="384" width="160" height="32"/>
+  <object id="212" x="5152" y="448" width="128" height="32"/>
+  <object id="214" x="5376" y="448" width="160" height="32"/>
+  <object id="215" x="5152" y="512" width="128" height="32"/>
+  <object id="216" x="5376" y="512" width="160" height="32"/>
+  <object id="217" x="5600" y="96" width="32" height="32"/>
+  <object id="218" x="5824" y="96" width="32" height="32"/>
+  <object id="219" x="5920" y="96" width="32" height="32"/>
+  <object id="220" x="5888" y="128" width="96" height="32"/>
+  <object id="221" x="6336" y="96" width="32" height="32"/>
+  <object id="225" x="5600" y="192" width="128" height="32"/>
+  <object id="226" x="5600" y="256" width="128" height="32"/>
+  <object id="227" x="5600" y="320" width="128" height="32"/>
+  <object id="229" x="5600" y="384" width="128" height="32"/>
+  <object id="230" x="5600" y="448" width="128" height="32"/>
+  <object id="231" x="5600" y="512" width="128" height="32"/>
+  <object id="232" x="5824" y="192" width="256" height="32"/>
+  <object id="233" x="5824" y="256" width="256" height="32"/>
+  <object id="234" x="5824" y="320" width="256" height="32"/>
+  <object id="235" x="5824" y="384" width="256" height="32"/>
+  <object id="236" x="5824" y="448" width="256" height="32"/>
+  <object id="237" x="5824" y="512" width="256" height="32"/>
+  <object id="239" x="6208" y="192" width="160" height="32"/>
+  <object id="240" x="6208" y="256" width="160" height="32"/>
+  <object id="241" x="6208" y="320" width="160" height="32"/>
+  <object id="242" x="6208" y="384" width="160" height="32"/>
+  <object id="243" x="6208" y="448" width="160" height="32"/>
+  <object id="244" x="6208" y="512" width="160" height="32"/>
+  <object id="249" x="6688" y="128" width="32" height="192"/>
+  <object id="250" x="6752" y="128" width="32" height="192"/>
+  <object id="251" x="6816" y="128" width="32" height="192"/>
+  <object id="252" x="6880" y="128" width="32" height="192"/>
+  <object id="253" x="6944" y="128" width="32" height="192"/>
+  <object id="254" x="7008" y="128" width="32" height="192"/>
+  <object id="255" x="7072" y="128" width="32" height="192"/>
+  <object id="256" x="7136" y="128" width="32" height="192"/>
+  <object id="257" x="7200" y="128" width="32" height="192"/>
+  <object id="258" x="7264" y="128" width="32" height="192"/>
+  <object id="259" x="7328" y="128" width="32" height="192"/>
+  <object id="270" x="6688" y="544" width="32" height="288"/>
+  <object id="271" x="6752" y="544" width="32" height="288"/>
+  <object id="272" x="6816" y="544" width="32" height="288"/>
+  <object id="273" x="6880" y="544" width="32" height="288"/>
+  <object id="274" x="6944" y="544" width="32" height="288"/>
+  <object id="275" x="7008" y="544" width="32" height="288"/>
+  <object id="276" x="7072" y="544" width="32" height="288"/>
+  <object id="277" x="7136" y="544" width="32" height="288"/>
+  <object id="278" x="7200" y="544" width="32" height="288"/>
+  <object id="279" x="7264" y="544" width="32" height="288"/>
+  <object id="281" x="3520" y="2368">
+   <polygon points="0,0 0,96 -3840,64 -3840,448 4160,448 4160,64 2784,64 2784,0 4224,0 4224,512 -3904,512 -3904,0"/>
+  </object>
+  <object id="282" x="3840" y="2368">
+   <polygon points="0,0 0,96 2176,96 2176,0"/>
+  </object>
+  <object id="283" x="3488" y="2560">
+   <polygon points="0,0 0,128 -3680,128 -3680,0"/>
+  </object>
+  <object id="284" x="3872" y="2560">
+   <polygon points="0,0 0,128 2112,128 2112,0"/>
+  </object>
+  <object id="285" x="7712" y="1984">
+   <polygon points="0,0 0,384 32,384 32,0"/>
+  </object>
+ </objectgroup>
+</map>
