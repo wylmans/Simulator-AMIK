@@ -136,6 +136,17 @@ Simulator-AMIK/
 * Jika terjadi error `pygame`, pastikan PATH Python sudah benar
 
 ---
+## Struktur Permainan
+* Menu Utama
+     * Permainan Baru
+          * Masukan Username
+     * Load Game
+     * Setting
+         * Sound Game
+         * Sound Effect
+         * Resolution
+         * Fullscreen 
+     * Exit
 
 ## 📜 Lisensi
 
