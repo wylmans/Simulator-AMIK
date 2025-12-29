@@ -28,6 +28,14 @@ except ImportError:
     print("[WARNING] Tiled map tidak tersedia")
     USE_TILED = False
 
+
+# ═══════════════════════════════════════════════════════════════
+# DEBUG FLAGS - Toggle untuk development/testing
+# ═══════════════════════════════════════════════════════════════
+ENABLE_SAMPLE_NPCS = False  # Set True untuk enable sample NPCs (testing)
+DEBUG_MODE_DEFAULT = False  # Set True untuk auto-enable debug mode
+# ═══════════════════════════════════════════════════════════════
+
 pygame.init()
 
 # Get available display modes from system
@@ -131,7 +139,7 @@ except Exception:
 # Game state management
 current_screen = "main_menu"  # "main_menu", "game", "ending"
 game_state = "playing"
-debug_mode = False
+debug_mode = DEBUG_MODE_DEFAULT  # Can be toggled via DEBUG_MODE_DEFAULT flag
 
 # New-game warning modal state
 newgame_warning_active = False
@@ -220,7 +228,7 @@ def initialize_game(player_name, load_save_data=None):
         player.set_directional_sprite("up", "karakter/mahasiswa_atas.png", "karakter/mahasiswa_atas.json")
         player.set_directional_sprite("down", "karakter/mahasiswa_bawah.png", "karakter/mahasiswa_bawah.json")
         player.set_idle_directional_sprite("left", "karakter/mahasiswa_idle_kiri.png", "karakter/mahasiswa_idle_kiri.json")
-        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/mahasiswa_idle_kanan.json")
+        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
     except Exception as e:
         print(f"[WARNING] Some sprites not loaded: {e}")
 
@@ -232,18 +240,27 @@ def initialize_game(player_name, load_save_data=None):
 
     # NPCs
     npc_manager = NPCManager()
-    sample_npcs = create_sample_npcs()
 
-    if USE_TILED and tiled_map:
-        spawns = tiled_map.get_spawn_points()
-        for npc in sample_npcs:
-            npc_spawn_key = f"npc_{npc.name.lower().replace(' ', '_')}"
-            if npc_spawn_key in spawns:
-                npc.x, npc.y = spawns[npc_spawn_key]
-            npc_manager.add_npc(npc)
+    # ═══════════════════════════════════════════════════════════════
+    # Sample NPCs untuk testing (dapat di-disable via ENABLE_SAMPLE_NPCS)
+    # ═══════════════════════════════════════════════════════════════
+    if ENABLE_SAMPLE_NPCS:
+        print("[DEBUG] Loading sample NPCs (testing mode)")
+        sample_npcs = create_sample_npcs()
+
+        if USE_TILED and tiled_map:
+            spawns = tiled_map.get_spawn_points()
+            for npc in sample_npcs:
+                npc_spawn_key = f"npc_{npc.name.lower().replace(' ', '_')}"
+                if npc_spawn_key in spawns:
+                    npc.x, npc.y = spawns[npc_spawn_key]
+                npc_manager.add_npc(npc)
+        else:
+            for npc in sample_npcs:
+                npc_manager.add_npc(npc)
     else:
-        for npc in sample_npcs:
-            npc_manager.add_npc(npc)
+        print("[INFO] Sample NPCs disabled. Use generate_npcs_v2.py to create NPCs.")
+    # ═══════════════════════════════════════════════════════════════
 
     # Quest system
     quest_manager = QuestManager()
@@ -810,7 +827,7 @@ while running:
             screen.blit(cancel_surf, cancel_rect)
 
     elif current_screen == "game":
-        screen.fill((0, 0, 0))  # Black background
+        screen.fill((30, 150, 50))
 
         if game_state == "ending_screen":
             ending_screen.draw(screen, quest_manager.completed_quests)
