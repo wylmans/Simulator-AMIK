@@ -220,7 +220,7 @@ def initialize_game(player_name, load_save_data=None):
         player.set_directional_sprite("up", "karakter/mahasiswa_atas.png", "karakter/mahasiswa_atas.json")
         player.set_directional_sprite("down", "karakter/mahasiswa_bawah.png", "karakter/mahasiswa_bawah.json")
         player.set_idle_directional_sprite("left", "karakter/mahasiswa_idle_kiri.png", "karakter/mahasiswa_idle_kiri.json")
-        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/Kang_azhar_idle_kanan.json")
+        player.set_idle_directional_sprite("right", "karakter/mahasiswa_idle_kanan.png", "karakter/mahasiswa_idle_kanan.json")
     except Exception as e:
         print(f"[WARNING] Some sprites not loaded: {e}")
 
