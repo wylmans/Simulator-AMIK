@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="7" nextobjectid="288">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="7" nextobjectid="287">
  <tileset firstgid="1" source="TEMBOK COKLAT.tsx" />
  <tileset firstgid="37" source="tembok parkiran.tsx" />
  <tileset firstgid="46" source="abu sedang corak.tsx" />
@@ -167,7 +167,7 @@
   <object id="1" name="player" x="494" y="557">
    <point />
   </object>
- <object id="286" name="npc_pak_aldo" x="4.768" y="160.0"><point /></object><object id="287" name="npc_pak_chandra" x="1792.0" y="96.0"><point /></object></objectgroup>
+ <object id="286" name="npc_pak_aldo" x="4.768" y="160.0"><point /></object></objectgroup>
  <layer id="3" name="lantai dua" width="30" height="20">
   <data encoding="base64" compression="zlib">
    <chunk x="-16" y="-16" width="16" height="16">

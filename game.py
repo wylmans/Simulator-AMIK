@@ -10,7 +10,9 @@ from core import input as Input
 from core.player import Player
 from core.camera import create_screen, camera
 from core.music import MusicManager
-from core.npc import NPCManager, create_sample_npcs
+from core.npc import NPCManager, create_sample_npcs, NPC
+import json
+import os
 from core.quest import QuestManager, CodeChallengeBox
 from core.dialog import DialogueBox, EndingChoice
 from core.ending import EndingScreen
@@ -240,6 +242,30 @@ def initialize_game(player_name, load_save_data=None):
 
     # NPCs
     npc_manager = NPCManager()
+
+    # Auto-load NPCs from generated config if present
+    config_path = os.path.join('.', 'npcs_config.json')
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                npc_list = json.load(f)
+
+            if npc_list:
+                print(f"[INFO] Loading {len(npc_list)} NPC(s) from {config_path}")
+                for npc_data in npc_list:
+                    try:
+                        npc_obj = NPC(
+                            name=npc_data.get('name', 'NPC'),
+                            x=float(npc_data.get('x', 0)),
+                            y=float(npc_data.get('y', 0)),
+                            sprite_config=npc_data.get('sprite_config', {}),
+                            dialogue_lines=npc_data.get('dialogues', [])
+                        )
+                        npc_manager.add_npc(npc_obj)
+                    except Exception as e:
+                        print(f"[WARNING] Failed to create NPC from config: {e}")
+        except Exception as e:
+            print(f"[WARNING] Could not read npcs_config.json: {e}")
 
     # ═══════════════════════════════════════════════════════════════
     # Sample NPCs untuk testing (dapat di-disable via ENABLE_SAMPLE_NPCS)
@@ -733,6 +759,9 @@ while running:
                 else:
                     player.sprite.update(dt)
                 dialogue_box.update()
+
+                # Update NPCs (for animations)
+                npc_manager.update_all(dt)
 
             elif game_state == "code_challenge":
                 result = code_challenge_box.update()

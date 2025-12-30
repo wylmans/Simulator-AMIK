@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Pak Aldo",
+    "role": "Dosen",
+    "x": 4768.0,
+    "y": 96.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/pakaldogerakan.png",
+      "json": "NPC/pakaldogerakan.json"
+    },
+    "quest": "Buat program sorting dengan algoritma bubble sort",
+    "dialogues": [
+      "Kerjakan tugas coding tentang algoritma sorting!",
+      "Buat program kalkulator sederhana sebagai tugas!",
+      "Debug code ini dan temukan errornya!",
+      "Implementasikan struktur data linked list!",
+      "Optimasi kode yang telah kamu buat!"
+    ],
+    "spawn_key": "npc_pak_aldo"
+  },
+  {
+    "name": "Pak Chandra",
+    "role": "Dosen",
+    "x": 1792.0,
+    "y": 96.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/pakchandrabergerak.png",
+      "json": "NPC/pakchandrabergerak.json"
+    },
+    "quest": "Buat program sorting dengan algoritma bubble sort",
+    "dialogues": [
+      "Kerjakan tugas coding tentang algoritma sorting!",
+      "Buat program kalkulator sederhana sebagai tugas!",
+      "Debug code ini dan temukan errornya!",
+      "Implementasikan struktur data linked list!",
+      "Optimasi kode yang telah kamu buat!"
+    ],
+    "spawn_key": "npc_pak_chandra"
+  }
+]
