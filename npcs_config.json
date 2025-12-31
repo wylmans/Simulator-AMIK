@@ -38,5 +38,86 @@
       "Optimasi kode yang telah kamu buat!"
     ],
     "spawn_key": "npc_pak_chandra"
+  },
+  {
+    "name": "Pak Adam",
+    "role": "Teknik",
+    "x": 2285,
+    "y": 110.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/pakadambergerak.png",
+      "json": "NPC/pakadambergerak.json"
+    },
+    "quest": "Buat ERD untuk sistem perpustakaan digital",
+    "dialogues": [
+      "Buat ERD untuk sistem perpustakaan!",
+      "Tulis query SQL untuk join 3 tabel!",
+      "Normalisasi database sampai 3NF!",
+      "Design schema untuk e-commerce!",
+      "Optimasi query yang lambat ini!"
+    ],
+    "spawn_key": "npc_pak_adam"
+  }
+  ,
+  {
+    "name": "Bu Shafira",
+    "role": "Teknik",
+    "x": 4306,
+    "y": 111.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/bu shafira gerak.png",
+      "json": "NPC/bu shafira gerak.json"
+    },
+    "quest": "Hitung determinan matriks 4x4",
+    "dialogues": [
+      "Selesaikan integral parsial ini!",
+      "Hitung determinan matriks 4x4!",
+      "Buktikan teorema ini dengan induksi!",
+      "Optimasi fungsi dengan turunan!",
+      "Selesaikan sistem persamaan linear!"
+    ],
+    "spawn_key": "npc_bu_shafira"
+  },
+  {
+    "name": "Miss Uyun",
+    "role": "bahasa",
+    "x": 3854,
+    "y": 111.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/Miss Uyun Gerak.png",
+      "json": "NPC/Miss Uyun Gerak.json"
+    },
+    "quest": "Presentasi hasil project kelompok",
+    "dialogues": [
+      "Kerjakan tugas tepat waktu ya!",
+      "Baca materi untuk pertemuan berikutnya!",
+      "Jangan lupa kumpulkan laporan!",
+      "Pelajari konsep yang sudah dijelaskan!",
+      "Latihan soal-soal di buku!"
+    ],
+    "spawn_key": "npc_miss_uyun"
+  },
+  {
+    "name": "Pak Asep",
+    "role": "Bahasa",
+    "x": 5197,
+    "y": 111.0,
+    "sprite_config": {
+      "type": "aseprite",
+      "spritesheet": "NPC/Pak Asep Gerak.png",
+      "json": "NPC/Pak Asep Gerak.json"
+    },
+    "quest": "Pelajari materi untuk ujian tengah semester",
+    "dialogues": [
+      "Kerjakan tugas tepat waktu ya!",
+      "Baca materi untuk pertemuan berikutnya!",
+      "Jangan lupa kumpulkan laporan!",
+      "Pelajari konsep yang sudah dijelaskan!",
+      "Latihan soal-soal di buku!"
+    ],
+    "spawn_key": "npc_pak_asep"
   }
 ]
